@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "analyze": "mkdir -p docs/metrics/bundle && vite-bundle-visualizer --output docs/metrics/bundle/stats.html --open true",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
