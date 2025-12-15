@@ -71,7 +71,7 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
     - Configurar `retry` con exponential backoff
     - Habilitar React Query DevTools en desarrollo
 
-- [ ] **Refactorizar capa de servicios/API**
+- [x] **Refactorizar capa de servicios/API**
 
   - Crear una estructura clara de servicios (`src/services/` o `src/api/`)
   - Abstraer todas las llamadas a Twelve Data en funciones de servicio
