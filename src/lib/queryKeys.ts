@@ -2,7 +2,8 @@ export const queryKeys = {
   stocks: {
     all: ["stocks"] as const,
     lists: () => [...queryKeys.stocks.all, "list"] as const,
-    list: () => [...queryKeys.stocks.lists()] as const,
+    list: (exchange: string) =>
+      [...queryKeys.stocks.lists(), exchange] as const,
     details: () => [...queryKeys.stocks.all, "detail"] as const,
     detail: (symbol: string) =>
       [...queryKeys.stocks.details(), symbol] as const,

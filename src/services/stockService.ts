@@ -4,7 +4,7 @@ import type { StockListResponse } from "../api/types";
 import { StockListResponseSchema } from "../api/schemas";
 import { validateResponse } from "./shared/validateResponse";
 
-export const stocksService = {
+export const stockService = {
   getStockList: async (
     exchange: string = "NASDAQ"
   ): Promise<StockListResponse> => {

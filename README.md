@@ -79,7 +79,7 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
   - Crear tipos para los parámetros de cada endpoint
   - Organizar servicios por dominio (stocks, quotes, search, etc.)
 
-- [ ] **Crear custom hooks con React Query**
+- [x] **Crear custom hooks con React Query**
 
   - `useStockList()` - Para obtener lista de acciones
   - `useStockQuote(symbol, interval, startDate, endDate)` - Para datos de time series

@@ -1,7 +1,15 @@
-import { QueryClient } from "@tanstack/react-query";
+import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { CACHE_TIME } from "./cacheConfig";
 
 export const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      const meta = query.meta as
+        | undefined
+        | { onError?: (err: unknown) => void };
+      meta?.onError?.(error);
+    },
+  }),
   defaultOptions: {
     queries: {
       staleTime: CACHE_TIME.FIVE_MINUTES,
