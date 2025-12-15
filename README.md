@@ -118,27 +118,43 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
   - Estrategia de caché para cada tipo de dato
   - Trade-offs de las decisiones tomadas
 
-#### Ejemplo de Estructura Esperada
+Ver: `docs/readme_anotation.md` → sección **"React Query: implementación, estrategia de caché y trade-offs"**.
+
+#### Estructura Actualizada
 
 ```
 src/
 ├── api/
-│   ├── client.ts          # Axios instance configurado
-│   ├── endpoints.ts       # Constantes de endpoints
-│   └── types.ts           # Tipos de la API
+│   ├── client.ts
+│   ├── endpoints.ts
+│   ├── schemas.ts
+│   ├── types.ts
+│   └── index.ts
 ├── services/
-│   ├── stockService.ts    # Funciones de servicio para stocks
-│   └── quoteService.ts    # Funciones de servicio para quotes
+│   ├── stockService.ts
+│   ├── quoteService.ts
+│   ├── searchService.ts
+│   └── shared/
+│       ├── requestOptions.ts
+│       └── validateResponse.ts
 ├── hooks/
 │   ├── queries/
 │   │   ├── useStockList.ts
 │   │   ├── useStockQuote.ts
 │   │   ├── useStockData.ts
 │   │   └── useStockSearch.ts
-│   └── useDebounce.ts    # Hook existente
+│   └── useDebounce.ts
+├── lib/
+│   ├── cacheConfig.ts
+│   ├── invalidation.ts
+│   ├── queryClient.ts
+│   └── queryKeys.ts
+├── utils/
+│   └── toast.ts
 ├── components/
 │   └── ...
-└── App.tsx               # QueryClientProvider aquí
+├── App.tsx
+└── main.tsx
 ```
 
 ---

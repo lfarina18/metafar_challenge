@@ -251,3 +251,76 @@ Registrar el output de `yarn build`:
 - **Notas**:
 
 ---
+
+# React Query: implementación, estrategia de caché y trade-offs
+
+## ¿Las queries fueron implementadas?
+
+Sí. Se implementó TanStack Query v5 a nivel de:
+
+- **Infra**:
+  - `src/lib/queryClient.ts`: `QueryClient` con `defaultOptions` + `QueryCache` para ejecutar `query.meta.onError`.
+  - `src/main.tsx`: `PersistQueryClientProvider` con persister async sobre `localStorage` y `buster`.
+- **Servicios** (con validación Zod + soporte de cancelación):
+  - `src/services/stockService.ts`
+  - `src/services/quoteService.ts`
+  - `src/services/searchService.ts`
+  - `src/services/shared/requestOptions.ts` (contrato único para `{ signal?: AbortSignal }`)
+- **Custom hooks** (queries):
+  - `src/hooks/queries/useStockList.ts`
+  - `src/hooks/queries/useStockData.ts`
+  - `src/hooks/queries/useStockQuote.ts`
+  - `src/hooks/queries/useStockSearch.ts` (con debouncing)
+
+### Nota sobre el uso actual en UI
+
+- Los hooks/servicios están listos y usados para **prefetch** (`TableRow` hover y `Detail` mount).
+- La **migración completa de componentes** a React Query (por ejemplo `StockTable` usando `useStockList` y búsqueda server-side con `useStockSearch`, y `StockPreferenceForm` usando `useStockData/useStockQuote`) todavía es un paso posterior.
+
+## Estrategia de caché por tipo de dato
+
+- **Datos estáticos: lista de acciones (`useStockList`)**
+
+  - `staleTime`: `Infinity`
+  - Persistencia: **sí**, en `localStorage` (persistimos solo `queryKey: ['stocks','list',exchange]`).
+  - Motivo: dataset grande y poco cambiante; mejora tiempo de carga y reduce requests.
+
+- **Datos históricos: time series histórico (`useStockQuote` con `realTime=false`)**
+
+  - `staleTime`: `0` (config actual)
+  - `gcTime`: `5m`
+  - Motivo: el endpoint puede ser pesado; se priorizó refetch manual/estratégico. (Si se quiere alinear estrictamente con checklist, se puede subir `staleTime` a `5m` cuando `realTime=false`).
+
+- **Datos tiempo real: time series realtime (`useStockQuote` con `realTime=true`)**
+
+  - `staleTime`: `0`
+  - `refetchInterval`: según intervalo seleccionado (`REFETCH_INTERVAL`).
+  - Motivo: asegurar datos frescos y updates automáticos.
+
+- **Búsquedas: symbol search (`useStockSearch`)**
+  - `staleTime`: `1m`
+  - `gcTime`: `5m`
+  - Debounce: `400ms` (configurable).
+  - Motivo: evitar spam de requests mientras el usuario tipea y reutilizar resultados recientes.
+
+## Trade-offs / Decisiones
+
+- **Persistencia selectiva**:
+
+  - Solo persistimos la lista (`stocks.list`) para reducir tamaño y evitar guardar time series (más pesado, más volátil).
+
+- **Buster para invalidación de cache persistida**:
+
+  - `buster: 'stocks-cache-v1'` permite resetear el caché persistido ante cambios incompatibles (schemas/queryKeys/estrategias).
+
+- **Validación runtime con Zod**:
+
+  - Se detectó que `/stocks` puede devolver payload parcial, por lo que `StockSchema` se relajó (campos extendidos opcionales + `.passthrough()`) para evitar crashes.
+
+- **Errores con TanStack Query v5**:
+
+  - Para toasts por query se usa `query.meta.onError` y se ejecuta desde `QueryCache.onError` (v5 no expone `onError` en el objeto options como en v4).
+
+- **Cancelación de requests (AbortSignal)**:
+  - Los `queryFn` usan `({ signal })` y los services propagan `signal` a Axios.
+  - Beneficio: evitar race conditions y requests innecesarias cuando cambia el input/params o se desmonta el componente.
