@@ -87,7 +87,7 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
   - `useStockSearch(query)` - Para búsqueda de símbolos (con debouncing)
   - Cada hook debe exponer: `data`, `isLoading`, `isError`, `error`, `refetch`
 
-- [ ] **Configurar estrategias de caché**
+- [x] **Configurar estrategias de caché**
 
   - **Datos estáticos** (lista de acciones): `staleTime: Infinity`, persistir en localStorage
   - **Datos históricos**: `staleTime: 5 minutos` (no cambian)

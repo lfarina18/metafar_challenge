@@ -2,9 +2,11 @@ import { StrictMode, Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import ErrorBoundary from "./errorBoundary.tsx";
-import { QueryClientProvider } from "@tanstack/react-query";
+import type { Query } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { queryClient } from "./lib/queryClient.ts";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 
 const ReactQueryDevtools = import.meta.env.DEV
   ? lazy(() =>
@@ -14,10 +16,38 @@ const ReactQueryDevtools = import.meta.env.DEV
     )
   : null;
 
+const asyncLocalStorage = {
+  getItem: async (key: string) => window.localStorage.getItem(key),
+  setItem: async (key: string, value: string) => {
+    window.localStorage.setItem(key, value);
+  },
+  removeItem: async (key: string) => {
+    window.localStorage.removeItem(key);
+  },
+};
+
+const persister = createAsyncStoragePersister({
+  storage: asyncLocalStorage,
+});
+
+const shouldDehydrateQuery = (query: Query): boolean => {
+  const key = query.queryKey as unknown as unknown[];
+  return key[0] === "stocks" && key[1] === "list";
+};
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{
+          persister,
+          maxAge: 1000 * 60 * 60 * 24 * 7,
+          dehydrateOptions: {
+            shouldDehydrateQuery,
+          },
+        }}
+      >
         <App />
         <Toaster position="top-right" />
         {ReactQueryDevtools && (
@@ -28,7 +58,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             />
           </Suspense>
         )}
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </ErrorBoundary>
   </StrictMode>
 );
