@@ -27,15 +27,15 @@ export interface Stock {
   symbol: string;
   name: string;
   currency: string;
-  exchange: string;
-  mic_code: string;
-  country: string;
   type: string;
-  figi_code: string;
-  cfi_code: string;
-  isin: string;
-  cusip: string;
-  access: Access;
+  exchange?: string;
+  mic_code?: string;
+  country?: string;
+  figi_code?: string;
+  cfi_code?: string;
+  isin?: string;
+  cusip?: string;
+  access?: Access;
 }
 
 export interface Access {

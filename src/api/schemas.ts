@@ -5,20 +5,22 @@ export const AccessSchema = z.object({
   plan: z.string(),
 });
 
-export const StockSchema = z.object({
-  symbol: z.string(),
-  name: z.string(),
-  currency: z.string(),
-  exchange: z.string(),
-  mic_code: z.string(),
-  country: z.string(),
-  type: z.string(),
-  figi_code: z.string(),
-  cfi_code: z.string(),
-  isin: z.string(),
-  cusip: z.string(),
-  access: AccessSchema,
-});
+export const StockSchema = z
+  .object({
+    symbol: z.string(),
+    name: z.string(),
+    currency: z.string(),
+    type: z.string(),
+    exchange: z.string().optional(),
+    mic_code: z.string().optional(),
+    country: z.string().optional(),
+    figi_code: z.string().optional(),
+    cfi_code: z.string().optional(),
+    isin: z.string().optional(),
+    cusip: z.string().optional(),
+    access: AccessSchema.optional(),
+  })
+  .passthrough();
 
 export const StockListResponseSchema = z.object({
   data: z.array(StockSchema),

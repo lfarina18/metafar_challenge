@@ -1,21 +1,41 @@
 import React from "react";
 import { TableRow, TableCell } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { IStock } from "../../types";
+import { queryKeys } from "../../lib/queryKeys";
+import { stockService } from "../../services/stockService";
+import { CACHE_TIME } from "../../lib/cacheConfig";
 
 interface IStockTableRowProps {
   stock: IStock;
 }
 
-const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => (
-  <TableRow key={stock.symbol}>
-    <TableCell>
-      <Link to={`/stock/${stock.symbol}`}>{stock.symbol}</Link>
-    </TableCell>
-    <TableCell>{stock.name}</TableCell>
-    <TableCell>{stock.currency}</TableCell>
-    <TableCell>{stock.type}</TableCell>
-  </TableRow>
-);
+const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
+  const queryClient = useQueryClient();
+
+  const prefetchStockData = React.useCallback(() => {
+    void queryClient
+      .prefetchQuery({
+        queryKey: queryKeys.stocks.detail(stock.symbol),
+        queryFn: () => stockService.getStockData(stock.symbol),
+        staleTime: CACHE_TIME.FIVE_MINUTES,
+      })
+      .catch(() => undefined);
+  }, [queryClient, stock.symbol]);
+
+  return (
+    <TableRow key={stock.symbol}>
+      <TableCell>
+        <Link to={`/stock/${stock.symbol}`} onMouseEnter={prefetchStockData}>
+          {stock.symbol}
+        </Link>
+      </TableCell>
+      <TableCell>{stock.name}</TableCell>
+      <TableCell>{stock.currency}</TableCell>
+      <TableCell>{stock.type}</TableCell>
+    </TableRow>
+  );
+};
 
 export default StockTableRow;

@@ -3,6 +3,8 @@ import {
   TableContainer,
   Table,
   TableBody,
+  TableRow as MuiTableRow,
+  TableCell,
   Paper,
   TablePagination,
 } from "@mui/material";
@@ -55,7 +57,7 @@ const StockTable: React.FC = () => {
     setSearchSymbol(event.target.value);
   }
 
-  function handleChangePage(_: unknown , newPage: number) {
+  function handleChangePage(_: unknown, newPage: number) {
     setPage(newPage);
   }
 
@@ -89,16 +91,19 @@ const StockTable: React.FC = () => {
       <TableContainer component={Paper}>
         <Table>
           <TableHeader />
-          <ClipLoader color="#0000ff" loading={loading} size={50} />
-          {!loading && (
-            <TableBody>
-              {filteredStocks
+          <TableBody>
+            {loading ? (
+              <MuiTableRow>
+                <TableCell colSpan={4} align="center">
+                  <ClipLoader color="#0000ff" loading={loading} size={50} />
+                </TableCell>
+              </MuiTableRow>
+            ) : (
+              filteredStocks
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((stock) => (
-                  <TableRow key={stock.symbol} stock={stock} />
-                ))}
-            </TableBody>
-          )}
+                .map((stock) => <TableRow key={stock.symbol} stock={stock} />)
+            )}
+          </TableBody>
         </Table>
         <TablePagination
           rowsPerPageOptions={[25, 50, 100]}

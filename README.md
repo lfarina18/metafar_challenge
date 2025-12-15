@@ -94,7 +94,7 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
   - **Datos en tiempo real**: `staleTime: 0`, `refetchInterval` según intervalo seleccionado
   - **Búsquedas**: `staleTime: 1 minuto`, caché corto
 
-- [ ] **Implementar prefetching inteligente**
+- [x] **Implementar prefetching inteligente**
 
   - Prefetch datos de acciones al hacer hover sobre filas de la tabla
   - Prefetch datos relacionados cuando se navega a una página de detalle
