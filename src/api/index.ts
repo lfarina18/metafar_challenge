@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "https://api.twelvedata.com";
-const API_KEY = "cb192ad241b44c4e87a7f63291f8d574";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+const API_KEY = import.meta.env.VITE_TWELVE_DATA_API_KEY;
 
 export const getStockData = async (symbol: string) => {
   try {
