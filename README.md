@@ -100,7 +100,7 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
   - Prefetch datos relacionados cuando se navega a una página de detalle
   - Usar `queryClient.prefetchQuery()` estratégicamente
 
-- [ ] **Manejo de invalidación de caché**
+- [x] **Manejo de invalidación de caché**
 
   - Invalidar caché cuando sea necesario
   - Usar `queryClient.invalidateQueries()` apropiadamente

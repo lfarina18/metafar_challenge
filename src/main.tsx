@@ -26,6 +26,8 @@ const asyncLocalStorage = {
   },
 };
 
+const CACHE_BUSTER = "stocks-cache-v1";
+
 const persister = createAsyncStoragePersister({
   storage: asyncLocalStorage,
 });
@@ -42,6 +44,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         client={queryClient}
         persistOptions={{
           persister,
+          buster: CACHE_BUSTER,
           maxAge: 1000 * 60 * 60 * 24 * 7,
           dehydrateOptions: {
             shouldDehydrateQuery,
