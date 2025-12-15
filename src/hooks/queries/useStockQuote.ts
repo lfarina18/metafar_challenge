@@ -83,14 +83,17 @@ export const useStockQuote = ({
 
   const query = useQuery({
     queryKey: queryKeys.quotes.detail({ symbol, interval, startDate, endDate }),
-    queryFn: () =>
-      quoteService.getStockQuote({
-        symbol,
-        interval,
-        start_date: startDate,
-        end_date: endDate,
-        outputsize,
-      }),
+    queryFn: ({ signal }) =>
+      quoteService.getStockQuote(
+        {
+          symbol,
+          interval,
+          start_date: startDate,
+          end_date: endDate,
+          outputsize,
+        },
+        { signal }
+      ),
     staleTime: 0,
     gcTime: CACHE_TIME.FIVE_MINUTES,
     refetchInterval: getRefetchInterval(),

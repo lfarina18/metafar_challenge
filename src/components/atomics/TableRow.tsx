@@ -18,7 +18,8 @@ const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
     void queryClient
       .prefetchQuery({
         queryKey: queryKeys.stocks.detail(stock.symbol),
-        queryFn: () => stockService.getStockData(stock.symbol),
+        queryFn: ({ signal }) =>
+          stockService.getStockData(stock.symbol, { signal }),
         staleTime: CACHE_TIME.FIVE_MINUTES,
       })
       .catch(() => undefined);

@@ -20,7 +20,8 @@ export const useStockSearch = (
 
   return useQuery({
     queryKey: queryKeys.search.symbols(debouncedQuery),
-    queryFn: () => searchService.searchSymbols(debouncedQuery, { outputsize }),
+    queryFn: ({ signal }) =>
+      searchService.searchSymbols(debouncedQuery, { outputsize }, { signal }),
     enabled: shouldFetch,
     staleTime: CACHE_TIME.ONE_MINUTE,
     gcTime: CACHE_TIME.FIVE_MINUTES,

@@ -19,7 +19,7 @@ const Detail: React.FC = () => {
     void queryClient
       .prefetchQuery({
         queryKey: queryKeys.stocks.detail(symbol),
-        queryFn: () => stockService.getStockData(symbol),
+        queryFn: ({ signal }) => stockService.getStockData(symbol, { signal }),
         staleTime: CACHE_TIME.FIVE_MINUTES,
       })
       .catch(() => undefined);

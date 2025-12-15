@@ -106,7 +106,7 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
   - Usar `queryClient.invalidateQueries()` apropiadamente
   - Implementar invalidación optimista donde sea posible
 
-- [ ] **Request deduplication y cancelación**
+- [x] **Request deduplication y cancelación**
   - Aprovechar la deduplicación automática de React Query
   - Implementar cancelación de queries cuando el componente se desmonta
   - Cancelar queries anteriores cuando cambian los parámetros

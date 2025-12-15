@@ -7,10 +7,12 @@ import {
 } from "../api/types";
 import { TimeSeriesResponseSchema } from "../api/schemas";
 import { validateResponse } from "./shared/validateResponse";
+import type { RequestOptions } from "./shared/requestOptions";
 
 export const quoteService = {
   getStockQuote: async (
-    params: StockQuoteParams
+    params: StockQuoteParams,
+    options?: RequestOptions
   ): Promise<TimeSeriesResponse> => {
     const {
       symbol,
@@ -40,6 +42,7 @@ export const quoteService = {
 
     const { data } = await apiClient.get(ENDPOINTS.TIME_SERIES, {
       params: apiParams,
+      signal: options?.signal,
     });
 
     return validateResponse(data, TimeSeriesResponseSchema);

@@ -7,7 +7,7 @@ import { CACHE_TIME } from "../../lib/cacheConfig";
 export const useStockData = (symbol: string) => {
   return useQuery({
     queryKey: queryKeys.stocks.detail(symbol),
-    queryFn: () => stockService.getStockData(symbol),
+    queryFn: ({ signal }) => stockService.getStockData(symbol, { signal }),
     staleTime: CACHE_TIME.FIVE_MINUTES,
     enabled: !!symbol,
     meta: {
