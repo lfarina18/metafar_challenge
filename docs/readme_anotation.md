@@ -464,11 +464,37 @@ Registrar el output de `yarn build`:
     - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
     - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
 
+### Línea base (antes de code splitting y lazy loading)
+
+Registrar el output de `yarn build`:
+
+- **JS bundle (raw)**: 805.01 kB
+- **JS bundle (gzip)**: 271.78 kB
+- **Evidencia**:
+
+  - Ruta/nombre del screenshot: metrics/bundle/build-before-code-splliting-and-lazy-loading.png
+
+  ![Build before code splitting/lazy loading](./metrics/bundle/build-before-code-splliting-and-lazy-loading.png)
+
 ## Después de cambios
 
 - **JS bundle (raw)**:
+  - `dist/assets/index-Cl7JHqTl.js`: 496.14 kB
+  - `dist/assets/Detail-C6G-CoSt.js`: 23.87 kB
+  - `dist/assets/StockChart-BRa0eoi8.js`: 288.05 kB
 - **JS bundle (gzip)**:
+  - `dist/assets/index-Cl7JHqTl.js`: 159.56 kB
+  - `dist/assets/Detail-C6G-CoSt.js`: 8.10 kB
+  - `dist/assets/StockChart-BRa0eoi8.js`: 106.63 kB
 - **Notas**:
+  - Se generó un chunk separado para `Detail` mediante `React.lazy()`.
+  - Se generó un chunk separado para `StockChart` (Highcharts) mediante `React.lazy()`.
+  - Se implementó preloading del chunk de `Detail` y `StockChart` al hacer hover sobre los links en la tabla.
+- **Evidencia**:
+
+  - Ruta/nombre del screenshot: metrics/bundle/build-after-code-splliting-and-lazy-loading.png
+
+  ![Build after code splitting/lazy loading](./metrics/bundle/build-after-code-splliting-and-lazy-loading.png)
 
 ---
 

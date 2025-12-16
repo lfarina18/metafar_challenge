@@ -16,6 +16,14 @@ const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
 
   const rowHeight = 52;
 
+  const preloadDetailRoute = React.useCallback(() => {
+    void import("../Detail").catch(() => undefined);
+  }, []);
+
+  const preloadChartChunk = React.useCallback(() => {
+    void import("../StockChart").catch(() => undefined);
+  }, []);
+
   const prefetchStockData = React.useCallback(() => {
     void queryClient
       .prefetchQuery({
@@ -27,10 +35,16 @@ const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
       .catch(() => undefined);
   }, [queryClient, stock.symbol]);
 
+  const handleHover = React.useCallback(() => {
+    preloadDetailRoute();
+    preloadChartChunk();
+    prefetchStockData();
+  }, [prefetchStockData, preloadChartChunk, preloadDetailRoute]);
+
   return (
     <TableRow key={stock.symbol} sx={{ height: rowHeight }}>
       <TableCell>
-        <Link to={`/stock/${stock.symbol}`} onMouseEnter={prefetchStockData}>
+        <Link to={`/stock/${stock.symbol}`} onMouseEnter={handleHover}>
           {stock.symbol}
         </Link>
       </TableCell>

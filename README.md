@@ -178,7 +178,7 @@ src/
   - Adaptar a scroll virtual
   - Medir mejora de performance (FPS, tiempo de render inicial)
 
-- [ ] **Code splitting y lazy loading**
+- [x] **Code splitting y lazy loading**
 
   - Implementar lazy loading de rutas con `React.lazy()` y `Suspense`
   - Separar `Detail` component (página de detalle) en un chunk separado

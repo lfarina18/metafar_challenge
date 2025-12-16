@@ -1,16 +1,34 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import StockTable from './components/StockTable';
-import Detail from './components/Detail';
+import * as React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import StockTable from "./components/StockTable";
+import { Box, CircularProgress } from "@mui/material";
 
-const App:React.FC = () => {
+const Detail = React.lazy(() => import("./components/Detail"));
+
+const LoadingFallback = () => (
+  <Box
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+    minHeight="100vh"
+  >
+    <CircularProgress />
+  </Box>
+);
+
+const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<StockTable />} />
-        <Route path="/stock/:symbol" element={<Detail />} />
-      </Routes>
+    <BrowserRouter
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
+      <React.Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/" element={<StockTable />} />
+          <Route path="/stock/:symbol" element={<Detail />} />
+        </Routes>
+      </React.Suspense>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

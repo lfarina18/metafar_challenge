@@ -1,12 +1,14 @@
 import * as React from "react";
-import { StockPreferenceForm, Chart } from "./index";
-
+import { Box, CircularProgress } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { IStockData } from "../types";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "../lib/queryKeys";
 import { stockService } from "../services/stockService";
 import { CACHE_TIME } from "../lib/cacheConfig";
+import StockPreferenceForm from "./StockPreferenceForm";
+
+const Chart = React.lazy(() => import("./StockChart"));
 
 const Detail: React.FC = () => {
   const { symbol } = useParams<{ symbol?: string }>();
@@ -31,7 +33,17 @@ const Detail: React.FC = () => {
         symbol={symbol || "MELI"} // if symbol is undefined, use "MELI" as default value
         handleSetStockData={setStockData}
       />
-      {stockData && <Chart stockData={stockData} />}
+      {stockData ? (
+        <React.Suspense
+          fallback={
+            <Box display="flex" justifyContent="center" py={2}>
+              <CircularProgress size={24} />
+            </Box>
+          }
+        >
+          <Chart stockData={stockData} />
+        </React.Suspense>
+      ) : null}
     </>
   );
 };
