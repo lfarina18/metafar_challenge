@@ -1,3 +1,5 @@
+import type { IntervalType } from "./api/types";
+
 export interface IMetaStockData {
   symbol: string;
   interval: string;
@@ -59,7 +61,7 @@ export interface IButtonProps {
   type: "submit" | "button" | "reset";
   variant: "contained" | "outlined" | "text";
   children: React.ReactNode;
-  style?: React.CSSProperties
+  style?: React.CSSProperties;
 }
 
 export interface IntervalSelectProps {
@@ -68,7 +70,14 @@ export interface IntervalSelectProps {
   style?: React.CSSProperties;
 }
 
+export interface StockQuotePreferences {
+  interval: IntervalType;
+  startDate: string;
+  endDate: string;
+  realTime: boolean;
+}
+
 export interface IStockPreferenceFormProps {
   symbol: string;
-  handleSetStockData: React.Dispatch<React.SetStateAction<IStockData | null>>;
+  onSubmit: (preferences: StockQuotePreferences) => void;
 }

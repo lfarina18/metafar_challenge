@@ -1,60 +1,41 @@
 import React from "react";
-import { getStockData, getStockQuote } from "../api";
 import {
   RadioButton,
   DateInput,
   IntervalSelect,
   Button,
 } from "./atomics/index";
-import { IStock, IStockPreferenceFormProps } from "../types";
+import type { Stock } from "../api/types";
+import { Interval, type IntervalType } from "../api/types";
+import { useStockData } from "../hooks/queries/useStockData";
+import type { IStockPreferenceFormProps } from "../types";
 import { getCurrentDay } from "../helpers";
 
 const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
-  handleSetStockData,
+  onSubmit,
   symbol,
 }) => {
-  const [interval, setInterval] = React.useState<string>("5min");
-  const [startDate, setStartDate] = React.useState<string>("");
-  const [endDate, setEndDate] = React.useState<string>("");
+  const [interval, setInterval] = React.useState<IntervalType>(
+    Interval.FIVE_MIN
+  );
+  const [startDate, setStartDate] = React.useState<string>(getCurrentDay());
+  const [endDate, setEndDate] = React.useState<string>(getCurrentDay());
   const [realTime, setRealTime] = React.useState<boolean>(true);
-  const [detailStock, setDetailStock] = React.useState<IStock | null>(null);
 
-  React.useEffect(() => {
-    async function fetchDefaultData() {
-      try {
-        const data = await getStockQuote(symbol, interval, startDate, endDate);
-        handleSetStockData(data);
-      } catch (error) {
-        console.error("Error fetching default stock data:", error);
-      }
-
-      try {
-        const { data } = await getStockData(symbol);
-        setDetailStock(data[0]);
-      } catch (error) {
-        console.error("Error fetching stock:", error);
-      }
-    }
-
-    fetchDefaultData();
-  }, [symbol]);
+  const detailStockQuery = useStockData(symbol);
+  const detailStock: Stock | undefined = detailStockQuery.data?.data?.[0];
 
   const handleSubmit = React.useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      try {
-        const data = await getStockQuote(symbol, interval, startDate, endDate);
-        handleSetStockData(data);
-      } catch (error) {
-        console.error("Error fetching stock data:", error);
-      }
+      onSubmit({ interval, startDate, endDate, realTime });
     },
-    [endDate, handleSetStockData, interval, startDate, symbol]
+    [endDate, interval, onSubmit, realTime, startDate]
   );
 
   const handleIntervalChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
-      setInterval(event.target.value);
+      setInterval(event.target.value as IntervalType);
     },
     []
   );

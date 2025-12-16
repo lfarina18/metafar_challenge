@@ -1,39 +1,70 @@
 import * as React from "react";
 import { Box, CircularProgress } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { IStockData } from "../types";
-import { useQueryClient } from "@tanstack/react-query";
-import { queryKeys } from "../lib/queryKeys";
-import { stockService } from "../services/stockService";
-import { CACHE_TIME } from "../lib/cacheConfig";
+import type { IStockData } from "../types";
+import type { StockQuotePreferences } from "../types";
+import { Interval } from "../api/types";
+import { getCurrentDay } from "../helpers";
+import { useStockQuote } from "../hooks/queries/useStockQuote";
 import StockPreferenceForm from "./StockPreferenceForm";
 
 const Chart = React.lazy(() => import("./StockChart"));
 
 const Detail: React.FC = () => {
   const { symbol } = useParams<{ symbol?: string }>();
-  const [stockData, setStockData] = React.useState<IStockData | null>(null);
-  const queryClient = useQueryClient();
+  const resolvedSymbol = symbol ?? "MELI";
 
-  React.useEffect(() => {
-    if (!symbol) return;
+  const [preferences, setPreferences] = React.useState<StockQuotePreferences>(
+    () => {
+      const today = getCurrentDay();
+      return {
+        interval: Interval.FIVE_MIN,
+        startDate: today,
+        endDate: today,
+        realTime: true,
+      };
+    }
+  );
 
-    void queryClient
-      .prefetchQuery({
-        queryKey: queryKeys.stocks.detail(symbol),
-        queryFn: ({ signal }) => stockService.getStockData(symbol, { signal }),
-        staleTime: CACHE_TIME.FIVE_MINUTES,
-      })
-      .catch(() => undefined);
-  }, [queryClient, symbol]);
+  const quoteQuery = useStockQuote({
+    symbol: resolvedSymbol,
+    interval: preferences.interval,
+    startDate: preferences.startDate,
+    endDate: preferences.endDate,
+    realTime: preferences.realTime,
+    enabled: true,
+  });
+
+  const chartData: IStockData | null = React.useMemo(() => {
+    const stockData = quoteQuery.data;
+    if (!stockData) return null;
+
+    return {
+      meta: {
+        symbol: stockData.meta.symbol,
+        interval: stockData.meta.interval,
+        currency: stockData.meta.currency,
+        exchange_timezone: stockData.meta.exchange_timezone,
+        mic_code: stockData.meta.mic_code,
+        exchange: stockData.meta.exchange,
+        type: stockData.meta.type,
+      },
+      values: stockData.values.map((v) => ({
+        datetime: v.datetime,
+        open: v.open,
+        high: v.high,
+        low: v.low,
+        close: v.close,
+        volume: v.volume ?? "0",
+      })),
+      status: stockData.status,
+    };
+  }, [quoteQuery.data]);
 
   return (
     <>
-      <StockPreferenceForm
-        symbol={symbol || "MELI"} // if symbol is undefined, use "MELI" as default value
-        handleSetStockData={setStockData}
-      />
-      {stockData ? (
+      <StockPreferenceForm symbol={resolvedSymbol} onSubmit={setPreferences} />
+      {chartData ? (
         <React.Suspense
           fallback={
             <Box display="flex" justifyContent="center" py={2}>
@@ -41,7 +72,7 @@ const Detail: React.FC = () => {
             </Box>
           }
         >
-          <Chart stockData={stockData} />
+          <Chart stockData={chartData} />
         </React.Suspense>
       ) : null}
     </>
