@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Box, CircularProgress } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Box, Button, CircularProgress } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import type { IStockData } from "../types";
 import type { StockQuotePreferences } from "../types";
 import { Interval } from "../api/types";
@@ -11,6 +11,7 @@ import StockPreferenceForm from "./StockPreferenceForm";
 const Chart = React.lazy(() => import("./StockChart"));
 
 const Detail: React.FC = () => {
+  const navigate = useNavigate();
   const { symbol } = useParams<{ symbol?: string }>();
   const resolvedSymbol = symbol ?? "MELI";
 
@@ -63,6 +64,11 @@ const Detail: React.FC = () => {
 
   return (
     <>
+      <Box px={2} pt={2}>
+        <Button variant="outlined" onClick={() => navigate("/")}>
+          Volver
+        </Button>
+      </Box>
       <StockPreferenceForm symbol={resolvedSymbol} onSubmit={setPreferences} />
       {chartData ? (
         <React.Suspense

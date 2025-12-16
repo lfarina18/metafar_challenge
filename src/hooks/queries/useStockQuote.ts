@@ -20,6 +20,8 @@ const getOutputSizeForInterval = (
   startDate?: string,
   endDate?: string
 ): number => {
+  const MIN_OUTPUTSIZE = 30;
+  const MAX_OUTPUTSIZE = 5000;
   const pointsPerDay: Record<IntervalType, number> = {
     [Interval.ONE_MIN]: 390,
     [Interval.FIVE_MIN]: 78,
@@ -32,7 +34,8 @@ const getOutputSizeForInterval = (
   };
 
   if (realTime) {
-    return pointsPerDay[interval] || 30;
+    const estimated = pointsPerDay[interval] || MIN_OUTPUTSIZE;
+    return Math.min(Math.max(estimated, MIN_OUTPUTSIZE), MAX_OUTPUTSIZE);
   }
 
   if (!startDate || !endDate) {
@@ -46,7 +49,7 @@ const getOutputSizeForInterval = (
 
   const estimatedPoints = diffDays * pointsPerDay[interval];
 
-  return Math.max(estimatedPoints, 30);
+  return Math.min(Math.max(estimatedPoints, MIN_OUTPUTSIZE), MAX_OUTPUTSIZE);
 };
 
 const INTERVAL_MAP: Record<IntervalType, number> = {

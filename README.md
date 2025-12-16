@@ -199,7 +199,7 @@ src/
     - Handlers en `StockTable` y `StockPreferenceForm`
   - **Documentar** cada optimización: por qué se hizo y qué problema resuelve
 
-- [ ] **Optimización del gráfico**
+- [x] **Optimización del gráfico**
 
   - Optimizar renderizado de Highcharts:
     - Limitar cantidad de puntos mostrados (data sampling para datasets grandes)
