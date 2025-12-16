@@ -567,7 +567,30 @@
 - **`useMemo` en filtrado** (`src/components/StockTable.tsx`):
 
   - `filteredStocks` se calcula con `useMemo` en base a `debouncedSearchName/debouncedSearchSymbol`.
-  - **Objetivo**: evitar recalcular filtrado en renders no relacionados a la búsqueda.
+  - **Objetivo**: evitar recalcar filtrado en renders no relacionados a la búsqueda.
+
+---
+
+## Optimizaciones adicionales de React Query (implementación - resumen escrito)
+
+### Implementado
+
+- **`structuralSharing: true`**
+
+  - Se usa el comportamiento por defecto de TanStack Query (no se desactivó).
+  - **Objetivo**: mantener referencias estables cuando la data no cambia, reduciendo re-renders.
+
+- **`placeholderData` / `keepPreviousData` para transiciones suaves**
+
+  - `useStockList` (`src/hooks/queries/useStockList.ts`) usa `placeholderData: (previousData) => previousData`.
+  - `useStockSearch` (`src/hooks/queries/useStockSearch.ts`) usa `placeholderData: (previousData) => previousData`.
+  - `useStockQuote` (`src/hooks/queries/useStockQuote.ts`) usa `placeholderData: keepPreviousData`.
+  - **Objetivo**: evitar flicker o “pantallas vacías” al cambiar parámetros y mientras se resuelve la nueva request.
+
+- **`select` para transformar datos solo cuando es necesario**
+
+  - `useStockQuote` (`src/hooks/queries/useStockQuote.ts`) usa `select` para ordenar `values` por `datetime`.
+  - **Objetivo**: mover transformaciones a la capa de query (cerca de la data) y entregar al UI un shape estable/predecible.
 
 # Lighthouse (Preview / build de producción)
 

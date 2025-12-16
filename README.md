@@ -208,7 +208,7 @@ src/
   - Implementar lazy loading del gráfico (solo cargar cuando se necesita)
   - Considerar renderizado progresivo para datos históricos extensos
 
-- [ ] **Optimizaciones adicionales de React Query**
+- [x] **Optimizaciones adicionales de React Query**
   - Configurar `structuralSharing: true` en QueryClient (ya viene por defecto)
   - Usar `keepPreviousData: true` para transiciones suaves entre queries
   - Implementar `placeholderData` para mejor UX durante carga

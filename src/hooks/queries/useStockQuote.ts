@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { quoteService } from "../../services/quoteService";
 import { queryKeys } from "../../lib/queryKeys";
 import { Interval, type IntervalType } from "../../api/types";
@@ -97,6 +97,15 @@ export const useStockQuote = ({
         },
         { signal }
       ),
+    placeholderData: keepPreviousData,
+    select: (data) => {
+      return {
+        ...data,
+        values: [...data.values].sort((a, b) =>
+          a.datetime.localeCompare(b.datetime)
+        ),
+      };
+    },
     staleTime: 0,
     gcTime: CACHE_TIME.FIVE_MINUTES,
     refetchInterval: getRefetchInterval(),
