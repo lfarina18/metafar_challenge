@@ -9,11 +9,13 @@
 
 # React Profiler (React DevTools)
 
-## Escenario A — Recarga (línea base)
+## Línea base inicial (histórico)
+
+### Escenario A — Recarga (línea base)
 
 **Objetivo**: medir el render inicial + primera pintura con datos.
 
-### Corrida 1
+#### Corrida 1
 
 - **Sesión del Profiler**: A1
 - **# Commits (1/N)**: 4/7
@@ -35,7 +37,7 @@
 
 ![A1 Recarga - Commit 4 - Ranked](./metrics/profiler/A1_reload_commit4_ranked.png)
 
-### Corrida 2
+#### Corrida 2
 
 - **Sesión del Profiler**: A2
 - **# Commits (1/N)**: 4/6
@@ -52,7 +54,7 @@
 
 ![A2 Recarga - Commit 4 - Ranked](./metrics/profiler/A2_reload_commit4_ranked.png)
 
-### Corrida 3
+#### Corrida 3
 
 - **Sesión del Profiler**: A3
 - **# Commits (1/N)**: 4/6
@@ -76,11 +78,11 @@
 
 ---
 
-## Escenario B — Scroll/Desplazamiento (línea base)
+### Escenario B — Scroll/Desplazamiento (línea base)
 
 **Objetivo**: detectar renders innecesarios durante el scroll.
 
-### Corrida 1
+#### Corrida 1
 
 - **# Commits**: 1/7
 - **Render del commit más pesado (ms)**: 54.7
@@ -96,11 +98,11 @@
 
 ![B1 Scroll - Commit 1 - Ranked](./metrics/profiler/B1_scroll_commit1_ranked.png)
 
-### Corrida 2
+#### Corrida 2
 
 - **# Commits**: 4/7
 - **Render del commit más pesado (ms)**: 70.4
-- - **Componentes más costosos (Ranked)**:
+- **Componentes más costosos (Ranked)**:
   - 1. StockTable
   - 2. SelectImput2
   - 3. StockTable
@@ -108,15 +110,15 @@
   - Ruta/nombre del screenshot: metrics/profiler/B2_scroll_commit4_flamegraph.png
   - Ruta/nombre del screenshot: metrics/profiler/B2_scroll_commit4_ranked.png
 
-![B1 Scroll - Commit 1 - Flamegraph](./metrics/profiler/B1_scroll_commit1_flamegraph.png)
+![B2 Scroll - Commit 4 - Flamegraph](./metrics/profiler/B2_scroll_commit4_flamegraph.png)
 
-![B1 Scroll - Commit 1 - Ranked](./metrics/profiler/B1_scroll_commit1_ranked.png)
+![B2 Scroll - Commit 4 - Ranked](./metrics/profiler/B2_scroll_commit4_ranked.png)
 
-### Corrida 3
+#### Corrida 3
 
 - **# Commits**: 4/7
 - **Render del commit más pesado (ms)**: 48.6
-- - **Componentes más costosos (Ranked)**:
+- **Componentes más costosos (Ranked)**:
   - 1. Link
   - 2. MuiTableRowRoot
   - 3. StockTable
@@ -135,13 +137,13 @@
 
 ---
 
-## Escenario C — Escritura (filtro) (línea base)
+### Escenario C — Escritura (filtro) (línea base)
 
 **Objetivo**: medir renders disparados por escribir y filtrar.
 
 **Entrada usada**: Buscar por símbolo "aame"
 
-### Corrida 1
+#### Corrida 1
 
 - **# Commits**: 14/17
 - **Render del commit más pesado (ms)**: 131.1
@@ -190,6 +192,212 @@
 
 ---
 
+## Línea base (antes de virtual scroll + React Query)
+
+### Escenario A — Recarga
+
+#### Corrida 1 (A1)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/A1_reload_commit5_flamegraph-before-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/A1_reload_commit5_ranked-before-virtual-react-query.png
+
+![A1 Recarga - Commit 5 - Flamegraph (before virtual/react-query)](./metrics/profiler/A1_reload_commit5_flamegraph-before-virtual-react-query.png)
+
+![A1 Recarga - Commit 5 - Ranked (before virtual/react-query)](./metrics/profiler/A1_reload_commit5_ranked-before-virtual-react-query.png)
+
+#### Corrida 2 (A2)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/A2_reload_commit8_flamegraph-before-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/A2_reload_commit8_ranked-before-virtual-react-query.png
+
+![A2 Recarga - Commit 8 - Flamegraph (before virtual/react-query)](./metrics/profiler/A2_reload_commit8_flamegraph-before-virtual-react-query.png)
+
+![A2 Recarga - Commit 8 - Ranked (before virtual/react-query)](./metrics/profiler/A2_reload_commit8_ranked-before-virtual-react-query.png)
+
+#### Corrida 3 (A3)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/A3_reload_commit5_flamegraph-before-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/A3_reload_commit5_ranked-before-virtual-react-query.png
+
+![A3 Recarga - Commit 5 - Flamegraph (before virtual/react-query)](./metrics/profiler/A3_reload_commit5_flamegraph-before-virtual-react-query.png)
+
+![A3 Recarga - Commit 5 - Ranked (before virtual/react-query)](./metrics/profiler/A3_reload_commit5_ranked-before-virtual-react-query.png)
+
+---
+
+### Escenario B — Scroll/Desplazamiento
+
+#### Corrida 1 (B1)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/B1_scroll_commit5_flamegraph-before-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/B1_scroll_commit5_ranked-before-virtual-react-query.png
+
+![B1 Scroll - Commit 5 - Flamegraph (before virtual/react-query)](./metrics/profiler/B1_scroll_commit5_flamegraph-before-virtual-react-query.png)
+
+![B1 Scroll - Commit 5 - Ranked (before virtual/react-query)](./metrics/profiler/B1_scroll_commit5_ranked-before-virtual-react-query.png)
+
+#### Corrida 2 (B2)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/B2_scroll_commit1_flamegraph-before-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/B2_scroll_commit1_ranked-before-virtual-react-query.png
+
+![B2 Scroll - Commit 1 - Flamegraph (before virtual/react-query)](./metrics/profiler/B2_scroll_commit1_flamegraph-before-virtual-react-query.png)
+
+![B2 Scroll - Commit 1 - Ranked (before virtual/react-query)](./metrics/profiler/B2_scroll_commit1_ranked-before-virtual-react-query.png)
+
+#### Corrida 3 (B3)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/B3_scroll_commit5_flamegraph-before-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/B3_scroll_commit5_ranked-before-virtual-react-query.png
+
+![B3 Scroll - Commit 5 - Flamegraph (before virtual/react-query)](./metrics/profiler/B3_scroll_commit5_flamegraph-before-virtual-react-query.png)
+
+![B3 Scroll - Commit 5 - Ranked (before virtual/react-query)](./metrics/profiler/B3_scroll_commit5_ranked-before-virtual-react-query.png)
+
+---
+
+### Escenario C — Escritura (filtro)
+
+**Entrada usada**: Buscar por símbolo "aame"
+
+#### Corrida 1 (C1)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/C1_search_symbol_commit13_flamegraph-before-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/C1_search_symbol_commit13_ranked-before-virtual-react-query.png
+
+![C1 Escritura - Commit 13 - Flamegraph (before virtual/react-query)](./metrics/profiler/C1_search_symbol_commit13_flamegraph-before-virtual-react-query.png)
+
+![C1 Escritura - Commit 13 - Ranked (before virtual/react-query)](./metrics/profiler/C1_search_symbol_commit13_ranked-before-virtual-react-query.png)
+
+#### Corrida 2 (C2)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/C2_search_symbol_commit15_flamegraph-before-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/C2_search_symbol_commit15_ranked-before-virtual-react-query.png
+
+![C2 Escritura - Commit 15 - Flamegraph (before virtual/react-query)](./metrics/profiler/C2_search_symbol_commit15_flamegraph-before-virtual-react-query.png)
+
+![C2 Escritura - Commit 15 - Ranked (before virtual/react-query)](./metrics/profiler/C2_search_symbol_commit15_ranked-before-virtual-react-query.png)
+
+#### Corrida 3 (C3)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/C3_search_symbol_commit1_flamegraph-before-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/C3_search_symbol_commit1_ranked-before-virtual-react-query.png
+
+![C3 Escritura - Commit 1 - Flamegraph (before virtual/react-query)](./metrics/profiler/C3_search_symbol_commit1_flamegraph-before-virtual-react-query.png)
+
+![C3 Escritura - Commit 1 - Ranked (before virtual/react-query)](./metrics/profiler/C3_search_symbol_commit1_ranked-before-virtual-react-query.png)
+
+---
+
+## Después de cambios (after virtual scroll + React Query)
+
+### Escenario A — Recarga
+
+#### Corrida 1 (A1)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/A1_reload_commit3_flamegraph-after-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/A1_reload_commit3_ranked-after-virtual-react-query.png
+
+![A1 Recarga - Commit 3 - Flamegraph (after virtual/react-query)](./metrics/profiler/A1_reload_commit3_flamegraph-after-virtual-react-query.png)
+
+![A1 Recarga - Commit 3 - Ranked (after virtual/react-query)](./metrics/profiler/A1_reload_commit3_ranked-after-virtual-react-query.png)
+
+#### Corrida 2 (A2)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/A2_reload_commit3_flamegraph-after-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/A2_reload_commit3_ranked-after-virtual-react-query.png
+
+![A2 Recarga - Commit 3 - Flamegraph (after virtual/react-query)](./metrics/profiler/A2_reload_commit3_flamegraph-after-virtual-react-query.png)
+
+![A2 Recarga - Commit 3 - Ranked (after virtual/react-query)](./metrics/profiler/A2_reload_commit3_ranked-after-virtual-react-query.png)
+
+#### Corrida 3 (A3)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/A3_reload_commit2_flamegraph-after-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/A3_reload_commit2_ranked-after-virtual-react-query.png
+
+![A3 Recarga - Commit 2 - Flamegraph (after virtual/react-query)](./metrics/profiler/A3_reload_commit2_flamegraph-after-virtual-react-query.png)
+
+![A3 Recarga - Commit 2 - Ranked (after virtual/react-query)](./metrics/profiler/A3_reload_commit2_ranked-after-virtual-react-query.png)
+
+### Escenario B — Scroll/Desplazamiento
+
+#### Corrida 1 (B1)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/B1_scroll_commit29_flamegraph-after-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/B1_scroll_commit29_ranked-after-virtual-react-query.png
+
+![B1 Scroll - Commit 29 - Flamegraph (after virtual/react-query)](./metrics/profiler/B1_scroll_commit29_flamegraph-after-virtual-react-query.png)
+
+![B1 Scroll - Commit 29 - Ranked (after virtual/react-query)](./metrics/profiler/B1_scroll_commit29_ranked-after-virtual-react-query.png)
+
+#### Corrida 2 (B2)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/B2_scroll_commit31_flamegraph-after-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/B2_scroll_commit31_ranked-after-virtual-react-query.png
+
+![B2 Scroll - Commit 31 - Flamegraph (after virtual/react-query)](./metrics/profiler/B2_scroll_commit31_flamegraph-after-virtual-react-query.png)
+
+![B2 Scroll - Commit 31 - Ranked (after virtual/react-query)](./metrics/profiler/B2_scroll_commit31_ranked-after-virtual-react-query.png)
+
+#### Corrida 3 (B3)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/B3_scroll_commit25_flamegraph-after-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/B3_scroll_commit25_ranked-after-virtual-react-query.png
+
+![B3 Scroll - Commit 25 - Flamegraph (after virtual/react-query)](./metrics/profiler/B3_scroll_commit25_flamegraph-after-virtual-react-query.png)
+
+![B3 Scroll - Commit 25 - Ranked (after virtual/react-query)](./metrics/profiler/B3_scroll_commit25_ranked-after-virtual-react-query.png)
+
+### Escenario C — Escritura (filtro)
+
+#### Corrida 1 (C1)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/C1_search_symbol_commit8_flamegraph-after-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/C1_search_symbol_commit8_ranked-after-virtual-react-query.png
+
+![C1 Escritura - Commit 8 - Flamegraph (after virtual/react-query)](./metrics/profiler/C1_search_symbol_commit8_flamegraph-after-virtual-react-query.png)
+
+![C1 Escritura - Commit 8 - Ranked (after virtual/react-query)](./metrics/profiler/C1_search_symbol_commit8_ranked-after-virtual-react-query.png)
+
+#### Corrida 2 (C2)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/C2_search_symbol_commit10_flamegraph-after-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/C2_search_symbol_commit10_ranked-after-virtual-react-query.png
+
+![C2 Escritura - Commit 10 - Flamegraph (after virtual/react-query)](./metrics/profiler/C2_search_symbol_commit10_flamegraph-after-virtual-react-query.png)
+
+![C2 Escritura - Commit 10 - Ranked (after virtual/react-query)](./metrics/profiler/C2_search_symbol_commit10_ranked-after-virtual-react-query.png)
+
+#### Corrida 3 (C3)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/C3_search_symbol_commit9_flamegraph-after-virtual-react-query.png
+  - Ruta/nombre del screenshot: metrics/profiler/C3_search_symbol_commit9_ranked-after-virtual-react-query.png
+
+![C3 Escritura - Commit 9 - Flamegraph (after virtual/react-query)](./metrics/profiler/C3_search_symbol_commit9_flamegraph-after-virtual-react-query.png)
+
+![C3 Escritura - Commit 9 - Ranked (after virtual/react-query)](./metrics/profiler/C3_search_symbol_commit9_ranked-after-virtual-react-query.png)
+
+---
+
 # Lighthouse (Preview / build de producción)
 
 ## Línea base (antes de cambios)
@@ -208,23 +416,35 @@
   - **LCP**: 1.7s
   - **TBT**: 40ms
   - **CLS**: 0.093
+- **Tiempo de carga inicial (proxy)**: LCP
 - **Evidencia**:
 
   - Ruta/nombre del screenshot/reporte: metrics/lighthouse/lighthouse_before.png
 
+  - Ruta/nombre del screenshot/reporte: metrics/lighthouse/lighthouse-before-virtual.png (preview)
+
   ![Lighthouse Before](./metrics/lighthouse/lighthouse_before.png)
+
+  ![Lighthouse Before Virtual](./metrics/lighthouse/lighthouse-before-virtual.png)
 
 ## Después de cambios
 
 - **Scores**:
-  - **Performance**:
+  - **Performance**: 100
+  - **Accessibility**: 98
+  - **Best Practices**: 100
+  - **SEO**: 82
 - **Métricas clave**:
-  - **FCP**:
-  - **LCP**:
-  - **TBT**:
-  - **CLS**:
+  - **FCP**: 0.4s
+  - **LCP**: 0.5s
+  - **TBT**: 0ms
+  - **CLS**: 0
+- **Tiempo de carga inicial (proxy)**: LCP
 - **Evidencia**:
-  - Ruta/nombre del screenshot/reporte:
+
+  - Ruta/nombre del screenshot/reporte: metrics/lighthouse/lighthouse-after-virtual.png
+
+  ![Lighthouse After Virtual](./metrics/lighthouse/lighthouse-after-virtual.png)
 
 ---
 

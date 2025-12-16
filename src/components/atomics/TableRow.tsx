@@ -14,6 +14,8 @@ interface IStockTableRowProps {
 const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
   const queryClient = useQueryClient();
 
+  const rowHeight = 52;
+
   const prefetchStockData = React.useCallback(() => {
     void queryClient
       .prefetchQuery({
@@ -26,7 +28,7 @@ const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
   }, [queryClient, stock.symbol]);
 
   return (
-    <TableRow key={stock.symbol}>
+    <TableRow key={stock.symbol} sx={{ height: rowHeight }}>
       <TableCell>
         <Link to={`/stock/${stock.symbol}`} onMouseEnter={prefetchStockData}>
           {stock.symbol}

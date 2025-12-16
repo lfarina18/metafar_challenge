@@ -172,10 +172,10 @@ src/
 
 #### Tareas Obligatorias
 
-- [ ] **Virtualización de tabla**
+- [x] **Virtualización de tabla**
 
-  - Implementar virtualización para `StockTable` usando `react-window` o `@tanstack/react-virtual`
-  - Mantener funcionalidad de paginación o adaptarla a scroll virtual
+  - Implementar virtualización para `StockTable` usando `@tanstack/react-virtual`
+  - Adaptar a scroll virtual
   - Medir mejora de performance (FPS, tiempo de render inicial)
 
 - [ ] **Code splitting y lazy loading**
