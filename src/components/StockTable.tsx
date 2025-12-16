@@ -67,8 +67,16 @@ const StockTable: React.FC = () => {
       : 0;
 
   React.useEffect(() => {
+    if (!parentRef.current) return;
+    if (filteredStocks.length === 0) return;
+
     rowVirtualizer.scrollToIndex(0);
-  }, [debouncedSearchName, debouncedSearchSymbol, rowVirtualizer]);
+  }, [
+    debouncedSearchName,
+    debouncedSearchSymbol,
+    filteredStocks.length,
+    rowVirtualizer,
+  ]);
 
   function handleSearchNameChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchName(event.target.value);
