@@ -79,6 +79,9 @@ const ChartScreen: FC<IChartProps> = ({ stockData }) => {
         useGPUTranslations: true,
         usePreAllocated: true,
       },
+      time: {
+        useUTC: false,
+      },
       series: [
         {
           name: "Interval",

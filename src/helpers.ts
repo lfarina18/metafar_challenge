@@ -1,6 +1,5 @@
 export function getCurrentDay() {
-  const currentDate = new Date();
-  const formattedDate = currentDate.toISOString().slice(0, 16);
-
-  return formattedDate;
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60_000);
+  return local.toISOString().slice(0, 16);
 }
