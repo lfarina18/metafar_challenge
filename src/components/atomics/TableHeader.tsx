@@ -12,4 +12,4 @@ const StockTableHeader: React.FC = () => (
   </TableHead>
 );
 
-export default StockTableHeader;
+export default React.memo(StockTableHeader);

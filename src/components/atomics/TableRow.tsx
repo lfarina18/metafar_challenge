@@ -55,4 +55,13 @@ const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
   );
 };
 
-export default StockTableRow;
+const areEqual = (prev: IStockTableRowProps, next: IStockTableRowProps) => {
+  return (
+    prev.stock.symbol === next.stock.symbol &&
+    prev.stock.name === next.stock.name &&
+    prev.stock.currency === next.stock.currency &&
+    prev.stock.type === next.stock.type
+  );
+};
+
+export default React.memo(StockTableRow, areEqual);

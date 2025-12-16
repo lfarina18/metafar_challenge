@@ -398,6 +398,177 @@
 
 ---
 
+## Línea base (antes de optimización de re-renders)
+
+### Escenario A — Recarga
+
+#### Corrida 1 (A1)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_A1_reload_commit1_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_A1_reload_commit1_ranked-before-rerender-optimizations.png
+
+![RR A1 Recarga - Commit 1 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_A1_reload_commit1_flamegraph-before-rerender-optimizations.png)
+
+![RR A1 Recarga - Commit 1 - Ranked (before rerender optimizations)](./metrics/profiler/RR_A1_reload_commit1_ranked-before-rerender-optimizations.png)
+
+#### Corrida 2 (A2)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_A2_reload_commit1_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_A2_reload_commit1_ranked-before-rerender-optimizations.png
+
+![RR A2 Recarga - Commit 1 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_A2_reload_commit1_flamegraph-before-rerender-optimizations.png)
+
+![RR A2 Recarga - Commit 1 - Ranked (before rerender optimizations)](./metrics/profiler/RR_A2_reload_commit1_ranked-before-rerender-optimizations.png)
+
+#### Corrida 3 (A3)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_A3_reload_commit2_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_A3_reload_commit2_ranked-before-rerender-optimizations.png
+
+![RR A3 Recarga - Commit 2 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_A3_reload_commit2_flamegraph-before-rerender-optimizations.png)
+
+![RR A3 Recarga - Commit 2 - Ranked (before rerender optimizations)](./metrics/profiler/RR_A3_reload_commit2_ranked-before-rerender-optimizations.png)
+
+---
+
+### Escenario B — Scroll/Desplazamiento
+
+#### Corrida 1 (B1)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_B1_scroll_commit40_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_B1_scroll_commit40_ranked-before-rerender-optimizations.png
+
+![RR B1 Scroll - Commit 40 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_B1_scroll_commit40_flamegraph-before-rerender-optimizations.png)
+
+![RR B1 Scroll - Commit 40 - Ranked (before rerender optimizations)](./metrics/profiler/RR_B1_scroll_commit40_ranked-before-rerender-optimizations.png)
+
+#### Corrida 2 (B2)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_B2_scroll_commit20_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_B2_scroll_commit20_ranked-before-rerender-optimizations.png
+
+![RR B2 Scroll - Commit 20 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_B2_scroll_commit20_flamegraph-before-rerender-optimizations.png)
+
+![RR B2 Scroll - Commit 20 - Ranked (before rerender optimizations)](./metrics/profiler/RR_B2_scroll_commit20_ranked-before-rerender-optimizations.png)
+
+#### Corrida 3 (B3)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_B3_scroll_commit58_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_B3_scroll_commit58_ranked-before-rerender-optimizations.png
+
+![RR B3 Scroll - Commit 58 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_B3_scroll_commit58_flamegraph-before-rerender-optimizations.png)
+
+![RR B3 Scroll - Commit 58 - Ranked (before rerender optimizations)](./metrics/profiler/RR_B3_scroll_commit58_ranked-before-rerender-optimizations.png)
+
+---
+
+### Escenario C — Escritura (filtro)
+
+**Entrada usada**: Buscar por símbolo "aame"
+
+#### Corrida 1 (C1)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_C1_search_symbol_commit15_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_C1_search_symbol_commit15_ranked-before-rerender-optimizations.png
+
+![RR C1 Escritura - Commit 15 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_C1_search_symbol_commit15_flamegraph-before-rerender-optimizations.png)
+
+![RR C1 Escritura - Commit 15 - Ranked (before rerender optimizations)](./metrics/profiler/RR_C1_search_symbol_commit15_ranked-before-rerender-optimizations.png)
+
+#### Corrida 2 (C2)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_C2_search_symbol_commit13_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_C2_search_symbol_commit13_ranked-before-rerender-optimizations.png
+
+![RR C2 Escritura - Commit 13 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_C2_search_symbol_commit13_flamegraph-before-rerender-optimizations.png)
+
+![RR C2 Escritura - Commit 13 - Ranked (before rerender optimizations)](./metrics/profiler/RR_C2_search_symbol_commit13_ranked-before-rerender-optimizations.png)
+
+#### Corrida 3 (C3)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_C3_search_symbol_commit15_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_C3_search_symbol_commit15_ranked-before-rerender-optimizations.png
+
+![RR C3 Escritura - Commit 15 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_C3_search_symbol_commit15_flamegraph-before-rerender-optimizations.png)
+
+![RR C3 Escritura - Commit 15 - Ranked (before rerender optimizations)](./metrics/profiler/RR_C3_search_symbol_commit15_ranked-before-rerender-optimizations.png)
+
+---
+
+### Escenario D — Navegación a detalle + gráfico
+
+#### Corrida 1 (D1)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_D1_reload_commit4_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_D1_reload_commit4_ranked-before-rerender-optimizations.png
+
+![RR D1 Detail - Commit 4 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_D1_reload_commit4_flamegraph-before-rerender-optimizations.png)
+
+![RR D1 Detail - Commit 4 - Ranked (before rerender optimizations)](./metrics/profiler/RR_D1_reload_commit4_ranked-before-rerender-optimizations.png)
+
+#### Corrida 2 (D2)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_D2_reload_commit1_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_D2_reload_commit1_ranked-before-rerender-optimizations.png
+
+![RR D2 Detail - Commit 1 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_D2_reload_commit1_flamegraph-before-rerender-optimizations.png)
+
+![RR D2 Detail - Commit 1 - Ranked (before rerender optimizations)](./metrics/profiler/RR_D2_reload_commit1_ranked-before-rerender-optimizations.png)
+
+#### Corrida 3 (D3)
+
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/profiler/RR_D3_reload_commit1_flamegraph-before-rerender-optimizations.png
+  - Ruta/nombre del screenshot: metrics/profiler/RR_D3_reload_commit1_ranked-before-rerender-optimizations.png
+
+![RR D3 Detail - Commit 1 - Flamegraph (before rerender optimizations)](./metrics/profiler/RR_D3_reload_commit1_flamegraph-before-rerender-optimizations.png)
+
+![RR D3 Detail - Commit 1 - Ranked (before rerender optimizations)](./metrics/profiler/RR_D3_reload_commit1_ranked-before-rerender-optimizations.png)
+
+---
+
+## Optimización de re-renders (implementación - resumen escrito)
+
+### Implementado
+
+- **`React.memo` en `TableRow`** (`src/components/atomics/TableRow.tsx`):
+
+  - Se memoizó la fila con un comparator por campos (`symbol/name/currency/type`).
+  - **Objetivo**: evitar renders redundantes de filas visibles durante updates frecuentes del virtualizer/scroll cuando el `stock` no cambió.
+
+- **`React.memo` en componentes atómicos**:
+
+  - **`TextField`** (`src/components/atomics/TextField.tsx`)
+  - **`TableHeader`** (`src/components/atomics/TableHeader.tsx`)
+  - **Objetivo**: que inputs y header no se re-rendericen por renders del padre (`StockTable`) que no cambian sus props.
+
+- **`useCallback` en handlers de búsqueda** (`src/components/StockTable.tsx`):
+
+  - `handleSearchNameChange` y `handleSearchSymbolChange` se estabilizaron con `useCallback`.
+  - **Objetivo**: mantener estable la identidad de `onChange` y aprovechar la memoización del `TextField`.
+
+- **`useMemo` + `React.memo` en `StockChart`** (`src/components/StockChart.tsx`):
+
+  - `chartOptions` se memorizó con `useMemo` (evita recomputar mapeos sobre `values`).
+  - El componente se exporta con `React.memo`.
+  - **Objetivo**: reducir recomputación y re-renders en el gráfico cuando `stockData` no cambia.
+
+- **`useMemo` en filtrado** (`src/components/StockTable.tsx`):
+
+  - `filteredStocks` se calcula con `useMemo` en base a `debouncedSearchName/debouncedSearchSymbol`.
+  - **Objetivo**: evitar recalcular filtrado en renders no relacionados a la búsqueda.
+
 # Lighthouse (Preview / build de producción)
 
 ## Línea base (antes de cambios)

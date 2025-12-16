@@ -20,4 +20,4 @@ const SearchField: React.FC<ISearchFieldProps> = ({
   />
 );
 
-export default SearchField;
+export default React.memo(SearchField);

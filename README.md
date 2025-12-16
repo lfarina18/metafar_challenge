@@ -185,7 +185,7 @@ src/
   - Separar `StockChart` (Highcharts es pesado) en un chunk separado
   - Implementar preloading de rutas al hacer hover sobre links
 
-- [ ] **Optimización de re-renders**
+- [x] **Optimización de re-renders**
 
   - Usar **React DevTools Profiler** para identificar componentes que se re-renderizan innecesariamente
   - Implementar `React.memo` en componentes que reciben props que no cambian frecuentemente:

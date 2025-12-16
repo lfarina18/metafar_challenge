@@ -78,15 +78,19 @@ const StockTable: React.FC = () => {
     rowVirtualizer,
   ]);
 
-  function handleSearchNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearchName(event.target.value);
-  }
+  const handleSearchNameChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchName(event.target.value);
+    },
+    []
+  );
 
-  function handleSearchSymbolChange(
-    event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    setSearchSymbol(event.target.value);
-  }
+  const handleSearchSymbolChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchSymbol(event.target.value);
+    },
+    []
+  );
 
   return (
     <>

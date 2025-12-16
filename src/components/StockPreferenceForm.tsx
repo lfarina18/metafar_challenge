@@ -39,60 +39,84 @@ const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
     fetchDefaultData();
   }, [symbol]);
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    try {
-      const data = await getStockQuote(symbol, interval, startDate, endDate);
-      handleSetStockData(data);
-    } catch (error) {
-      console.error("Error fetching stock data:", error);
-    }
-  }
+  const handleSubmit = React.useCallback(
+    async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      try {
+        const data = await getStockQuote(symbol, interval, startDate, endDate);
+        handleSetStockData(data);
+      } catch (error) {
+        console.error("Error fetching stock data:", error);
+      }
+    },
+    [endDate, handleSetStockData, interval, startDate, symbol]
+  );
 
-  function handleIntervalChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setInterval(event.target.value);
-  }
+  const handleIntervalChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setInterval(event.target.value);
+    },
+    []
+  );
 
-  function handleStartDateChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setStartDate(event.target.value);
-  }
+  const handleStartDateChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setStartDate(event.target.value);
+    },
+    []
+  );
 
-  function handleEndDateChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setEndDate(event.target.value);
-  }
+  const handleEndDateChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setEndDate(event.target.value);
+    },
+    []
+  );
 
-  function handleCheckboxChange(event: React.ChangeEvent<HTMLInputElement>) {
-    // If the user selects "realtime", set the start and end date to the current day
-    if (event.target.value === "realtime") {
-      const date = getCurrentDay();
-      setStartDate(date);
-      setEndDate(date);
-    }
-    setRealTime(event.target.value === "realtime");
-  }
+  const handleCheckboxChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      // If the user selects "realtime", set the start and end date to the current day
+      if (event.target.value === "realtime") {
+        const date = getCurrentDay();
+        setStartDate(date);
+        setEndDate(date);
+      }
+      setRealTime(event.target.value === "realtime");
+    },
+    []
+  );
 
   return (
-    <form onSubmit={handleSubmit} style={{
-      display: "flex",
-      flexDirection: "column",
-      borderBottom: "1px solid #ccc",
-      padding: "10px",
-      marginBottom: "20px",
-    }}>
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        borderBottom: "1px solid #ccc",
+        padding: "10px",
+        marginBottom: "20px",
+      }}
+    >
       <div style={styles.headerContainer}>
         <div style={styles.headerTitle}>
           {symbol} - {detailStock?.name} - {detailStock?.currency}
         </div>
-        <div style={{
-          marginTop: "10px",
-          fontSize: "18px",
-          textAlign: "right",
-        }}>Usuario: Juan</div>
+        <div
+          style={{
+            marginTop: "10px",
+            fontSize: "18px",
+            textAlign: "right",
+          }}
+        >
+          Usuario: Juan
+        </div>
       </div>
-      <div style={{
-        display: "flex",
-        flexDirection: "column",
-      }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <div style={styles.radioContainer}>
           <RadioButton
             name="dataOption"
@@ -144,9 +168,7 @@ const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
 };
 
 const styles = {
-  form: {
-    
-  },
+  form: {},
   headerContainer: {
     display: "flex",
     justifyContent: "space-between",
