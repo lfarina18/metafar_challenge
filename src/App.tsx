@@ -1,9 +1,9 @@
 import * as React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import StockTable from "./components/StockTable";
 import { Box, CircularProgress } from "@mui/material";
 
-const Detail = React.lazy(() => import("./components/Detail"));
+const HomePage = React.lazy(() => import("./pages/HomePage"));
+const StockDetailPage = React.lazy(() => import("./pages/StockDetailPage"));
 
 const LoadingFallback = () => (
   <Box
@@ -33,8 +33,8 @@ const App: React.FC = () => {
       >
         <React.Suspense fallback={<LoadingFallback />}>
           <Routes>
-            <Route path="/" element={<StockTable />} />
-            <Route path="/stock/:symbol" element={<Detail />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/stock/:symbol" element={<StockDetailPage />} />
           </Routes>
         </React.Suspense>
       </Box>

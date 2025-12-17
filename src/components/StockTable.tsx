@@ -9,7 +9,9 @@ import {
   Paper,
 } from "@mui/material";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { TextField, TableHeader, TableRow } from "./atomics/index";
+import { TextField } from "./atoms";
+import { TableHeader } from "./molecules";
+import TableRow from "./organisms/TableRow";
 import { ClipLoader } from "react-spinners";
 import { IStock } from "../types";
 import useDebounce from "../hooks/useDebounce";

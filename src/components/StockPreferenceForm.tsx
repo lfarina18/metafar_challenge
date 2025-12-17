@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  RadioButton,
-  DateInput,
-  IntervalSelect,
-  Button,
-} from "./atomics/index";
+import { RadioButton, DateInput, Button } from "./atoms";
+import { IntervalSelect } from "./molecules";
 import type { Stock } from "../api/types";
 import { Interval, type IntervalType } from "../api/types";
 import { useStockData } from "../hooks/queries/useStockData";
