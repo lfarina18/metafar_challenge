@@ -1,10 +1,16 @@
 import type { IValuesStockData } from "../types";
 
 export const parseDatetimeToMs = (datetime: string): number => {
-  const direct = Date.parse(datetime);
-  if (!Number.isNaN(direct)) return direct;
+  const trimmed = datetime.trim();
+  const hasTimeZone = /Z$|[+-]\d{2}:?\d{2}$/.test(trimmed);
+  const isIsoLike = trimmed.includes("T") || hasTimeZone;
 
-  const parts = datetime.trim().split(" ");
+  if (isIsoLike) {
+    const direct = Date.parse(trimmed);
+    if (!Number.isNaN(direct)) return direct;
+  }
+
+  const parts = trimmed.split(" ");
   if (parts.length !== 2) return NaN;
 
   const [datePart, timePart] = parts;
@@ -13,7 +19,7 @@ export const parseDatetimeToMs = (datetime: string): number => {
 
   if ([y, m, d, hh, mm].some((n) => Number.isNaN(n))) return NaN;
 
-  return Date.UTC(y, m - 1, d, hh, mm, Number.isNaN(ss) ? 0 : ss);
+  return new Date(y, m - 1, d, hh, mm, Number.isNaN(ss) ? 0 : ss).getTime();
 };
 
 export const sampleValues = <T>(values: T[], maxPoints: number): T[] => {
