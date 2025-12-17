@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Alert, Box, Button, Skeleton, Typography } from "@mui/material";
+import { Alert, Box, Skeleton } from "@mui/material";
 import { useParams } from "react-router-dom";
 import type { IStockData } from "../types";
 import type { StockQuotePreferences } from "../types";
@@ -7,6 +7,7 @@ import { Interval } from "../api/types";
 import { getNowClampedToMarketStart, getTodayMarketStart } from "../helpers";
 import { useStockQuote } from "../hooks/queries/useStockQuote";
 import StockPreferenceForm from "./StockPreferenceForm";
+import { RealTimeStatusBar } from "./molecules";
 import {
   dismissToast,
   getPublicErrorMessage,
@@ -118,50 +119,21 @@ const Detail: React.FC = () => {
       </Box>
 
       {preferences.realTime ? (
-        <Box
-          px={{ xs: 1.5, sm: 2 }}
-          py={1}
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          flexWrap="wrap"
-          gap={2}
-          role="status"
-          aria-live="polite"
-        >
-          {(() => {
-            const hasNoData =
-              !realTimePaused &&
-              quoteQuery.isError &&
-              isNoDataError(quoteQuery.error);
-
-            const isUpdating =
-              !realTimePaused &&
-              quoteQuery.isFetching &&
-              !quoteQuery.isLoading &&
-              !quoteQuery.isError;
-
-            return (
-              <Typography variant="body2" color="text.secondary">
-                Tiempo real: {realTimePaused ? "Pausado" : "Activo"}
-                {hasNoData
-                  ? " (sin datos)"
-                  : isUpdating
-                  ? " (actualizando...)"
-                  : ""}
-              </Typography>
-            );
-          })()}
-
-          <Button
-            size="small"
-            variant={realTimePaused ? "contained" : "outlined"}
-            onClick={() => setRealTimePaused((prev) => !prev)}
-            sx={{ width: { xs: "100%", sm: "auto" } }}
-          >
-            {realTimePaused ? "Reanudar" : "Pausar"}
-          </Button>
-        </Box>
+        <RealTimeStatusBar
+          paused={realTimePaused}
+          hasNoData={
+            !realTimePaused &&
+            quoteQuery.isError &&
+            isNoDataError(quoteQuery.error)
+          }
+          isUpdating={
+            !realTimePaused &&
+            quoteQuery.isFetching &&
+            !quoteQuery.isLoading &&
+            !quoteQuery.isError
+          }
+          onTogglePause={() => setRealTimePaused((prev) => !prev)}
+        />
       ) : null}
 
       {quoteQuery.isError &&
