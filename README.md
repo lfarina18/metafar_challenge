@@ -316,11 +316,11 @@ src/
 
 #### Situación Actual
 
-- No hay tests implementados
+- Vitest + React Testing Library configurados
 
 #### Tareas
 
-- [ ] **Configurar testing**
+- [x] **Configurar testing**
 
   - Configurar Vitest (recomendado para Vite) o Jest
   - Configurar React Testing Library
