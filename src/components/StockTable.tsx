@@ -10,12 +10,12 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
-import { useVirtualizer } from "@tanstack/react-virtual";
 import { TableHeader, TableRowsSkeleton } from "./molecules";
 import TableRow from "./organisms/TableRow";
 import { useStockSearch } from "../hooks/queries/useStockSearch";
 import { useStockAutocompleteState } from "../hooks/useStockAutocompleteState";
 import { useStockTableData } from "../hooks/useStockTableData";
+import { useVirtualizedRows } from "../hooks/useVirtualizedRows";
 import { getPublicErrorMessage } from "../utils/toast";
 import type { SymbolSearchResult } from "../api/types";
 
@@ -46,28 +46,13 @@ const StockTable: React.FC = () => {
     return symbolSearchData?.data ?? [];
   }, [symbolSearchData]);
 
-  const rowVirtualizer = useVirtualizer({
+  const { virtualRows, paddingTop, paddingBottom } = useVirtualizedRows({
     count: stocks.length,
-    getScrollElement: () => parentRef.current,
+    parentRef,
     estimateSize: () => 52,
     overscan: 10,
+    resetDeps: [exchange, selectedSymbol?.symbol],
   });
-
-  const virtualRows = rowVirtualizer.getVirtualItems();
-  const paddingTop = virtualRows.length > 0 ? virtualRows[0]?.start ?? 0 : 0;
-  const paddingBottom =
-    virtualRows.length > 0
-      ? rowVirtualizer.getTotalSize() -
-        ((virtualRows[virtualRows.length - 1]?.start ?? 0) +
-          (virtualRows[virtualRows.length - 1]?.size ?? 0))
-      : 0;
-
-  React.useEffect(() => {
-    if (!parentRef.current) return;
-    if (stocks.length === 0) return;
-
-    rowVirtualizer.scrollToIndex(0);
-  }, [exchange, selectedSymbol?.symbol, stocks.length, rowVirtualizer]);
 
   return (
     <Box sx={{ width: "100%" }}>
