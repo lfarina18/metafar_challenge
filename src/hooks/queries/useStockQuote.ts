@@ -2,11 +2,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { quoteService } from "../../services/quoteService";
 import { queryKeys } from "../../lib/queryKeys";
 import { Interval, type IntervalType } from "../../api/types";
-import {
-  getPublicErrorMessage,
-  isNoDataError,
-  showErrorToast,
-} from "../../utils/toast";
+import { getPublicErrorMessage, showErrorToast } from "../../utils/toast";
 import { CACHE_TIME, REFETCH_INTERVAL } from "../../lib/cacheConfig";
 import { getNowClampedToMarketStart, getTodayMarketStart } from "../../helpers";
 
@@ -138,7 +134,7 @@ export const useStockQuote = ({
     enabled: shouldFetch,
     meta: {
       onError: (err: unknown) => {
-        if (realTime && isNoDataError(err)) {
+        if (realTime) {
           return;
         }
         showErrorToast(getPublicErrorMessage(err));

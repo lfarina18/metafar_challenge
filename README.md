@@ -252,18 +252,18 @@ src/
   - [x] Indicador visual de que está en modo tiempo real
   - [x] Permitir pausar/reanudar actualizaciones
 
-- [ ] **Mejorar ErrorBoundary**
+- [x] **Mejorar ErrorBoundary**
 
-  - ErrorBoundary más robusto con opciones de recovery
-  - Integrar con React Query para mostrar errores de API
-  - Mensajes de error amigables para el usuario
+  - [x] ErrorBoundary más robusto con opciones de recovery
+  - [x] Mensajes de error amigables para el usuario
+  - [x] Errores de API: se manejan con estados de React Query (toasts/UI), no con ErrorBoundary
 
 - [ ] **Feedback visual**
   - [ ] Implementar una versión responsive en, como mínimo, una pantalla.
   - [x] Sistema de toasts/notificaciones para feedback al usuario (opcional pero valorado).
   - [x] Notificar errores de API
-  - [ ] Notificar éxito de operaciones
-  - [ ] Mostrar cuando los datos están siendo actualizados en background
+  - [x] Notificar éxito de operaciones
+  - [x] Mostrar cuando los datos están siendo actualizados en background
 
 **Entregables**:
 

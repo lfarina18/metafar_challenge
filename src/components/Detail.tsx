@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, Skeleton, Typography } from "@mui/material";
+import { Alert, Box, Button, Skeleton, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import type { IStockData } from "../types";
 import type { StockQuotePreferences } from "../types";
@@ -7,7 +7,13 @@ import { Interval } from "../api/types";
 import { getNowClampedToMarketStart, getTodayMarketStart } from "../helpers";
 import { useStockQuote } from "../hooks/queries/useStockQuote";
 import StockPreferenceForm from "./StockPreferenceForm";
-import { getPublicErrorMessage, isNoDataError } from "../utils/toast";
+import {
+  dismissToast,
+  getPublicErrorMessage,
+  isNoDataError,
+  showLoadingToast,
+  showSuccessToast,
+} from "../utils/toast";
 
 const Chart = React.lazy(() => import("./StockChart"));
 
@@ -17,6 +23,9 @@ const Detail: React.FC = () => {
   const resolvedSymbol = symbol ?? "MELI";
 
   const [realTimePaused, setRealTimePaused] = React.useState<boolean>(false);
+  const [historicalToastId, setHistoricalToastId] = React.useState<
+    string | null
+  >(null);
 
   const [preferences, setPreferences] = React.useState<StockQuotePreferences>(
     () => {
@@ -46,6 +55,33 @@ const Detail: React.FC = () => {
     paused: preferences.realTime ? realTimePaused : false,
     enabled: true,
   });
+
+  React.useEffect(() => {
+    if (!historicalToastId) return;
+
+    if (quoteQuery.isError) {
+      dismissToast(historicalToastId);
+      setHistoricalToastId(null);
+      return;
+    }
+
+    if (quoteQuery.isSuccess) {
+      dismissToast(historicalToastId);
+      setHistoricalToastId(null);
+      showSuccessToast("Gráfico actualizado");
+    }
+  }, [historicalToastId, quoteQuery.isError, quoteQuery.isSuccess]);
+
+  const handlePreferencesSubmit = React.useCallback(
+    (next: StockQuotePreferences) => {
+      setPreferences(next);
+      if (!next.realTime) {
+        const toastId = showLoadingToast("Cargando gráfico...");
+        setHistoricalToastId(toastId);
+      }
+    },
+    []
+  );
 
   const chartData: IStockData | null = React.useMemo(() => {
     const stockData = quoteQuery.data;
@@ -80,7 +116,10 @@ const Detail: React.FC = () => {
           Volver
         </Button>
       </Box>
-      <StockPreferenceForm symbol={resolvedSymbol} onSubmit={setPreferences} />
+      <StockPreferenceForm
+        symbol={resolvedSymbol}
+        onSubmit={handlePreferencesSubmit}
+      />
 
       {preferences.realTime ? (
         <Box
@@ -99,10 +138,20 @@ const Detail: React.FC = () => {
               quoteQuery.isError &&
               isNoDataError(quoteQuery.error);
 
+            const isUpdating =
+              !realTimePaused &&
+              quoteQuery.isFetching &&
+              !quoteQuery.isLoading &&
+              !quoteQuery.isError;
+
             return (
               <Typography variant="body2" color="text.secondary">
                 Tiempo real: {realTimePaused ? "Pausado" : "Activo"}
-                {hasNoData ? " (sin datos)" : ""}
+                {hasNoData
+                  ? " (sin datos)"
+                  : isUpdating
+                  ? " (actualizando...)"
+                  : ""}
               </Typography>
             );
           })()}
@@ -121,11 +170,15 @@ const Detail: React.FC = () => {
       preferences.realTime &&
       isNoDataError(quoteQuery.error) ? (
         <Box px={2} py={2} role="status" aria-live="polite">
-          No hay datos disponibles para la fecha y hora actual.
+          <Alert severity="info">
+            No hay datos disponibles para la fecha y hora actual.
+          </Alert>
         </Box>
       ) : quoteQuery.isError ? (
         <Box px={2} py={2} role="alert" aria-live="assertive">
-          {getPublicErrorMessage(quoteQuery.error)}
+          <Alert severity="error">
+            {getPublicErrorMessage(quoteQuery.error)}
+          </Alert>
         </Box>
       ) : quoteQuery.isLoading && !chartData ? (
         <Box px={2} py={2}>
