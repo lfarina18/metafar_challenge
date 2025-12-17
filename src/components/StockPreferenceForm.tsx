@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { RadioButton, DateInput, Button } from "./atoms";
-import { IntervalSelect } from "./molecules";
+import { IntervalSelect, StockPreferenceHeader } from "./molecules";
 import type { Stock } from "../api/types";
 import { Interval, type IntervalType } from "../api/types";
 import { useStockData } from "../hooks/queries/useStockData";
@@ -86,48 +86,12 @@ const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
         gap: 2,
       }}
     >
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: { xs: "1fr", sm: "auto 1fr auto" },
-          alignItems: { sm: "center" },
-          columnGap: { sm: 2 },
-          rowGap: 1,
-          width: "100%",
-        }}
-      >
-        <Box sx={{ width: { xs: "100%", sm: "auto" } }}>
-          <Button
-            type="button"
-            variant="outlined"
-            onClick={() => navigate("/")}
-            sx={{ width: { xs: "100%", sm: "auto" } }}
-          >
-            Volver
-          </Button>
-        </Box>
-
-        <Box
-          sx={{
-            fontSize: { xs: "18px", sm: "24px" },
-            textAlign: { xs: "left", sm: "center" },
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {symbol} - {detailStock?.name} - {detailStock?.currency}
-        </Box>
-
-        <Box
-          sx={{
-            fontSize: "18px",
-            textAlign: { xs: "left", sm: "right" },
-          }}
-        >
-          Usuario: Juan
-        </Box>
-      </Box>
+      <StockPreferenceHeader
+        symbol={symbol}
+        name={detailStock?.name}
+        currency={detailStock?.currency}
+        onBack={() => navigate("/")}
+      />
 
       <Box display="flex" flexDirection="column" gap={2}>
         <Box display="flex" flexDirection="column" gap={1}>
