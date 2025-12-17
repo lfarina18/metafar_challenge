@@ -6,7 +6,7 @@ import type { StockQuotePreferences } from "../types";
 import { Interval } from "../api/types";
 import { getNowClampedToMarketStart, getTodayMarketStart } from "../helpers";
 import { useStockQuote } from "../hooks/queries/useStockQuote";
-import { useHistoricalChartToast } from "../hooks/useHistoricalChartToast";
+import { useHistoricalChartToast } from "../hooks/detail/useHistoricalChartToast";
 import StockPreferenceForm from "./StockPreferenceForm";
 import { RealTimeStatusBar } from "./molecules";
 import { getPublicErrorMessage, isNoDataError } from "../utils/toast";

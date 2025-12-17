@@ -13,9 +13,9 @@ import {
 import { TableHeader, TableRowsSkeleton } from "./molecules";
 import TableRow from "./organisms/TableRow";
 import { useStockSearch } from "../hooks/queries/useStockSearch";
-import { useStockAutocompleteState } from "../hooks/useStockAutocompleteState";
-import { useStockTableData } from "../hooks/useStockTableData";
-import { useVirtualizedRows } from "../hooks/useVirtualizedRows";
+import { useStockAutocompleteState } from "../hooks/table/useStockAutocompleteState";
+import { useStockTableData } from "../hooks/table/useStockTableData";
+import { useVirtualizedRows } from "../hooks/table/useVirtualizedRows";
 import { getPublicErrorMessage } from "../utils/toast";
 import type { SymbolSearchResult } from "../api/types";
 
