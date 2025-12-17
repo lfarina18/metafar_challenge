@@ -29,12 +29,12 @@ export const quoteService = {
     };
 
     if (start_date && end_date) {
-      if (start_date === end_date) {
-        const dateOnly = start_date.split("T")[0];
-        apiParams.date = dateOnly;
+      const startDateOnly = start_date.split("T")[0];
+      const endDateOnly = end_date.split("T")[0];
+
+      if (startDateOnly === endDateOnly) {
+        apiParams.date = startDateOnly;
       } else {
-        const startDateOnly = start_date.split("T")[0];
-        const endDateOnly = end_date.split("T")[0];
         apiParams.start_date = startDateOnly;
         apiParams.end_date = endDateOnly;
       }

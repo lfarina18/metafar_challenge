@@ -238,19 +238,19 @@ src/
 
 #### Tareas
 
-- [ ] **Aprovechar estados de React Query**
+- [x] **Aprovechar estados de React Query**
 
-  - Usar `isLoading`, `isFetching`, `isError`, `error` de React Query en componentes
-  - Mostrar estados de loading específicos por sección
-  - Implementar skeleton loaders donde sea apropiado
-  - Mostrar mensajes de error amigables usando `error` de React Query
+  - [x] Usar `isLoading`, `isError`, `error` de React Query en componentes (no mostramos `isFetching` en tabla por UX)
+  - [x] Mostrar estados de loading específicos por sección
+  - [x] Implementar skeleton loaders donde sea apropiado
+  - [x] Mostrar mensajes de error amigables usando `error` de React Query
 
 - [ ] **Mejorar modo tiempo real**
 
-  - Implementar actualización automática usando `refetchInterval` de React Query
-  - Configurar `refetchInterval` dinámicamente según el intervalo seleccionado
-  - Indicador visual de que está en modo tiempo real
-  - Permitir pausar/reanudar actualizaciones
+  - [x] Implementar actualización automática usando `refetchInterval` de React Query
+  - [x] Configurar `refetchInterval` dinámicamente según el intervalo seleccionado
+  - [ ] Indicador visual de que está en modo tiempo real
+  - [ ] Permitir pausar/reanudar actualizaciones
 
 - [ ] **Mejorar ErrorBoundary**
 
@@ -259,10 +259,11 @@ src/
   - Mensajes de error amigables para el usuario
 
 - [ ] **Feedback visual**
-  - Implementar una versión responsive en, como mínimo, una pantalla.
-  - Sistema de toasts/notificaciones para feedback al usuario (opcional pero valorado).
-  - Notificar errores de API, éxito de operaciones
-  - Mostrar cuando los datos están siendo actualizados en background
+  - [ ] Implementar una versión responsive en, como mínimo, una pantalla.
+  - [x] Sistema de toasts/notificaciones para feedback al usuario (opcional pero valorado).
+  - [x] Notificar errores de API
+  - [ ] Notificar éxito de operaciones
+  - [ ] Mostrar cuando los datos están siendo actualizados en background
 
 **Entregables**:
 

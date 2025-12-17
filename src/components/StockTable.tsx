@@ -10,18 +10,18 @@ import {
 } from "@mui/material";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { TextField } from "./atoms";
-import { TableHeader } from "./molecules";
+import { TableHeader, TableRowsSkeleton } from "./molecules";
 import TableRow from "./organisms/TableRow";
-import { ClipLoader } from "react-spinners";
 import { IStock } from "../types";
 import useDebounce from "../hooks/useDebounce";
 import { useStockList } from "../hooks/queries/useStockList";
+import { getPublicErrorMessage } from "../utils/toast";
 
 const StockTable: React.FC = () => {
   const [searchName, setSearchName] = React.useState<string>("");
   const [searchSymbol, setSearchSymbol] = React.useState<string>("");
 
-  const { data, isLoading, isError } = useStockList();
+  const { data, isLoading, isError, error } = useStockList();
 
   const stocks: IStock[] = React.useMemo(() => {
     return (
@@ -116,18 +116,12 @@ const StockTable: React.FC = () => {
           <TableHeader />
           <TableBody>
             {isLoading && !data ? (
-              <MuiTableRow>
-                <TableCell colSpan={4} align="center">
-                  <Box role="status" aria-live="polite" aria-busy="true">
-                    <ClipLoader color="#0000ff" loading size={50} />
-                  </Box>
-                </TableCell>
-              </MuiTableRow>
+              <TableRowsSkeleton rows={10} />
             ) : isError ? (
               <MuiTableRow>
                 <TableCell colSpan={4} align="center">
                   <Box role="alert" aria-live="assertive">
-                    Error al cargar la lista.
+                    {getPublicErrorMessage(error)}
                   </Box>
                 </TableCell>
               </MuiTableRow>

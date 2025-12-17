@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Box, Button, Skeleton } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import type { IStockData } from "../types";
 import type { StockQuotePreferences } from "../types";
@@ -7,6 +7,7 @@ import { Interval } from "../api/types";
 import { getCurrentDay } from "../helpers";
 import { useStockQuote } from "../hooks/queries/useStockQuote";
 import StockPreferenceForm from "./StockPreferenceForm";
+import { getPublicErrorMessage, isNoDataError } from "../utils/toast";
 
 const Chart = React.lazy(() => import("./StockChart"));
 
@@ -70,11 +71,26 @@ const Detail: React.FC = () => {
         </Button>
       </Box>
       <StockPreferenceForm symbol={resolvedSymbol} onSubmit={setPreferences} />
-      {chartData ? (
+
+      {quoteQuery.isError &&
+      preferences.realTime &&
+      isNoDataError(quoteQuery.error) ? (
+        <Box px={2} py={2} role="status" aria-live="polite">
+          No hay datos disponibles para la fecha y hora actual.
+        </Box>
+      ) : quoteQuery.isError ? (
+        <Box px={2} py={2} role="alert" aria-live="assertive">
+          {getPublicErrorMessage(quoteQuery.error)}
+        </Box>
+      ) : quoteQuery.isLoading && !chartData ? (
+        <Box px={2} py={2}>
+          <Skeleton variant="rectangular" height={320} />
+        </Box>
+      ) : chartData ? (
         <React.Suspense
           fallback={
-            <Box display="flex" justifyContent="center" py={2}>
-              <CircularProgress size={24} />
+            <Box px={2} py={2}>
+              <Skeleton variant="rectangular" height={320} />
             </Box>
           }
         >

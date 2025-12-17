@@ -2,7 +2,11 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { quoteService } from "../../services/quoteService";
 import { queryKeys } from "../../lib/queryKeys";
 import { Interval, type IntervalType } from "../../api/types";
-import { showErrorToast } from "../../utils/toast";
+import {
+  getPublicErrorMessage,
+  isNoDataError,
+  showErrorToast,
+} from "../../utils/toast";
 import { CACHE_TIME, REFETCH_INTERVAL } from "../../lib/cacheConfig";
 
 interface UseStockQuoteParams {
@@ -111,10 +115,11 @@ export const useStockQuote = ({
     refetchInterval: getRefetchInterval(),
     enabled: shouldFetch,
     meta: {
-      onError: () => {
-        showErrorToast(
-          "Error al cargar los datos. Por favor, intenta nuevamente."
-        );
+      onError: (err: unknown) => {
+        if (realTime && isNoDataError(err)) {
+          return;
+        }
+        showErrorToast(getPublicErrorMessage(err));
       },
     },
   });

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CACHE_TIME } from "../../lib/cacheConfig";
 import { queryKeys } from "../../lib/queryKeys";
 import useDebounce from "../useDebounce";
-import { showErrorToast } from "../../utils/toast";
+import { getPublicErrorMessage, showErrorToast } from "../../utils/toast";
 import { searchService } from "../../services/searchService";
 
 export const useStockSearch = (
@@ -27,10 +27,8 @@ export const useStockSearch = (
     gcTime: CACHE_TIME.FIVE_MINUTES,
     placeholderData: (previousData) => previousData,
     meta: {
-      onError: () => {
-        showErrorToast(
-          "Error al buscar símbolos. Por favor, intenta nuevamente."
-        );
+      onError: (err: unknown) => {
+        showErrorToast(getPublicErrorMessage(err));
       },
     },
   });
