@@ -42,12 +42,16 @@ const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
   }, [prefetchStockData, preloadChartChunk, preloadDetailRoute]);
 
   return (
-    <TableRow key={stock.symbol} sx={{ height: rowHeight }}>
+    <TableRow
+      key={`${stock.symbol}-${stock.exchange ?? ""}`}
+      sx={{ height: rowHeight }}
+    >
       <TableCell>
         <Link to={`/stock/${stock.symbol}`} onMouseEnter={handleHover}>
           {stock.symbol}
         </Link>
       </TableCell>
+      <TableCell>{stock.exchange ?? "-"}</TableCell>
       <TableCell>{stock.name}</TableCell>
       <TableCell>{stock.currency}</TableCell>
       <TableCell>{stock.type}</TableCell>
@@ -58,6 +62,7 @@ const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
 const areEqual = (prev: IStockTableRowProps, next: IStockTableRowProps) => {
   return (
     prev.stock.symbol === next.stock.symbol &&
+    prev.stock.exchange === next.stock.exchange &&
     prev.stock.name === next.stock.name &&
     prev.stock.currency === next.stock.currency &&
     prev.stock.type === next.stock.type

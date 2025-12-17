@@ -31,6 +31,8 @@ export interface IStock {
   name: string;
   currency: string;
   type: string;
+  exchange?: string;
+  mic_code?: string;
 }
 interface IOption {
   value: string;

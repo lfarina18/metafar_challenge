@@ -14,6 +14,9 @@ const TableRowsSkeleton: React.FC<TableRowsSkeletonProps> = ({ rows = 10 }) => {
             <Skeleton variant="text" width="60%" />
           </TableCell>
           <TableCell>
+            <Skeleton variant="text" width="50%" />
+          </TableCell>
+          <TableCell>
             <Skeleton variant="text" width="80%" />
           </TableCell>
           <TableCell>

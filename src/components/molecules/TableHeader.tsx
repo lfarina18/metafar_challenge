@@ -8,6 +8,9 @@ const StockTableHeader: React.FC = () => (
         Símbolo
       </TableCell>
       <TableCell component="th" scope="col">
+        Exchange
+      </TableCell>
+      <TableCell component="th" scope="col">
         Nombre
       </TableCell>
       <TableCell component="th" scope="col">
