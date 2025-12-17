@@ -121,13 +121,23 @@ const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
             label="Histórico"
           />
           <div style={styles.dateInputContainer}>
+            <label htmlFor="start-date" style={styles.dateInputLabel}>
+              Desde
+            </label>
             <DateInput
+              id="start-date"
+              ariaLabel="Desde"
               disabled={realTime}
               value={startDate}
               onChange={handleStartDateChange}
               style={styles.dateInput}
             />
+            <label htmlFor="end-date" style={styles.dateInputLabel}>
+              Hasta
+            </label>
             <DateInput
+              id="end-date"
+              ariaLabel="Hasta"
               disabled={realTime}
               value={endDate}
               onChange={handleEndDateChange}
@@ -178,6 +188,11 @@ const styles = {
   },
   dateInputContainer: {
     margin: "0px 5px",
+  },
+  dateInputLabel: {
+    fontSize: "12px",
+    color: "#666",
+    marginRight: "6px",
   },
   dateInput: {
     padding: "5px",

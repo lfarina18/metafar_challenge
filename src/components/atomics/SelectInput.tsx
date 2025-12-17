@@ -5,8 +5,16 @@ const SelectInput: React.FC<ISelectInputProps> = ({
   value,
   onChange,
   options,
+  id,
+  ariaLabel,
 }) => (
-  <select value={value} onChange={onChange} style={styles.select}>
+  <select
+    id={id}
+    aria-label={ariaLabel}
+    value={value}
+    onChange={onChange}
+    style={styles.select}
+  >
     {options.map((option) => (
       <option key={option.value} value={option.value}>
         {option.label}
@@ -17,8 +25,8 @@ const SelectInput: React.FC<ISelectInputProps> = ({
 
 const styles = {
   select: {
-    width: '12rem',
-    height: '2rem',
+    width: "12rem",
+    height: "2rem",
   },
 };
 

@@ -625,20 +625,37 @@
 
 - **Scores**:
   - **Performance**: 100
-  - **Accessibility**: 98
+  - **Accessibility**: 100
   - **Best Practices**: 100
-  - **SEO**: 82
+  - **SEO**: 100
 - **Métricas clave**:
   - **FCP**: 0.4s
   - **LCP**: 0.5s
   - **TBT**: 0ms
   - **CLS**: 0
 - **Tiempo de carga inicial (proxy)**: LCP
+- **Notas (cambios que habilitaron 100/100)**:
+
+  - **A11y (labels / landmarks / semántica)**:
+
+    - Asociar `label` a inputs (`htmlFor`/`id`) y `aria-label` como fallback en atómicos.
+    - Agregar `main` landmark en el layout raíz.
+    - Semántica de tabla: headers como `th` con `scope="col"`.
+    - Anuncios de estado: `role="status"`/`role="alert"` + `aria-live` en loading/error.
+
+  - **SEO (crawling/indexing)**:
+    - `public/robots.txt` válido.
+    - `public/sitemap.xml` + referencia desde `robots.txt`.
+    - `lang="es-AR"` en `index.html`.
+
 - **Evidencia**:
 
   - Ruta/nombre del screenshot/reporte: metrics/lighthouse/lighthouse-after-virtual.png
+  - Ruta/nombre del screenshot/reporte: metrics/lighthouse/lighthouse-100.png
 
   ![Lighthouse After Virtual](./metrics/lighthouse/lighthouse-after-virtual.png)
+
+  ![Lighthouse 100](./metrics/lighthouse/lighthouse-100.png)
 
 ---
 

@@ -5,6 +5,7 @@ import {
   TableBody,
   TableRow as MuiTableRow,
   TableCell,
+  Box,
   Paper,
 } from "@mui/material";
 import { useVirtualizer } from "@tanstack/react-virtual";
@@ -109,19 +110,23 @@ const StockTable: React.FC = () => {
         ref={parentRef}
         sx={{ maxHeight: 600, overflow: "auto" }}
       >
-        <Table stickyHeader>
+        <Table stickyHeader aria-label="Lista de acciones">
           <TableHeader />
           <TableBody>
             {isLoading && !data ? (
               <MuiTableRow>
                 <TableCell colSpan={4} align="center">
-                  <ClipLoader color="#0000ff" loading size={50} />
+                  <Box role="status" aria-live="polite" aria-busy="true">
+                    <ClipLoader color="#0000ff" loading size={50} />
+                  </Box>
                 </TableCell>
               </MuiTableRow>
             ) : isError ? (
               <MuiTableRow>
                 <TableCell colSpan={4} align="center">
-                  Error al cargar la lista.
+                  <Box role="alert" aria-live="assertive">
+                    Error al cargar la lista.
+                  </Box>
                 </TableCell>
               </MuiTableRow>
             ) : (

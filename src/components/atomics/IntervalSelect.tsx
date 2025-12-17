@@ -7,6 +7,7 @@ const IntervalSelect: React.FC<IntervalSelectProps> = ({
   onChange,
   style,
 }) => {
+  const id = "interval-select";
   const options = [
     { value: "1min", label: "1 minuto" },
     { value: "5min", label: "5 minutos" },
@@ -15,8 +16,16 @@ const IntervalSelect: React.FC<IntervalSelectProps> = ({
 
   return (
     <div style={style}>
-      <label style={styles.label}>Intervalo:</label>
-      <SelectInput value={value} onChange={onChange} options={options} />
+      <label htmlFor={id} style={styles.label}>
+        Intervalo:
+      </label>
+      <SelectInput
+        id={id}
+        ariaLabel="Intervalo"
+        value={value}
+        onChange={onChange}
+        options={options}
+      />
     </div>
   );
 };

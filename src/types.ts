@@ -42,6 +42,7 @@ export interface IRadioButtonProps {
   checked: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
+  id?: string;
 }
 
 export interface IDateInputProps {
@@ -49,12 +50,16 @@ export interface IDateInputProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   style?: React.CSSProperties;
+  id?: string;
+  ariaLabel?: string;
 }
 
 export interface ISelectInputProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   options: IOption[];
+  id?: string;
+  ariaLabel?: string;
 }
 
 export interface IButtonProps {

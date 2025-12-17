@@ -21,12 +21,23 @@ const App: React.FC = () => {
     <BrowserRouter
       future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
     >
-      <React.Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          <Route path="/" element={<StockTable />} />
-          <Route path="/stock/:symbol" element={<Detail />} />
-        </Routes>
-      </React.Suspense>
+      <Box
+        component="main"
+        role="main"
+        sx={{
+          width: "100%",
+          maxWidth: (theme) => theme.breakpoints.values.lg,
+          mx: "auto",
+          px: 2,
+        }}
+      >
+        <React.Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            <Route path="/" element={<StockTable />} />
+            <Route path="/stock/:symbol" element={<Detail />} />
+          </Routes>
+        </React.Suspense>
+      </Box>
     </BrowserRouter>
   );
 };
