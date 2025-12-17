@@ -17,11 +17,11 @@ const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
   const rowHeight = 52;
 
   const preloadDetailRoute = React.useCallback(() => {
-    void import("../Detail").catch(() => undefined);
+    void import("./StockDetail").catch(() => undefined);
   }, []);
 
   const preloadChartChunk = React.useCallback(() => {
-    void import("../StockChart").catch(() => undefined);
+    void import("./StockChart").catch(() => undefined);
   }, []);
 
   const prefetchStockData = React.useCallback(() => {
