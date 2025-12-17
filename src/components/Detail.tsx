@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Box, Button, Skeleton } from "@mui/material";
+import { Box, Button, Skeleton, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import type { IStockData } from "../types";
 import type { StockQuotePreferences } from "../types";
 import { Interval } from "../api/types";
-import { getCurrentDay } from "../helpers";
+import { getNowClampedToMarketStart, getTodayMarketStart } from "../helpers";
 import { useStockQuote } from "../hooks/queries/useStockQuote";
 import StockPreferenceForm from "./StockPreferenceForm";
 import { getPublicErrorMessage, isNoDataError } from "../utils/toast";
@@ -16,17 +16,26 @@ const Detail: React.FC = () => {
   const { symbol } = useParams<{ symbol?: string }>();
   const resolvedSymbol = symbol ?? "MELI";
 
+  const [realTimePaused, setRealTimePaused] = React.useState<boolean>(false);
+
   const [preferences, setPreferences] = React.useState<StockQuotePreferences>(
     () => {
-      const today = getCurrentDay();
+      const start = getTodayMarketStart();
+      const now = getNowClampedToMarketStart();
       return {
         interval: Interval.FIVE_MIN,
-        startDate: today,
-        endDate: today,
+        startDate: start,
+        endDate: now,
         realTime: true,
       };
     }
   );
+
+  React.useEffect(() => {
+    if (!preferences.realTime) {
+      setRealTimePaused(false);
+    }
+  }, [preferences.realTime]);
 
   const quoteQuery = useStockQuote({
     symbol: resolvedSymbol,
@@ -34,6 +43,7 @@ const Detail: React.FC = () => {
     startDate: preferences.startDate,
     endDate: preferences.endDate,
     realTime: preferences.realTime,
+    paused: preferences.realTime ? realTimePaused : false,
     enabled: true,
   });
 
@@ -71,6 +81,41 @@ const Detail: React.FC = () => {
         </Button>
       </Box>
       <StockPreferenceForm symbol={resolvedSymbol} onSubmit={setPreferences} />
+
+      {preferences.realTime ? (
+        <Box
+          px={2}
+          py={1}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          gap={2}
+          role="status"
+          aria-live="polite"
+        >
+          {(() => {
+            const hasNoData =
+              !realTimePaused &&
+              quoteQuery.isError &&
+              isNoDataError(quoteQuery.error);
+
+            return (
+              <Typography variant="body2" color="text.secondary">
+                Tiempo real: {realTimePaused ? "Pausado" : "Activo"}
+                {hasNoData ? " (sin datos)" : ""}
+              </Typography>
+            );
+          })()}
+
+          <Button
+            size="small"
+            variant={realTimePaused ? "contained" : "outlined"}
+            onClick={() => setRealTimePaused((prev) => !prev)}
+          >
+            {realTimePaused ? "Reanudar" : "Pausar"}
+          </Button>
+        </Box>
+      ) : null}
 
       {quoteQuery.isError &&
       preferences.realTime &&

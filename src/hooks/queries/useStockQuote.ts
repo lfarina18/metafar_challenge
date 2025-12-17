@@ -8,6 +8,7 @@ import {
   showErrorToast,
 } from "../../utils/toast";
 import { CACHE_TIME, REFETCH_INTERVAL } from "../../lib/cacheConfig";
+import { getNowClampedToMarketStart, getTodayMarketStart } from "../../helpers";
 
 interface UseStockQuoteParams {
   symbol: string;
@@ -15,6 +16,7 @@ interface UseStockQuoteParams {
   startDate?: string;
   endDate?: string;
   realTime?: boolean;
+  paused?: boolean;
   enabled?: boolean;
 }
 
@@ -73,30 +75,50 @@ export const useStockQuote = ({
   startDate,
   endDate,
   realTime = false,
+  paused = false,
   enabled = true,
 }: UseStockQuoteParams) => {
+  const effectiveStartDate = realTime ? getTodayMarketStart() : startDate;
+  const effectiveEndDate = realTime ? getNowClampedToMarketStart() : endDate;
+
   const getRefetchInterval = (): number | false => {
     if (!realTime) return false;
+    if (paused) return false;
     return INTERVAL_MAP[interval] || REFETCH_INTERVAL.FIVE_MIN;
   };
 
-  const shouldFetch = enabled && Boolean(symbol && startDate && endDate);
+  const shouldFetch =
+    enabled && Boolean(symbol && effectiveStartDate && effectiveEndDate);
   const outputsize = getOutputSizeForInterval(
     interval,
     realTime,
-    startDate,
-    endDate
+    effectiveStartDate,
+    effectiveEndDate
   );
 
   const query = useQuery({
-    queryKey: queryKeys.quotes.detail({ symbol, interval, startDate, endDate }),
+    queryKey: realTime
+      ? ([
+          "quotes",
+          {
+            symbol,
+            interval,
+            day: effectiveStartDate?.slice(0, 10),
+          },
+        ] as const)
+      : queryKeys.quotes.detail({
+          symbol,
+          interval,
+          startDate: effectiveStartDate,
+          endDate: effectiveEndDate,
+        }),
     queryFn: ({ signal }) =>
       quoteService.getStockQuote(
         {
           symbol,
           interval,
-          start_date: startDate,
-          end_date: endDate,
+          start_date: effectiveStartDate,
+          end_date: effectiveEndDate,
           outputsize,
         },
         { signal }

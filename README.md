@@ -245,12 +245,12 @@ src/
   - [x] Implementar skeleton loaders donde sea apropiado
   - [x] Mostrar mensajes de error amigables usando `error` de React Query
 
-- [ ] **Mejorar modo tiempo real**
+- [x] **Mejorar modo tiempo real**
 
   - [x] Implementar actualización automática usando `refetchInterval` de React Query
   - [x] Configurar `refetchInterval` dinámicamente según el intervalo seleccionado
-  - [ ] Indicador visual de que está en modo tiempo real
-  - [ ] Permitir pausar/reanudar actualizaciones
+  - [x] Indicador visual de que está en modo tiempo real
+  - [x] Permitir pausar/reanudar actualizaciones
 
 - [ ] **Mejorar ErrorBoundary**
 

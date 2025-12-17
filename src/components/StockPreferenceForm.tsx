@@ -5,7 +5,7 @@ import type { Stock } from "../api/types";
 import { Interval, type IntervalType } from "../api/types";
 import { useStockData } from "../hooks/queries/useStockData";
 import type { IStockPreferenceFormProps } from "../types";
-import { getCurrentDay } from "../helpers";
+import { getNowClampedToMarketStart, getTodayMarketStart } from "../helpers";
 
 const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
   onSubmit,
@@ -14,8 +14,12 @@ const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
   const [interval, setInterval] = React.useState<IntervalType>(
     Interval.FIVE_MIN
   );
-  const [startDate, setStartDate] = React.useState<string>(getCurrentDay());
-  const [endDate, setEndDate] = React.useState<string>(getCurrentDay());
+  const [startDate, setStartDate] = React.useState<string>(
+    getTodayMarketStart()
+  );
+  const [endDate, setEndDate] = React.useState<string>(
+    getNowClampedToMarketStart()
+  );
   const [realTime, setRealTime] = React.useState<boolean>(true);
 
   const detailStockQuery = useStockData(symbol);
@@ -54,9 +58,8 @@ const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
     (event: React.ChangeEvent<HTMLInputElement>) => {
       // If the user selects "realtime", set the start and end date to the current day
       if (event.target.value === "realtime") {
-        const date = getCurrentDay();
-        setStartDate(date);
-        setEndDate(date);
+        setStartDate(getTodayMarketStart());
+        setEndDate(getNowClampedToMarketStart());
       }
       setRealTime(event.target.value === "realtime");
     },
