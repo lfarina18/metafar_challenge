@@ -14,15 +14,19 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { TableHeader, TableRowsSkeleton } from "./molecules";
 import TableRow from "./organisms/TableRow";
 import { useStockSearch } from "../hooks/queries/useStockSearch";
+import { useStockAutocompleteState } from "../hooks/useStockAutocompleteState";
 import { useStockTableData } from "../hooks/useStockTableData";
 import { getPublicErrorMessage } from "../utils/toast";
 import type { SymbolSearchResult } from "../api/types";
 
 const StockTable: React.FC = () => {
-  const [exchange, setExchange] = React.useState<string>("NASDAQ");
-  const [autocompleteInput, setAutocompleteInput] = React.useState<string>("");
-  const [selectedSymbol, setSelectedSymbol] =
-    React.useState<SymbolSearchResult | null>(null);
+  const {
+    exchange,
+    autocompleteInput,
+    selectedSymbol,
+    handleAutocompleteInputChange,
+    handleAutocompleteChange,
+  } = useStockAutocompleteState({ initialExchange: "NASDAQ" });
 
   const { stocks, data, isLoading, isError, error } = useStockTableData({
     exchange,
@@ -64,40 +68,6 @@ const StockTable: React.FC = () => {
 
     rowVirtualizer.scrollToIndex(0);
   }, [exchange, selectedSymbol?.symbol, stocks.length, rowVirtualizer]);
-
-  const handleAutocompleteInputChange = React.useCallback(
-    (
-      _: React.SyntheticEvent,
-      value: string,
-      reason: "input" | "reset" | "clear"
-    ) => {
-      setAutocompleteInput(value);
-
-      if (
-        reason === "input" &&
-        selectedSymbol &&
-        value !== selectedSymbol.symbol
-      ) {
-        setSelectedSymbol(null);
-      }
-    },
-    [selectedSymbol]
-  );
-
-  const handleAutocompleteChange = React.useCallback(
-    (_: React.SyntheticEvent, value: SymbolSearchResult | null) => {
-      setSelectedSymbol(value);
-
-      if (!value) {
-        setAutocompleteInput("");
-        return;
-      }
-
-      setExchange(value.exchange);
-      setAutocompleteInput(value.symbol);
-    },
-    []
-  );
 
   return (
     <Box sx={{ width: "100%" }}>
