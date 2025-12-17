@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { CACHE_TIME } from "../../lib/cacheConfig";
 import { queryKeys } from "../../lib/queryKeys";
+import type { SearchSymbolsQueryKey } from "../../lib/queryKeys";
 import useDebounce from "../useDebounce";
 import { getPublicErrorMessage, showErrorToast } from "../../utils/toast";
 import { searchService } from "../../services/searchService";
+import type { SymbolSearchResponse } from "../../api/types";
 
 export const useStockSearch = (
   query: string,
@@ -18,7 +20,12 @@ export const useStockSearch = (
   const debouncedQuery = useDebounce(query, debounceMs).trim();
   const shouldFetch = enabled && debouncedQuery.length > 0;
 
-  return useQuery({
+  return useQuery<
+    SymbolSearchResponse,
+    unknown,
+    SymbolSearchResponse,
+    SearchSymbolsQueryKey
+  >({
     queryKey: queryKeys.search.symbols(debouncedQuery),
     queryFn: ({ signal }) =>
       searchService.searchSymbols(debouncedQuery, { outputsize }, { signal }),

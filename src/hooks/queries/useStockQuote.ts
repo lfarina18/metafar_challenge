@@ -1,10 +1,12 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { quoteService } from "../../services/quoteService";
 import { queryKeys } from "../../lib/queryKeys";
+import type { QuoteQueryKey } from "../../lib/queryKeys";
 import { Interval, type IntervalType } from "../../api/types";
 import { getPublicErrorMessage, showErrorToast } from "../../utils/toast";
 import { CACHE_TIME, REFETCH_INTERVAL } from "../../lib/cacheConfig";
 import { getNowClampedToMarketStart, getTodayMarketStart } from "../../helpers";
+import type { TimeSeriesResponse } from "../../api/types";
 
 interface UseStockQuoteParams {
   symbol: string;
@@ -92,16 +94,18 @@ export const useStockQuote = ({
     effectiveEndDate
   );
 
-  const query = useQuery({
+  const query = useQuery<
+    TimeSeriesResponse,
+    unknown,
+    TimeSeriesResponse,
+    QuoteQueryKey
+  >({
     queryKey: realTime
-      ? ([
-          "quotes",
-          {
-            symbol,
-            interval,
-            day: effectiveStartDate?.slice(0, 10),
-          },
-        ] as const)
+      ? queryKeys.quotes.realtime({
+          symbol,
+          interval,
+          day: effectiveStartDate!.slice(0, 10),
+        })
       : queryKeys.quotes.detail({
           symbol,
           interval,
@@ -120,7 +124,7 @@ export const useStockQuote = ({
         { signal }
       ),
     placeholderData: keepPreviousData,
-    select: (data) => {
+    select: (data): TimeSeriesResponse => {
       return {
         ...data,
         values: [...data.values].sort((a, b) =>

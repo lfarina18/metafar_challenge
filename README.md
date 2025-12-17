@@ -282,25 +282,25 @@ src/
 
 #### Tareas
 
-- [ ] **TypeScript estricto**
+- [x] **TypeScript estricto**
 
   - Configurar TypeScript en modo estricto en `tsconfig.json`
   - Eliminar todos los `any` implícitos
   - Crear tipos compartidos y utility types
 
-- [ ] **Tipos para React Query**
+- [x] **Tipos para React Query**
 
   - Crear tipos para query keys (usar `as const` y tipos inferidos)
   - Tipos para funciones de query y mutation
   - Tipos para parámetros de queries
 
-- [ ] **Tipos para Twelve Data**
+- [x] **Tipos para Twelve Data**
 
   - Crear tipos completos para todas las respuestas de Twelve Data
   - Tipos para diferentes endpoints (time_series, quote, symbol_search, etc.)
   - Tipos para parámetros de cada endpoint
 
-- [ ] **Validación de datos (opcional pero valorado)**
+- [x] **Validación de datos (opcional pero valorado)**
   - Implementar validación de respuestas de API usando Zod
   - Type guards apropiados
   - Manejar casos donde la API devuelve datos inesperados

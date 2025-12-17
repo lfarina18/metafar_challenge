@@ -73,6 +73,49 @@ export interface TimeSeriesResponse {
   status: ApiStatus;
 }
 
+export interface FiftyTwoWeekRange {
+  low: string;
+  high: string;
+  low_change: string;
+  high_change: string;
+  low_change_percent: string;
+  high_change_percent: string;
+  range: string;
+}
+
+export interface QuoteResponse {
+  symbol: string;
+  name: string;
+  exchange: string;
+  mic_code: string;
+  currency: string;
+  datetime: string;
+  timestamp: number;
+  last_quote_at: number;
+  open: string;
+  high: string;
+  low: string;
+  close: string;
+  volume: string;
+  previous_close?: string;
+  change?: string;
+  percent_change?: string;
+  average_volume?: string;
+  rolling_1d_change?: string;
+  rolling_7d_change?: string;
+  rolling_change?: string;
+  is_market_open?: boolean;
+  fifty_two_week?: FiftyTwoWeekRange;
+  extended_change?: string;
+  extended_percent_change?: string;
+  extended_price?: string;
+  extended_timestamp?: string;
+}
+
+export interface QuoteParams {
+  symbol: string;
+}
+
 export interface StockQuoteParams {
   symbol: string;
   interval?: IntervalType;
@@ -90,6 +133,7 @@ export interface SymbolSearchResult {
   instrument_type: InstrumentType;
   country: string;
   currency: string;
+  access?: Access;
 }
 
 export interface SymbolSearchResponse {
@@ -98,7 +142,7 @@ export interface SymbolSearchResponse {
 }
 
 export interface ApiErrorResponse {
-  code: number;
+  code?: number;
   message: string;
   status: "error";
 }

@@ -2,14 +2,28 @@ import { apiClient } from "../api/client";
 import { ENDPOINTS } from "../api/endpoints";
 import {
   Interval,
+  type QuoteParams,
+  type QuoteResponse,
   type StockQuoteParams,
   type TimeSeriesResponse,
 } from "../api/types";
-import { TimeSeriesResponseSchema } from "../api/schemas";
+import { QuoteResponseSchema, TimeSeriesResponseSchema } from "../api/schemas";
 import { validateResponse } from "./shared/validateResponse";
 import type { RequestOptions } from "./shared/requestOptions";
 
 export const quoteService = {
+  getQuote: async (
+    params: QuoteParams,
+    options?: RequestOptions
+  ): Promise<QuoteResponse> => {
+    const { data } = await apiClient.get(ENDPOINTS.QUOTE, {
+      params,
+      signal: options?.signal,
+    });
+
+    return validateResponse(data, QuoteResponseSchema);
+  },
+
   getStockQuote: async (
     params: StockQuoteParams,
     options?: RequestOptions
