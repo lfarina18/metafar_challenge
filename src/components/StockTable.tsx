@@ -13,10 +13,8 @@ import {
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { TableHeader, TableRowsSkeleton } from "./molecules";
 import TableRow from "./organisms/TableRow";
-import { IStock } from "../types";
-import { useStockList } from "../hooks/queries/useStockList";
 import { useStockSearch } from "../hooks/queries/useStockSearch";
-import { useStockData } from "../hooks/queries/useStockData";
+import { useStockTableData } from "../hooks/useStockTableData";
 import { getPublicErrorMessage } from "../utils/toast";
 import type { SymbolSearchResult } from "../api/types";
 
@@ -26,39 +24,10 @@ const StockTable: React.FC = () => {
   const [selectedSymbol, setSelectedSymbol] =
     React.useState<SymbolSearchResult | null>(null);
 
-  const stockListQuery = useStockList(exchange);
-  const stockDataQuery = useStockData(selectedSymbol?.symbol ?? "");
-
-  const data = selectedSymbol ? stockDataQuery.data : stockListQuery.data;
-  const isLoading = selectedSymbol
-    ? stockDataQuery.isLoading
-    : stockListQuery.isLoading;
-  const isError = selectedSymbol
-    ? stockDataQuery.isError
-    : stockListQuery.isError;
-  const error = selectedSymbol ? stockDataQuery.error : stockListQuery.error;
-
-  const stocks: IStock[] = React.useMemo(() => {
-    const rows =
-      selectedSymbol && data?.data
-        ? data.data.filter(
-            (s) =>
-              s.exchange === selectedSymbol.exchange &&
-              s.mic_code === selectedSymbol.mic_code
-          )
-        : data?.data;
-
-    return (
-      rows?.map((s) => ({
-        symbol: s.symbol,
-        name: s.name,
-        currency: s.currency,
-        type: s.type,
-        exchange: s.exchange,
-        mic_code: s.mic_code,
-      })) ?? []
-    );
-  }, [data, selectedSymbol]);
+  const { stocks, data, isLoading, isError, error } = useStockTableData({
+    exchange,
+    selectedSymbol,
+  });
 
   const parentRef = React.useRef<HTMLDivElement | null>(null);
 
