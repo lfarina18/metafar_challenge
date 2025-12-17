@@ -258,8 +258,8 @@ src/
   - [x] Mensajes de error amigables para el usuario
   - [x] Errores de API: se manejan con estados de React Query (toasts/UI), no con ErrorBoundary
 
-- [ ] **Feedback visual**
-  - [ ] Implementar una versión responsive en, como mínimo, una pantalla.
+- [x] **Feedback visual**
+  - [x] Implementar una versión responsive en, como mínimo, una pantalla.
   - [x] Sistema de toasts/notificaciones para feedback al usuario (opcional pero valorado).
   - [x] Notificar errores de API
   - [x] Notificar éxito de operaciones

@@ -52,12 +52,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         }}
       >
         <App />
-        <Toaster position="top-right" />
+        <Toaster position="top-center" />
         {ReactQueryDevtools && (
           <Suspense fallback={null}>
             <ReactQueryDevtools
               initialIsOpen={false}
-              buttonPosition="top-right"
+              buttonPosition="bottom-left"
             />
           </Suspense>
         )}

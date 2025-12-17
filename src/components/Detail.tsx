@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Alert, Box, Button, Skeleton, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import type { IStockData } from "../types";
 import type { StockQuotePreferences } from "../types";
 import { Interval } from "../api/types";
@@ -18,7 +18,6 @@ import {
 const Chart = React.lazy(() => import("./StockChart"));
 
 const Detail: React.FC = () => {
-  const navigate = useNavigate();
   const { symbol } = useParams<{ symbol?: string }>();
   const resolvedSymbol = symbol ?? "MELI";
 
@@ -111,23 +110,21 @@ const Detail: React.FC = () => {
 
   return (
     <>
-      <Box px={2} pt={2}>
-        <Button variant="outlined" onClick={() => navigate("/")}>
-          Volver
-        </Button>
+      <Box px={{ xs: 1.5, sm: 2 }}>
+        <StockPreferenceForm
+          symbol={resolvedSymbol}
+          onSubmit={handlePreferencesSubmit}
+        />
       </Box>
-      <StockPreferenceForm
-        symbol={resolvedSymbol}
-        onSubmit={handlePreferencesSubmit}
-      />
 
       {preferences.realTime ? (
         <Box
-          px={2}
+          px={{ xs: 1.5, sm: 2 }}
           py={1}
           display="flex"
           alignItems="center"
           justifyContent="space-between"
+          flexWrap="wrap"
           gap={2}
           role="status"
           aria-live="polite"
@@ -160,6 +157,7 @@ const Detail: React.FC = () => {
             size="small"
             variant={realTimePaused ? "contained" : "outlined"}
             onClick={() => setRealTimePaused((prev) => !prev)}
+            sx={{ width: { xs: "100%", sm: "auto" } }}
           >
             {realTimePaused ? "Reanudar" : "Pausar"}
           </Button>
@@ -169,25 +167,25 @@ const Detail: React.FC = () => {
       {quoteQuery.isError &&
       preferences.realTime &&
       isNoDataError(quoteQuery.error) ? (
-        <Box px={2} py={2} role="status" aria-live="polite">
+        <Box px={{ xs: 1.5, sm: 2 }} py={2} role="status" aria-live="polite">
           <Alert severity="info">
             No hay datos disponibles para la fecha y hora actual.
           </Alert>
         </Box>
       ) : quoteQuery.isError ? (
-        <Box px={2} py={2} role="alert" aria-live="assertive">
+        <Box px={{ xs: 1.5, sm: 2 }} py={2} role="alert" aria-live="assertive">
           <Alert severity="error">
             {getPublicErrorMessage(quoteQuery.error)}
           </Alert>
         </Box>
       ) : quoteQuery.isLoading && !chartData ? (
-        <Box px={2} py={2}>
+        <Box px={{ xs: 1.5, sm: 2 }} py={2}>
           <Skeleton variant="rectangular" height={320} />
         </Box>
       ) : chartData ? (
         <React.Suspense
           fallback={
-            <Box px={2} py={2}>
+            <Box px={{ xs: 1.5, sm: 2 }} py={2}>
               <Skeleton variant="rectangular" height={320} />
             </Box>
           }

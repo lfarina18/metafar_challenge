@@ -7,6 +7,7 @@ const DateInput: React.FC<IDateInputProps> = ({
   onChange,
   id,
   ariaLabel,
+  style,
 }) => (
   <input
     id={id}
@@ -15,7 +16,7 @@ const DateInput: React.FC<IDateInputProps> = ({
     disabled={disabled}
     value={value}
     onChange={onChange}
-    style={styles.dateInput}
+    style={{ ...styles.dateInput, ...style }}
   />
 );
 
@@ -28,6 +29,8 @@ const styles = {
   dateInput: {
     padding: "5px",
     fontSize: "14px",
+    width: "12rem",
+    maxWidth: "100%",
   },
 };
 

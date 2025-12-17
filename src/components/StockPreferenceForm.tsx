@@ -1,4 +1,5 @@
 import React from "react";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { RadioButton, DateInput, Button } from "./atoms";
 import { IntervalSelect } from "./molecules";
 import type { Stock } from "../api/types";
@@ -6,11 +7,17 @@ import { Interval, type IntervalType } from "../api/types";
 import { useStockData } from "../hooks/queries/useStockData";
 import type { IStockPreferenceFormProps } from "../types";
 import { getNowClampedToMarketStart, getTodayMarketStart } from "../helpers";
+import { useNavigate } from "react-router-dom";
 
 const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
   onSubmit,
   symbol,
 }) => {
+  const theme = useTheme();
+  const navigate = useNavigate();
+
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [interval, setInterval] = React.useState<IntervalType>(
     Interval.FIVE_MIN
   );
@@ -67,93 +74,177 @@ const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
   );
 
   return (
-    <form
+    <Box
+      component="form"
       onSubmit={handleSubmit}
-      style={{
+      sx={{
         display: "flex",
         flexDirection: "column",
         borderBottom: "1px solid #ccc",
-        padding: "10px",
-        marginBottom: "20px",
+        pb: 2,
+        mb: 2,
+        gap: 2,
       }}
     >
-      <div style={styles.headerContainer}>
-        <div style={styles.headerTitle}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", sm: "auto 1fr auto" },
+          alignItems: { sm: "center" },
+          columnGap: { sm: 2 },
+          rowGap: 1,
+          width: "100%",
+        }}
+      >
+        <Box sx={{ width: { xs: "100%", sm: "auto" } }}>
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={() => navigate("/")}
+            sx={{ width: { xs: "100%", sm: "auto" } }}
+          >
+            Volver
+          </Button>
+        </Box>
+
+        <Box
+          sx={{
+            fontSize: { xs: "18px", sm: "24px" },
+            textAlign: { xs: "left", sm: "center" },
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
           {symbol} - {detailStock?.name} - {detailStock?.currency}
-        </div>
-        <div
-          style={{
-            marginTop: "10px",
+        </Box>
+
+        <Box
+          sx={{
             fontSize: "18px",
-            textAlign: "right",
+            textAlign: { xs: "left", sm: "right" },
           }}
         >
           Usuario: Juan
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <div style={styles.radioContainer}>
-          <RadioButton
-            name="dataOption"
-            value="realtime"
-            checked={realTime}
-            onChange={handleCheckboxChange}
-            label="Tiempo Real"
-          />
-          <span style={styles.description}>
-            (utiliza la fecha actual, al graficar esta opción, se debe
-            actualizar el gráfico en forma automática según el intervalo
-            seleccionado)
-          </span>
-        </div>
-        <div style={styles.radioContainer}>
-          <RadioButton
-            name="dataOption"
-            value="history"
-            checked={!realTime}
-            onChange={handleCheckboxChange}
-            label="Histórico"
-          />
-          <div style={styles.dateInputContainer}>
-            <label htmlFor="start-date" style={styles.dateInputLabel}>
-              Desde
-            </label>
-            <DateInput
-              id="start-date"
-              ariaLabel="Desde"
-              disabled={realTime}
-              value={startDate}
-              onChange={handleStartDateChange}
-              style={styles.dateInput}
+        </Box>
+      </Box>
+
+      <Box display="flex" flexDirection="column" gap={2}>
+        <Box display="flex" flexDirection="column" gap={1}>
+          <Box display="flex" alignItems="center" gap={1} flexWrap="wrap">
+            <RadioButton
+              name="dataOption"
+              value="realtime"
+              checked={realTime}
+              onChange={handleCheckboxChange}
+              label="Tiempo Real"
             />
-            <label htmlFor="end-date" style={styles.dateInputLabel}>
-              Hasta
-            </label>
-            <DateInput
-              id="end-date"
-              ariaLabel="Hasta"
-              disabled={realTime}
-              value={endDate}
-              onChange={handleEndDateChange}
-              style={styles.dateInput}
+            <Box component="span" sx={styles.description}>
+              (utiliza la fecha actual, al graficar esta opción, se debe
+              actualizar el gráfico en forma automática según el intervalo
+              seleccionado)
+            </Box>
+          </Box>
+
+          <Box
+            display="flex"
+            flexDirection={{ xs: "column", sm: "row" }}
+            alignItems={{ sm: "center" }}
+            gap={1}
+            flexWrap="wrap"
+          >
+            <RadioButton
+              name="dataOption"
+              value="history"
+              checked={!realTime}
+              onChange={handleCheckboxChange}
+              label="Histórico"
             />
-          </div>
-        </div>
-        <IntervalSelect
-          value={interval}
-          onChange={handleIntervalChange}
-          style={styles.intervalSelect}
-        />
-        <Button variant="contained" type="submit" style={styles.button}>
-          Graficar
-        </Button>
-      </div>
-    </form>
+            <Box
+              display="flex"
+              flexDirection={{ xs: "column", sm: "row" }}
+              gap={1}
+              flexWrap="wrap"
+              alignItems={{ sm: "center" }}
+              sx={{ width: "100%" }}
+            >
+              <Box
+                display="flex"
+                flexDirection={{ xs: "column", sm: "row" }}
+                gap={1}
+                alignItems={{ sm: "center" }}
+                sx={{ width: { xs: "100%", sm: "auto" } }}
+              >
+                <label htmlFor="start-date" style={styles.dateInputLabel}>
+                  Desde
+                </label>
+                <DateInput
+                  id="start-date"
+                  ariaLabel="Desde"
+                  disabled={realTime}
+                  value={startDate}
+                  onChange={handleStartDateChange}
+                  style={
+                    isMobile
+                      ? { width: "100%" }
+                      : { width: "12rem", maxWidth: "12rem" }
+                  }
+                />
+              </Box>
+
+              <Box
+                display="flex"
+                flexDirection={{ xs: "column", sm: "row" }}
+                gap={1}
+                alignItems={{ sm: "center" }}
+                sx={{ width: { xs: "100%", sm: "auto" } }}
+              >
+                <label htmlFor="end-date" style={styles.dateInputLabel}>
+                  Hasta
+                </label>
+                <DateInput
+                  id="end-date"
+                  ariaLabel="Hasta"
+                  disabled={realTime}
+                  value={endDate}
+                  onChange={handleEndDateChange}
+                  style={
+                    isMobile
+                      ? { width: "100%" }
+                      : { width: "12rem", maxWidth: "12rem" }
+                  }
+                />
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+
+        <Box display="flex" flexDirection="column" gap={2}>
+          <IntervalSelect
+            value={interval}
+            onChange={handleIntervalChange}
+            style={{ marginBottom: 0 }}
+          />
+          <Box
+            display="flex"
+            justifyContent={{ xs: "stretch", sm: "flex-start" }}
+            sx={{ width: "100%" }}
+          >
+            <Button
+              variant="contained"
+              type="submit"
+              style={
+                isMobile
+                  ? { width: "100%" }
+                  : { width: "14rem", maxWidth: "14rem" }
+              }
+            >
+              Graficar
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

@@ -7,9 +7,9 @@ import {
   TableCell,
   Box,
   Paper,
+  TextField,
 } from "@mui/material";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { TextField } from "./atoms";
 import { TableHeader, TableRowsSkeleton } from "./molecules";
 import TableRow from "./organisms/TableRow";
 import { IStock } from "../types";
@@ -96,21 +96,37 @@ const StockTable: React.FC = () => {
   );
 
   return (
-    <>
-      <TextField
-        label="Buscar por nombre"
-        value={searchName}
-        onChange={handleSearchNameChange}
-      />
-      <TextField
-        label="Buscar por símbolo"
-        value={searchSymbol}
-        onChange={handleSearchSymbolChange}
-      />
+    <Box sx={{ width: "100%" }}>
+      <Box
+        display="flex"
+        flexDirection={{ xs: "column", sm: "row" }}
+        gap={2}
+        mb={2}
+        sx={{ width: "100%" }}
+      >
+        <TextField
+          label="Buscar por nombre"
+          value={searchName}
+          onChange={handleSearchNameChange}
+          fullWidth
+          sx={{ flex: 1, minWidth: { sm: 220 } }}
+        />
+        <TextField
+          label="Buscar por símbolo"
+          value={searchSymbol}
+          onChange={handleSearchSymbolChange}
+          fullWidth
+          sx={{ flex: 1, minWidth: { sm: 220 } }}
+        />
+      </Box>
       <TableContainer
         component={Paper}
         ref={parentRef}
-        sx={{ maxHeight: 600, overflow: "auto" }}
+        sx={{
+          maxHeight: { xs: 520, sm: 600 },
+          overflow: "auto",
+          width: "100%",
+        }}
       >
         <Table stickyHeader aria-label="Lista de acciones">
           <TableHeader />
@@ -154,7 +170,7 @@ const StockTable: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 };
 

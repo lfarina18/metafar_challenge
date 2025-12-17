@@ -9,7 +9,10 @@ const RadioButton: React.FC<IRadioButtonProps> = ({
   label,
   id,
 }) => (
-  <>
+  <label
+    htmlFor={id ?? `${name}-${value}`}
+    style={{ display: "flex", alignItems: "center", gap: "8px" }}
+  >
     <input
       type="radio"
       id={id ?? `${name}-${value}`}
@@ -18,8 +21,8 @@ const RadioButton: React.FC<IRadioButtonProps> = ({
       checked={checked}
       onChange={onChange}
     />
-    <label htmlFor={id ?? `${name}-${value}`}>{label}</label>
-  </>
+    {label}
+  </label>
 );
 
 export default RadioButton;

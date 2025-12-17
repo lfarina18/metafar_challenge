@@ -1,3 +1,4 @@
+import { SxProps } from "@mui/system";
 import type { IntervalType } from "./api/types";
 
 export interface IMetaStockData {
@@ -67,6 +68,8 @@ export interface IButtonProps {
   variant: "contained" | "outlined" | "text";
   children: React.ReactNode;
   style?: React.CSSProperties;
+  onClick?: () => void;
+  sx?: SxProps;
 }
 
 export interface IntervalSelectProps {

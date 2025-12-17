@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, CssBaseline } from "@mui/material";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const StockDetailPage = React.lazy(() => import("./pages/StockDetailPage"));
@@ -28,9 +28,13 @@ const App: React.FC = () => {
           width: "100%",
           maxWidth: (theme) => theme.breakpoints.values.lg,
           mx: "auto",
-          px: 2,
+          px: { xs: 1.5, sm: 2 },
+          py: { xs: 1.5, sm: 2 },
+          boxSizing: "border-box",
+          overflowX: "hidden",
         }}
       >
+        <CssBaseline />
         <React.Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
