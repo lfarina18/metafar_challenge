@@ -6,15 +6,10 @@ import type { StockQuotePreferences } from "../types";
 import { Interval } from "../api/types";
 import { getNowClampedToMarketStart, getTodayMarketStart } from "../helpers";
 import { useStockQuote } from "../hooks/queries/useStockQuote";
+import { useHistoricalChartToast } from "../hooks/useHistoricalChartToast";
 import StockPreferenceForm from "./StockPreferenceForm";
 import { RealTimeStatusBar } from "./molecules";
-import {
-  dismissToast,
-  getPublicErrorMessage,
-  isNoDataError,
-  showLoadingToast,
-  showSuccessToast,
-} from "../utils/toast";
+import { getPublicErrorMessage, isNoDataError } from "../utils/toast";
 
 const Chart = React.lazy(() => import("./StockChart"));
 
@@ -23,9 +18,6 @@ const Detail: React.FC = () => {
   const resolvedSymbol = symbol ?? "MELI";
 
   const [realTimePaused, setRealTimePaused] = React.useState<boolean>(false);
-  const [historicalToastId, setHistoricalToastId] = React.useState<
-    string | null
-  >(null);
 
   const [preferences, setPreferences] = React.useState<StockQuotePreferences>(
     () => {
@@ -56,31 +48,20 @@ const Detail: React.FC = () => {
     enabled: true,
   });
 
-  React.useEffect(() => {
-    if (!historicalToastId) return;
-
-    if (quoteQuery.isError) {
-      dismissToast(historicalToastId);
-      setHistoricalToastId(null);
-      return;
-    }
-
-    if (quoteQuery.isSuccess) {
-      dismissToast(historicalToastId);
-      setHistoricalToastId(null);
-      showSuccessToast("Gráfico actualizado");
-    }
-  }, [historicalToastId, quoteQuery.isError, quoteQuery.isSuccess]);
+  const historicalToast = useHistoricalChartToast({
+    enabled: !preferences.realTime,
+    isError: quoteQuery.isError,
+    isSuccess: quoteQuery.isSuccess,
+  });
 
   const handlePreferencesSubmit = React.useCallback(
     (next: StockQuotePreferences) => {
       setPreferences(next);
       if (!next.realTime) {
-        const toastId = showLoadingToast("Cargando gráfico...");
-        setHistoricalToastId(toastId);
+        historicalToast.show();
       }
     },
-    []
+    [historicalToast]
   );
 
   const chartData: IStockData | null = React.useMemo(() => {
