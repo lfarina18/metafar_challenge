@@ -42,10 +42,7 @@ const StockTableRow: React.FC<IStockTableRowProps> = ({ stock }) => {
   }, [prefetchStockData, preloadChartChunk, preloadDetailRoute]);
 
   return (
-    <TableRow
-      key={`${stock.symbol}-${stock.exchange ?? ""}`}
-      sx={{ height: rowHeight }}
-    >
+    <TableRow sx={{ height: rowHeight }}>
       <TableCell>
         <Link to={`/stock/${stock.symbol}`} onMouseEnter={handleHover}>
           {stock.symbol}

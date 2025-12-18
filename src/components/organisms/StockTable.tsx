@@ -86,6 +86,16 @@ const StockTable: FC = () => {
           getOptionLabel={(option) =>
             `${option.symbol} - ${option.instrument_name}`
           }
+          renderOption={(props, option) => {
+            return (
+              <li
+                {...props}
+                key={`${option.symbol}-${option.mic_code}-${option.exchange}-${option.instrument_name}`}
+              >
+                {`${option.symbol} - ${option.instrument_name}`}
+              </li>
+            );
+          }}
           isOptionEqualToValue={(option, value) =>
             option.symbol === value.symbol &&
             option.exchange === value.exchange &&
@@ -146,7 +156,7 @@ const StockTable: FC = () => {
 
                   return (
                     <TableRow
-                      key={`${stock.symbol}-${stock.exchange ?? ""}`}
+                      key={`${stock.symbol}-${stock.mic_code ?? ""}-${stock.exchange ?? ""}-${virtualRow.index}`}
                       stock={stock}
                     />
                   );
