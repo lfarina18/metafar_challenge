@@ -73,6 +73,7 @@ const StockTable: React.FC = () => {
             width: { xs: "100%", sm: 420 },
             flex: { xs: "1 1 auto", sm: "0 0 auto" },
           }}
+          popupIcon={null}
           noOptionsText="Ingrese para buscar..."
           loadingText="Cargando..."
           options={symbolOptions}
