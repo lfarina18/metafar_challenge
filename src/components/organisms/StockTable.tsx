@@ -122,6 +122,15 @@ const StockTable: FC = () => {
                   </Box>
                 </TableCell>
               </MuiTableRow>
+            ) : stocks.length === 0 ? (
+              <MuiTableRow>
+                <TableCell colSpan={5} align="center">
+                  <Box role="status" aria-live="polite">
+                    {selectedSymbol &&
+                      `No hay datos para "${selectedSymbol.symbol}".`}
+                  </Box>
+                </TableCell>
+              </MuiTableRow>
             ) : (
               <>
                 {paddingTop > 0 ? (
