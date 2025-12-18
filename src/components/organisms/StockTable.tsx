@@ -46,12 +46,17 @@ const StockTable: React.FC = () => {
     return symbolSearchData?.data ?? [];
   }, [symbolSearchData]);
 
+  const virtualizationResetDeps = React.useMemo(
+    () => [exchange, selectedSymbol?.symbol],
+    [exchange, selectedSymbol?.symbol]
+  );
+
   const { virtualRows, paddingTop, paddingBottom } = useVirtualizedRows({
     count: stocks.length,
     parentRef,
     estimateSize: () => 52,
     overscan: 10,
-    resetDeps: [exchange, selectedSymbol?.symbol],
+    resetDeps: virtualizationResetDeps,
   });
 
   return (

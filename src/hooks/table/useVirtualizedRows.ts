@@ -48,7 +48,7 @@ export const useVirtualizedRows = ({
     if (count === 0) return;
 
     virtualizer.scrollToIndex(0);
-  }, [count, parentRef, virtualizer, ...resetDeps]);
+  }, [count, parentRef, virtualizer, resetDeps]);
 
   return {
     virtualizer,
