@@ -27,13 +27,13 @@ export const sampleValues = <T>(values: T[], maxPoints: number): T[] => {
 
   const step = Math.ceil(values.length / maxPoints);
   return values.filter(
-    (_, idx) => idx % step === 0 || idx === values.length - 1
+    (_, idx) => idx % step === 0 || idx === values.length - 1,
   );
 };
 
 export const buildSeriesData = (
   values: IValuesStockData[],
-  maxPoints: number
+  maxPoints: number,
 ): [number, number][] => {
   const sampledValues = sampleValues(values, maxPoints);
 

@@ -22,7 +22,7 @@ const getOutputSizeForInterval = (
   interval: IntervalType,
   realTime: boolean,
   startDate?: string,
-  endDate?: string
+  endDate?: string,
 ): number => {
   const MIN_OUTPUTSIZE = 30;
   const MAX_OUTPUTSIZE = 5000;
@@ -91,7 +91,7 @@ export const useStockQuote = ({
     interval,
     realTime,
     effectiveStartDate,
-    effectiveEndDate
+    effectiveEndDate,
   );
 
   const query = useQuery<
@@ -121,14 +121,14 @@ export const useStockQuote = ({
           end_date: effectiveEndDate,
           outputsize,
         },
-        { signal }
+        { signal },
       ),
     placeholderData: keepPreviousData,
     select: (data): TimeSeriesResponse => {
       return {
         ...data,
         values: [...data.values].sort((a, b) =>
-          a.datetime.localeCompare(b.datetime)
+          a.datetime.localeCompare(b.datetime),
         ),
       };
     },

@@ -19,13 +19,13 @@ const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [interval, setInterval] = React.useState<IntervalType>(
-    Interval.FIVE_MIN
+    Interval.FIVE_MIN,
   );
   const [startDate, setStartDate] = React.useState<string>(
-    getTodayMarketStart()
+    getTodayMarketStart(),
   );
   const [endDate, setEndDate] = React.useState<string>(
-    getNowClampedToMarketStart()
+    getNowClampedToMarketStart(),
   );
   const [realTime, setRealTime] = React.useState<boolean>(true);
 
@@ -37,28 +37,28 @@ const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
       event.preventDefault();
       onSubmit({ interval, startDate, endDate, realTime });
     },
-    [endDate, interval, onSubmit, realTime, startDate]
+    [endDate, interval, onSubmit, realTime, startDate],
   );
 
   const handleIntervalChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       setInterval(event.target.value as IntervalType);
     },
-    []
+    [],
   );
 
   const handleStartDateChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setStartDate(event.target.value);
     },
-    []
+    [],
   );
 
   const handleEndDateChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setEndDate(event.target.value);
     },
-    []
+    [],
   );
 
   const handleCheckboxChange = React.useCallback(
@@ -70,7 +70,7 @@ const StockPreferenceForm: React.FC<IStockPreferenceFormProps> = ({
       }
       setRealTime(event.target.value === "realtime");
     },
-    []
+    [],
   );
 
   return (

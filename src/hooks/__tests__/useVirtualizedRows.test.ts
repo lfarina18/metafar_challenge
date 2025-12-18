@@ -51,7 +51,7 @@ describe("useVirtualizedRows", () => {
         parentRef,
         estimateSize,
         resetDeps: [],
-      })
+      }),
     );
 
     expect(useVirtualizerMock).toHaveBeenCalledTimes(1);
@@ -102,7 +102,7 @@ describe("useVirtualizedRows", () => {
         estimateSize,
         overscan: 5,
         resetDeps: [],
-      })
+      }),
     );
 
     expect(result.current.paddingTop).toBe(100);
@@ -128,7 +128,7 @@ describe("useVirtualizedRows", () => {
         parentRef,
         estimateSize: () => 10,
         resetDeps: [],
-      })
+      }),
     );
 
     await waitFor(() => {
@@ -156,7 +156,7 @@ describe("useVirtualizedRows", () => {
         parentRef,
         estimateSize: () => 10,
         resetDeps: [],
-      })
+      }),
     );
 
     await new Promise((r) => setTimeout(r, 0));
@@ -185,7 +185,7 @@ describe("useVirtualizedRows", () => {
           estimateSize: () => 10,
           resetDeps: [dep],
         }),
-      { initialProps: { dep: "a" } }
+      { initialProps: { dep: "a" } },
     );
 
     await waitFor(() => {

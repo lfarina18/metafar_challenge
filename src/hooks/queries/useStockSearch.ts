@@ -13,7 +13,7 @@ export const useStockSearch = (
     enabled?: boolean;
     debounceMs?: number;
     outputsize?: number;
-  }
+  },
 ) => {
   const { enabled = true, debounceMs = 400, outputsize = 30 } = options ?? {};
 

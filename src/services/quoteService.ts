@@ -14,7 +14,7 @@ import type { RequestOptions } from "./shared/requestOptions";
 export const quoteService = {
   getQuote: async (
     params: QuoteParams,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<QuoteResponse> => {
     const { data } = await apiClient.get(ENDPOINTS.QUOTE, {
       params,
@@ -26,7 +26,7 @@ export const quoteService = {
 
   getStockQuote: async (
     params: StockQuoteParams,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<TimeSeriesResponse> => {
     const {
       symbol,

@@ -11,7 +11,7 @@ export const searchService = {
     options?: {
       outputsize?: number;
     },
-    requestOptions?: RequestOptions
+    requestOptions?: RequestOptions,
   ): Promise<SymbolSearchResponse> => {
     const { outputsize = 30 } = options ?? {};
 

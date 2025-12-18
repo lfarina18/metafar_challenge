@@ -49,7 +49,7 @@ describe("useStockTableData", () => {
     } as never);
 
     const { result } = renderHook(() =>
-      useStockTableData({ exchange: "NASDAQ", selectedSymbol: null })
+      useStockTableData({ exchange: "NASDAQ", selectedSymbol: null }),
     );
 
     expect(useStockList).toHaveBeenCalledTimes(1);
@@ -135,7 +135,7 @@ describe("useStockTableData", () => {
     } as never);
 
     const { result } = renderHook(() =>
-      useStockTableData({ exchange: "NASDAQ", selectedSymbol })
+      useStockTableData({ exchange: "NASDAQ", selectedSymbol }),
     );
 
     expect(useStockList).toHaveBeenCalledTimes(1);
@@ -179,7 +179,7 @@ describe("useStockTableData", () => {
     } as never);
 
     const { result: listResult } = renderHook(() =>
-      useStockTableData({ exchange: "NASDAQ", selectedSymbol: null })
+      useStockTableData({ exchange: "NASDAQ", selectedSymbol: null }),
     );
 
     expect(listResult.current.isLoading).toBe(true);
@@ -198,7 +198,7 @@ describe("useStockTableData", () => {
     };
 
     const { result: detailResult } = renderHook(() =>
-      useStockTableData({ exchange: "NASDAQ", selectedSymbol })
+      useStockTableData({ exchange: "NASDAQ", selectedSymbol }),
     );
 
     expect(detailResult.current.isLoading).toBe(false);

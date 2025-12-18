@@ -4,9 +4,8 @@ import type { SymbolSearchResult } from "../../api/types";
 
 describe("useStockAutocompleteState", () => {
   it("initializes with default exchange and empty input", async () => {
-    const { useStockAutocompleteState } = await import(
-      "../table/useStockAutocompleteState"
-    );
+    const { useStockAutocompleteState } =
+      await import("../table/useStockAutocompleteState");
 
     const { result } = renderHook(() => useStockAutocompleteState());
 
@@ -16,21 +15,19 @@ describe("useStockAutocompleteState", () => {
   });
 
   it("initializes with custom initialExchange", async () => {
-    const { useStockAutocompleteState } = await import(
-      "../table/useStockAutocompleteState"
-    );
+    const { useStockAutocompleteState } =
+      await import("../table/useStockAutocompleteState");
 
     const { result } = renderHook(() =>
-      useStockAutocompleteState({ initialExchange: "NYSE" })
+      useStockAutocompleteState({ initialExchange: "NYSE" }),
     );
 
     expect(result.current.exchange).toBe("NYSE");
   });
 
   it("handleAutocompleteChange sets selectedSymbol, exchange and input", async () => {
-    const { useStockAutocompleteState } = await import(
-      "../table/useStockAutocompleteState"
-    );
+    const { useStockAutocompleteState } =
+      await import("../table/useStockAutocompleteState");
 
     const option: SymbolSearchResult = {
       symbol: "AAPL",
@@ -48,7 +45,7 @@ describe("useStockAutocompleteState", () => {
     act(() => {
       result.current.handleAutocompleteChange(
         {} as unknown as React.SyntheticEvent,
-        option
+        option,
       );
     });
 
@@ -58,9 +55,8 @@ describe("useStockAutocompleteState", () => {
   });
 
   it("handleAutocompleteChange clears input when value is null", async () => {
-    const { useStockAutocompleteState } = await import(
-      "../table/useStockAutocompleteState"
-    );
+    const { useStockAutocompleteState } =
+      await import("../table/useStockAutocompleteState");
 
     const option: SymbolSearchResult = {
       symbol: "AAPL",
@@ -78,7 +74,7 @@ describe("useStockAutocompleteState", () => {
     act(() => {
       result.current.handleAutocompleteChange(
         {} as unknown as React.SyntheticEvent,
-        option
+        option,
       );
     });
 
@@ -87,7 +83,7 @@ describe("useStockAutocompleteState", () => {
     act(() => {
       result.current.handleAutocompleteChange(
         {} as unknown as React.SyntheticEvent,
-        null
+        null,
       );
     });
 
@@ -96,9 +92,8 @@ describe("useStockAutocompleteState", () => {
   });
 
   it("handleAutocompleteInputChange clears selectedSymbol when user types a different value", async () => {
-    const { useStockAutocompleteState } = await import(
-      "../table/useStockAutocompleteState"
-    );
+    const { useStockAutocompleteState } =
+      await import("../table/useStockAutocompleteState");
 
     const option: SymbolSearchResult = {
       symbol: "AAPL",
@@ -116,7 +111,7 @@ describe("useStockAutocompleteState", () => {
     act(() => {
       result.current.handleAutocompleteChange(
         {} as unknown as React.SyntheticEvent,
-        option
+        option,
       );
     });
 
@@ -126,7 +121,7 @@ describe("useStockAutocompleteState", () => {
       result.current.handleAutocompleteInputChange(
         {} as unknown as React.SyntheticEvent,
         "MSFT",
-        "input"
+        "input",
       );
     });
 
@@ -135,9 +130,8 @@ describe("useStockAutocompleteState", () => {
   });
 
   it("handleAutocompleteInputChange does not clear selectedSymbol for non-input reasons", async () => {
-    const { useStockAutocompleteState } = await import(
-      "../table/useStockAutocompleteState"
-    );
+    const { useStockAutocompleteState } =
+      await import("../table/useStockAutocompleteState");
 
     const option: SymbolSearchResult = {
       symbol: "AAPL",
@@ -155,7 +149,7 @@ describe("useStockAutocompleteState", () => {
     act(() => {
       result.current.handleAutocompleteChange(
         {} as unknown as React.SyntheticEvent,
-        option
+        option,
       );
     });
 
@@ -163,7 +157,7 @@ describe("useStockAutocompleteState", () => {
       result.current.handleAutocompleteInputChange(
         {} as unknown as React.SyntheticEvent,
         "MSFT",
-        "reset"
+        "reset",
       );
     });
 

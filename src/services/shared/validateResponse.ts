@@ -15,7 +15,7 @@ export class ApiError extends Error {
 
 export const validateResponse = <T>(
   data: unknown,
-  schema: z.ZodSchema<T>
+  schema: z.ZodSchema<T>,
 ): T => {
   const errorCheck = ApiErrorResponseSchema.safeParse(data);
   if (errorCheck.success) {
@@ -31,7 +31,7 @@ export const validateResponse = <T>(
   if (!result.success) {
     console.error("Validation error:", result.error.issues);
     throw new Error(
-      "Error en la respuesta del servicio, consulte a soporte técnico para más información."
+      "Error en la respuesta del servicio, consulte a soporte técnico para más información.",
     );
   }
 

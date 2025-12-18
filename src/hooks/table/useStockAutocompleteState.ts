@@ -13,11 +13,11 @@ interface UseStockAutocompleteStateResult {
   handleAutocompleteInputChange: (
     _: React.SyntheticEvent,
     value: string,
-    reason: "input" | "reset" | "clear"
+    reason: "input" | "reset" | "clear",
   ) => void;
   handleAutocompleteChange: (
     _: React.SyntheticEvent,
-    value: SymbolSearchResult | null
+    value: SymbolSearchResult | null,
   ) => void;
 }
 
@@ -33,7 +33,7 @@ export const useStockAutocompleteState = ({
     (
       _: React.SyntheticEvent,
       value: string,
-      reason: "input" | "reset" | "clear"
+      reason: "input" | "reset" | "clear",
     ) => {
       setAutocompleteInput(value);
 
@@ -45,7 +45,7 @@ export const useStockAutocompleteState = ({
         setSelectedSymbol(null);
       }
     },
-    [selectedSymbol]
+    [selectedSymbol],
   );
 
   const handleAutocompleteChange = React.useCallback(
@@ -60,7 +60,7 @@ export const useStockAutocompleteState = ({
       setExchange(value.exchange);
       setAutocompleteInput(value.symbol);
     },
-    []
+    [],
   );
 
   return {

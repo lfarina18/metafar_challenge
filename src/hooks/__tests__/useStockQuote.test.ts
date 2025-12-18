@@ -85,7 +85,7 @@ describe("useStockQuote", () => {
           startDate: "2025-01-01T10:00",
           endDate: "2025-01-01T10:00",
         }),
-      { wrapper }
+      { wrapper },
     );
 
     // Assert
@@ -102,7 +102,7 @@ describe("useStockQuote", () => {
         end_date: "2025-01-01T10:00",
         outputsize: 30,
       }),
-      expect.objectContaining({ signal: expect.any(AbortSignal) })
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
 
     expect(result.current.data?.values.map((v) => v.datetime)).toEqual([
@@ -129,7 +129,7 @@ describe("useStockQuote", () => {
           interval: Interval.FIVE_MIN,
           realTime: true,
         }),
-      { wrapper }
+      { wrapper },
     );
 
     // Assert
@@ -146,7 +146,7 @@ describe("useStockQuote", () => {
         end_date: "2025-01-01T10:05",
         outputsize: 78,
       }),
-      expect.objectContaining({ signal: expect.any(AbortSignal) })
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
 
     expect(showErrorToast).not.toHaveBeenCalled();
@@ -156,9 +156,8 @@ describe("useStockQuote", () => {
     // Arrange
     const wrapper = createWrapper();
     const { quoteService } = await import("../../services/quoteService");
-    const { getPublicErrorMessage, showErrorToast } = await import(
-      "../../utils/toast"
-    );
+    const { getPublicErrorMessage, showErrorToast } =
+      await import("../../utils/toast");
     const { useStockQuote } = await import("../queries/useStockQuote");
 
     const err = new Error("Request failed");
@@ -174,7 +173,7 @@ describe("useStockQuote", () => {
           startDate: "2025-01-01T10:00",
           endDate: "2025-01-01T10:00",
         }),
-      { wrapper }
+      { wrapper },
     );
 
     // Assert

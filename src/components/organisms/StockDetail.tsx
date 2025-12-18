@@ -29,7 +29,7 @@ const StockDetail: React.FC = () => {
         endDate: now,
         realTime: true,
       };
-    }
+    },
   );
 
   React.useEffect(() => {
@@ -61,7 +61,7 @@ const StockDetail: React.FC = () => {
         historicalToast.show();
       }
     },
-    [historicalToast]
+    [historicalToast],
   );
 
   const chartData: IStockData | null = React.useMemo(() => {

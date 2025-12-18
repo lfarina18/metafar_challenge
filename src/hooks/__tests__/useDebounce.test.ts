@@ -18,7 +18,7 @@ describe("useDebounce", () => {
       ({ value, delay }) => useDebounce(value, delay),
       {
         initialProps: { value: "a", delay: 300 },
-      }
+      },
     );
 
     expect(result.current).toBe("a");
@@ -31,7 +31,7 @@ describe("useDebounce", () => {
       ({ value, delay }) => useDebounce(value, delay),
       {
         initialProps: { value: "a", delay: 300 },
-      }
+      },
     );
 
     rerender({ value: "b", delay: 300 });
@@ -58,7 +58,7 @@ describe("useDebounce", () => {
       ({ value, delay }) => useDebounce(value, delay),
       {
         initialProps: { value: "a", delay: 300 },
-      }
+      },
     );
 
     rerender({ value: "b", delay: 300 });
@@ -89,7 +89,7 @@ describe("useDebounce", () => {
       ({ value, delay }) => useDebounce(value, delay),
       {
         initialProps: { value: "a", delay: 300 },
-      }
+      },
     );
 
     rerender({ value: "b", delay: 300 });

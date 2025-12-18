@@ -543,29 +543,24 @@
 ### Implementado
 
 - **`React.memo` en `TableRow`** (`src/components/atomics/TableRow.tsx`):
-
   - Se memoizó la fila con un comparator por campos (`symbol/name/currency/type`).
   - **Objetivo**: evitar renders redundantes de filas visibles durante updates frecuentes del virtualizer/scroll cuando el `stock` no cambió.
 
 - **`React.memo` en componentes atómicos**:
-
   - **`TextField`** (`src/components/atomics/TextField.tsx`)
   - **`TableHeader`** (`src/components/atomics/TableHeader.tsx`)
   - **Objetivo**: que inputs y header no se re-rendericen por renders del padre (`StockTable`) que no cambian sus props.
 
 - **`useCallback` en handlers de búsqueda** (`src/components/StockTable.tsx`):
-
   - `handleSearchNameChange` y `handleSearchSymbolChange` se estabilizaron con `useCallback`.
   - **Objetivo**: mantener estable la identidad de `onChange` y aprovechar la memoización del `TextField`.
 
 - **`useMemo` + `React.memo` en `StockChart`** (`src/components/StockChart.tsx`):
-
   - `chartOptions` se memorizó con `useMemo` (evita recomputar mapeos sobre `values`).
   - El componente se exporta con `React.memo`.
   - **Objetivo**: reducir recomputación y re-renders en el gráfico cuando `stockData` no cambia.
 
 - **`useMemo` en filtrado** (`src/components/StockTable.tsx`):
-
   - `filteredStocks` se calcula con `useMemo` en base a `debouncedSearchName/debouncedSearchSymbol`.
   - **Objetivo**: evitar recalcar filtrado en renders no relacionados a la búsqueda.
 
@@ -576,19 +571,16 @@
 ### Implementado
 
 - **`structuralSharing: true`**
-
   - Se usa el comportamiento por defecto de TanStack Query (no se desactivó).
   - **Objetivo**: mantener referencias estables cuando la data no cambia, reduciendo re-renders.
 
 - **`placeholderData` / `keepPreviousData` para transiciones suaves**
-
   - `useStockList` (`src/hooks/queries/useStockList.ts`) usa `placeholderData: (previousData) => previousData`.
   - `useStockSearch` (`src/hooks/queries/useStockSearch.ts`) usa `placeholderData: (previousData) => previousData`.
   - `useStockQuote` (`src/hooks/queries/useStockQuote.ts`) usa `placeholderData: keepPreviousData`.
   - **Objetivo**: evitar flicker o “pantallas vacías” al cambiar parámetros y mientras se resuelve la nueva request.
 
 - **`select` para transformar datos solo cuando es necesario**
-
   - `useStockQuote` (`src/hooks/queries/useStockQuote.ts`) usa `select` para ordenar `values` por `datetime`.
   - **Objetivo**: mover transformaciones a la capa de query (cerca de la data) y entregar al UI un shape estable/predecible.
 
@@ -612,7 +604,6 @@
   - **CLS**: 0.093
 - **Tiempo de carga inicial (proxy)**: LCP
 - **Evidencia**:
-
   - Ruta/nombre del screenshot/reporte: metrics/lighthouse/lighthouse_before.png
 
   - Ruta/nombre del screenshot/reporte: metrics/lighthouse/lighthouse-before-virtual.png (preview)
@@ -635,9 +626,7 @@
   - **CLS**: 0
 - **Tiempo de carga inicial (proxy)**: LCP
 - **Notas (cambios que habilitaron 100/100)**:
-
   - **A11y (labels / landmarks / semántica)**:
-
     - Asociar `label` a inputs (`htmlFor`/`id`) y `aria-label` como fallback en atómicos.
     - Agregar `main` landmark en el layout raíz.
     - Semántica de tabla: headers como `th` con `scope="col"`.
@@ -649,7 +638,6 @@
     - `lang="es-AR"` en `index.html`.
 
 - **Evidencia**:
-
   - Ruta/nombre del screenshot/reporte: metrics/lighthouse/lighthouse-after-virtual.png
   - Ruta/nombre del screenshot/reporte: metrics/lighthouse/lighthouse-100.png
 
@@ -682,7 +670,6 @@ Registrar el output de `yarn build`:
 - **JS bundle (raw)**: 805.01 kB
 - **JS bundle (gzip)**: 271.78 kB
 - **Evidencia**:
-
   - Ruta/nombre del screenshot: metrics/bundle/build-before-code-splliting-and-lazy-loading.png
 
   ![Build before code splitting/lazy loading](./metrics/bundle/build-before-code-splliting-and-lazy-loading.png)
@@ -702,7 +689,6 @@ Registrar el output de `yarn build`:
   - Se generó un chunk separado para `StockChart` (Highcharts) mediante `React.lazy()`.
   - Se implementó preloading del chunk de `Detail` y `StockChart` al hacer hover sobre los links en la tabla.
 - **Evidencia**:
-
   - Ruta/nombre del screenshot: metrics/bundle/build-after-code-splliting-and-lazy-loading.png
 
   ![Build after code splitting/lazy loading](./metrics/bundle/build-after-code-splliting-and-lazy-loading.png)
@@ -737,19 +723,16 @@ Sí. Se implementó TanStack Query v5 a nivel de:
 ## Estrategia de caché por tipo de dato
 
 - **Datos estáticos: lista de acciones (`useStockList`)**
-
   - `staleTime`: `Infinity`
   - Persistencia: **sí**, en `localStorage` (persistimos solo `queryKey: ['stocks','list',exchange]`).
   - Motivo: dataset grande y poco cambiante; mejora tiempo de carga y reduce requests.
 
 - **Datos históricos: time series histórico (`useStockQuote` con `realTime=false`)**
-
   - `staleTime`: `0` (config actual)
   - `gcTime`: `5m`
   - Motivo: el endpoint puede ser pesado; se priorizó refetch manual/estratégico. (Si se quiere alinear estrictamente con checklist, se puede subir `staleTime` a `5m` cuando `realTime=false`).
 
 - **Datos tiempo real: time series realtime (`useStockQuote` con `realTime=true`)**
-
   - `staleTime`: `0`
   - `refetchInterval`: según intervalo seleccionado (`REFETCH_INTERVAL`).
   - Motivo: asegurar datos frescos y updates automáticos.
@@ -763,19 +746,15 @@ Sí. Se implementó TanStack Query v5 a nivel de:
 ## Trade-offs / Decisiones
 
 - **Persistencia selectiva**:
-
   - Solo persistimos la lista (`stocks.list`) para reducir tamaño y evitar guardar time series (más pesado, más volátil).
 
 - **Buster para invalidación de cache persistida**:
-
   - `buster: 'stocks-cache-v1'` permite resetear el caché persistido ante cambios incompatibles (schemas/queryKeys/estrategias).
 
 - **Validación runtime con Zod**:
-
   - Se detectó que `/stocks` puede devolver payload parcial, por lo que `StockSchema` se relajó (campos extendidos opcionales + `.passthrough()`) para evitar crashes.
 
 - **Errores con TanStack Query v5**:
-
   - Para toasts por query se usa `query.meta.onError` y se ejecuta desde `QueryCache.onError` (v5 no expone `onError` en el objeto options como en v4).
 
 - **Cancelación de requests (AbortSignal)**:

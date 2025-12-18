@@ -48,7 +48,7 @@ const StockTable: React.FC = () => {
 
   const virtualizationResetDeps = React.useMemo(
     () => [exchange, selectedSymbol?.symbol],
-    [exchange, selectedSymbol?.symbol]
+    [exchange, selectedSymbol?.symbol],
   );
 
   const { virtualRows, paddingTop, paddingBottom } = useVirtualizedRows({

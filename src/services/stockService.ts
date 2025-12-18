@@ -8,7 +8,7 @@ import type { RequestOptions } from "./shared/requestOptions";
 export const stockService = {
   getStockList: async (
     exchange: string = "NASDAQ",
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<StockListResponse> => {
     const { data } = await apiClient.get(ENDPOINTS.STOCKS, {
       params: {
@@ -23,7 +23,7 @@ export const stockService = {
 
   getStockData: async (
     symbol: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<StockListResponse> => {
     const { data } = await apiClient.get(ENDPOINTS.STOCKS, {
       params: {

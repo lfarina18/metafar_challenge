@@ -58,7 +58,7 @@ describe("useStockSearch", () => {
     // Act
     const { result } = renderHook(
       () => useStockSearch("AAPL", { debounceMs: 0, outputsize: 10 }),
-      { wrapper }
+      { wrapper },
     );
 
     // Assert
@@ -70,7 +70,7 @@ describe("useStockSearch", () => {
     expect(searchService.searchSymbols).toHaveBeenCalledWith(
       "AAPL",
       { outputsize: 10 },
-      expect.objectContaining({ signal: expect.any(AbortSignal) })
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
     expect(result.current.data).toEqual(mockResponse);
   });
@@ -79,9 +79,8 @@ describe("useStockSearch", () => {
     // Arrange
     const wrapper = createWrapper();
     const { searchService } = await import("../../services/searchService");
-    const { getPublicErrorMessage, showErrorToast } = await import(
-      "../../utils/toast"
-    );
+    const { getPublicErrorMessage, showErrorToast } =
+      await import("../../utils/toast");
     const { useStockSearch } = await import("../queries/useStockSearch");
 
     const err = new Error("Request failed");
@@ -92,7 +91,7 @@ describe("useStockSearch", () => {
     // Act
     const { result } = renderHook(
       () => useStockSearch("AAPL", { debounceMs: 0 }),
-      { wrapper }
+      { wrapper },
     );
 
     // Assert

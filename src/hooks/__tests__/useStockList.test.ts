@@ -51,7 +51,7 @@ describe("useStockList", () => {
     expect(stockService.getStockList).toHaveBeenCalledTimes(1);
     expect(stockService.getStockList).toHaveBeenCalledWith(
       "NASDAQ",
-      expect.objectContaining({ signal: expect.any(AbortSignal) })
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
     expect(result.current.data).toEqual(mockResponse);
   });
@@ -60,9 +60,8 @@ describe("useStockList", () => {
     // Arrange
     const wrapper = createWrapper();
     const { stockService } = await import("../../services/stockService");
-    const { getPublicErrorMessage, showErrorToast } = await import(
-      "../../utils/toast"
-    );
+    const { getPublicErrorMessage, showErrorToast } =
+      await import("../../utils/toast");
     const { useStockList } = await import("../queries/useStockList");
 
     const err = new Error("Request failed");

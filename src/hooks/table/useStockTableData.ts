@@ -39,7 +39,7 @@ export const useStockTableData = ({
         ? data.data.filter(
             (s) =>
               s.exchange === selectedSymbol.exchange &&
-              s.mic_code === selectedSymbol.mic_code
+              s.mic_code === selectedSymbol.mic_code,
           )
         : data?.data;
 

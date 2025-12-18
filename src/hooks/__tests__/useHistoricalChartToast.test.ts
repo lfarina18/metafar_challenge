@@ -14,9 +14,8 @@ describe("useHistoricalChartToast", () => {
 
   it("show() sets toastId using showLoadingToast", async () => {
     const { showLoadingToast } = await import("../../utils/toast");
-    const { useHistoricalChartToast } = await import(
-      "../detail/useHistoricalChartToast"
-    );
+    const { useHistoricalChartToast } =
+      await import("../detail/useHistoricalChartToast");
 
     vi.mocked(showLoadingToast).mockReturnValue("toast-1");
 
@@ -25,7 +24,7 @@ describe("useHistoricalChartToast", () => {
         enabled: true,
         isError: false,
         isSuccess: false,
-      })
+      }),
     );
 
     act(() => {
@@ -38,12 +37,10 @@ describe("useHistoricalChartToast", () => {
   });
 
   it("dismisses and clears toastId when enabled and isError becomes true", async () => {
-    const { dismissToast, showLoadingToast } = await import(
-      "../../utils/toast"
-    );
-    const { useHistoricalChartToast } = await import(
-      "../detail/useHistoricalChartToast"
-    );
+    const { dismissToast, showLoadingToast } =
+      await import("../../utils/toast");
+    const { useHistoricalChartToast } =
+      await import("../detail/useHistoricalChartToast");
 
     vi.mocked(showLoadingToast).mockReturnValue("toast-1");
 
@@ -52,7 +49,7 @@ describe("useHistoricalChartToast", () => {
         useHistoricalChartToast({ enabled, isError, isSuccess }),
       {
         initialProps: { enabled: true, isError: false, isSuccess: false },
-      }
+      },
     );
 
     act(() => {
@@ -67,12 +64,10 @@ describe("useHistoricalChartToast", () => {
   });
 
   it("dismisses, clears toastId and shows success when enabled and isSuccess becomes true", async () => {
-    const { dismissToast, showLoadingToast, showSuccessToast } = await import(
-      "../../utils/toast"
-    );
-    const { useHistoricalChartToast } = await import(
-      "../detail/useHistoricalChartToast"
-    );
+    const { dismissToast, showLoadingToast, showSuccessToast } =
+      await import("../../utils/toast");
+    const { useHistoricalChartToast } =
+      await import("../detail/useHistoricalChartToast");
 
     vi.mocked(showLoadingToast).mockReturnValue("toast-1");
 
@@ -81,7 +76,7 @@ describe("useHistoricalChartToast", () => {
         useHistoricalChartToast({ enabled, isError, isSuccess }),
       {
         initialProps: { enabled: true, isError: false, isSuccess: false },
-      }
+      },
     );
 
     act(() => {
@@ -98,12 +93,10 @@ describe("useHistoricalChartToast", () => {
   });
 
   it("does nothing when not enabled", async () => {
-    const { dismissToast, showLoadingToast, showSuccessToast } = await import(
-      "../../utils/toast"
-    );
-    const { useHistoricalChartToast } = await import(
-      "../detail/useHistoricalChartToast"
-    );
+    const { dismissToast, showLoadingToast, showSuccessToast } =
+      await import("../../utils/toast");
+    const { useHistoricalChartToast } =
+      await import("../detail/useHistoricalChartToast");
 
     vi.mocked(showLoadingToast).mockReturnValue("toast-1");
 
@@ -112,7 +105,7 @@ describe("useHistoricalChartToast", () => {
         useHistoricalChartToast({ enabled, isError, isSuccess }),
       {
         initialProps: { enabled: false, isError: false, isSuccess: false },
-      }
+      },
     );
 
     act(() => {

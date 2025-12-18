@@ -63,7 +63,6 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
 #### Tareas Obligatorias
 
 - [x] **Instalar y configurar React Query (TanStack Query)**
-
   - Instalar `@tanstack/react-query` y `@tanstack/react-query-devtools`
   - Configurar `QueryClient` con opciones apropiadas:
     - `defaultOptions` para queries y mutations
@@ -72,7 +71,6 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
     - Habilitar React Query DevTools en desarrollo
 
 - [x] **Refactorizar capa de servicios/API**
-
   - Crear una estructura clara de servicios (`src/services/` o `src/api/`)
   - Abstraer todas las llamadas a Twelve Data en funciones de servicio
   - Implementar tipos TypeScript completos para todas las respuestas de la API
@@ -80,7 +78,6 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
   - Organizar servicios por dominio (stocks, quotes, search, etc.)
 
 - [x] **Crear custom hooks con React Query**
-
   - `useStockList()` - Para obtener lista de acciones
   - `useStockQuote(symbol, interval, startDate, endDate)` - Para datos de time series
   - `useStockData(symbol)` - Para información básica de una acción
@@ -88,20 +85,17 @@ Tu tarea es **refactorizar la arquitectura** de esta aplicación implementando *
   - Cada hook debe exponer: `data`, `isLoading`, `isError`, `error`, `refetch`
 
 - [x] **Configurar estrategias de caché**
-
   - **Datos estáticos** (lista de acciones): `staleTime: Infinity`, persistir en localStorage
   - **Datos históricos**: `staleTime: 5 minutos` (no cambian)
   - **Datos en tiempo real**: `staleTime: 0`, `refetchInterval` según intervalo seleccionado
   - **Búsquedas**: `staleTime: 1 minuto`, caché corto
 
 - [x] **Implementar prefetching inteligente**
-
   - Prefetch datos de acciones al hacer hover sobre filas de la tabla
   - Prefetch datos relacionados cuando se navega a una página de detalle
   - Usar `queryClient.prefetchQuery()` estratégicamente
 
 - [x] **Manejo de invalidación de caché**
-
   - Invalidar caché cuando sea necesario
   - Usar `queryClient.invalidateQueries()` apropiadamente
   - Implementar invalidación optimista donde sea posible
@@ -173,20 +167,17 @@ src/
 #### Tareas Obligatorias
 
 - [x] **Virtualización de tabla**
-
   - Implementar virtualización para `StockTable` usando `@tanstack/react-virtual`
   - Adaptar a scroll virtual
   - Medir mejora de performance (FPS, tiempo de render inicial)
 
 - [x] **Code splitting y lazy loading**
-
   - Implementar lazy loading de rutas con `React.lazy()` y `Suspense`
   - Separar `Detail` component (página de detalle) en un chunk separado
   - Separar `StockChart` (Highcharts es pesado) en un chunk separado
   - Implementar preloading de rutas al hacer hover sobre links
 
 - [x] **Optimización de re-renders**
-
   - Usar **React DevTools Profiler** para identificar componentes que se re-renderizan innecesariamente
   - Implementar `React.memo` en componentes que reciben props que no cambian frecuentemente:
     - `TableRow` - memoizar para evitar re-renders al cambiar filtros
@@ -200,7 +191,6 @@ src/
   - **Documentar** cada optimización: por qué se hizo y qué problema resuelve
 
 - [x] **Optimización del gráfico**
-
   - Optimizar renderizado de Highcharts:
     - Limitar cantidad de puntos mostrados (data sampling para datasets grandes)
     - Implementar `dataGrouping` de Highcharts para datasets grandes
@@ -239,21 +229,18 @@ src/
 #### Tareas
 
 - [x] **Aprovechar estados de React Query**
-
   - [x] Usar `isLoading`, `isError`, `error` de React Query en componentes (no mostramos `isFetching` en tabla por UX)
   - [x] Mostrar estados de loading específicos por sección
   - [x] Implementar skeleton loaders donde sea apropiado
   - [x] Mostrar mensajes de error amigables usando `error` de React Query
 
 - [x] **Mejorar modo tiempo real**
-
   - [x] Implementar actualización automática usando `refetchInterval` de React Query
   - [x] Configurar `refetchInterval` dinámicamente según el intervalo seleccionado
   - [x] Indicador visual de que está en modo tiempo real
   - [x] Permitir pausar/reanudar actualizaciones
 
 - [x] **Mejorar ErrorBoundary**
-
   - [x] ErrorBoundary más robusto con opciones de recovery
   - [x] Mensajes de error amigables para el usuario
   - [x] Errores de API: se manejan con estados de React Query (toasts/UI), no con ErrorBoundary
@@ -283,19 +270,16 @@ src/
 #### Tareas
 
 - [x] **TypeScript estricto**
-
   - Configurar TypeScript en modo estricto en `tsconfig.json`
   - Eliminar todos los `any` implícitos
   - Crear tipos compartidos y utility types
 
 - [x] **Tipos para React Query**
-
   - Crear tipos para query keys (usar `as const` y tipos inferidos)
   - Tipos para funciones de query y mutation
   - Tipos para parámetros de queries
 
 - [x] **Tipos para Twelve Data**
-
   - Crear tipos completos para todas las respuestas de Twelve Data
   - Tipos para diferentes endpoints (time_series, quote, symbol_search, etc.)
   - Tipos para parámetros de cada endpoint
@@ -321,19 +305,16 @@ src/
 #### Tareas
 
 - [x] **Configurar testing**
-
   - Configurar Vitest (recomendado para Vite) o Jest
   - Configurar React Testing Library
   - Configurar `@tanstack/react-query` para testing
 
 - [ ] **Tests de hooks de React Query**
-
   - Tests para custom hooks de queries
   - Mocking de servicios
   - Tests de estados de loading, error, success
 
 - [ ] **Tests de componentes**
-
   - Tests para componentes críticos usando React Query
   - Tests de integración para flujos completos
   - Mocking apropiado de React Query
@@ -363,14 +344,12 @@ src/
 ## 📦 Entregables Requeridos
 
 1. **Código refactorizado y funcional**
-
    - React Query implementado en toda la aplicación
    - Optimizaciones de performance aplicadas
    - Código limpio y bien documentado
    - Commits descriptivos y bien estructurados
 
 2. **README actualizado** con:
-
    - Instrucciones de setup y ejecución
    - Descripción de la nueva arquitectura con React Query
    - Estructura de carpetas explicada
@@ -378,7 +357,6 @@ src/
    - Mejoras implementadas
 
 3. **Documento técnico** (opcional pero muy valorado) explicando:
-
    - **React Query**:
      - Por qué se eligió React Query
      - Estrategia de caché para cada tipo de dato
@@ -487,7 +465,6 @@ src/
    ```
 
 5. **Configurar API Key de Twelve Data**
-
    - El proyecto actualmente tiene una API key hardcodeada en `src/api/index.ts`
    - **IMPORTANTE**: Moverla a variables de entorno (`.env`)
    - Crear archivo `.env` con: `VITE_TWELVE_DATA_API_KEY=tu_api_key`
@@ -549,14 +526,12 @@ src/
 ## 💡 Tips y Recomendaciones
 
 1. **Comienza con React Query**
-
    - Primero instala y configura React Query
    - Crea la estructura de servicios y tipos
    - Refactoriza un componente a la vez usando React Query
    - Usa React Query DevTools para entender el comportamiento del caché
 
 2. **Estrategia de implementación recomendada**
-
    - **Paso 1**: Configurar QueryClient y estructura base (1h)
    - **Paso 2**: Refactorizar servicios y crear custom hooks (2h)
    - **Paso 3**: Migrar componentes uno por uno (2h)
@@ -564,7 +539,6 @@ src/
    - **Paso 5**: Mejoras de UX y TypeScript (1h)
 
 3. **React Query - Mejores prácticas**
-
    - Usa `queryKey` consistentes y tipados
    - Configura `staleTime` según el tipo de dato (estáticos: Infinity, tiempo real: 0)
    - Aprovecha `keepPreviousData` para transiciones suaves
@@ -572,21 +546,18 @@ src/
    - Implementa prefetching en interacciones del usuario (hover, etc.)
 
 4. **Performance - Medir antes de optimizar**
-
    - Usa React DevTools Profiler para identificar problemas reales
    - Mide bundle size antes y después
    - No optimices prematuramente - optimiza donde hay problemas reales
    - Documenta por qué cada optimización es necesaria
 
 5. **Trabaja incrementalmente**
-
    - Haz commits frecuentes y descriptivos
    - Implementa mejoras de forma incremental
    - Prueba cada cambio antes de continuar
    - Usa branches para features grandes
 
 6. **Documenta decisiones**
-
    - Explica por qué elegiste React Query sobre otras soluciones
    - Documenta la estrategia de caché
    - Incluye comentarios donde el código no sea autoexplicativo
