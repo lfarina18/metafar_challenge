@@ -1,8 +1,8 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import { IButtonProps } from "../../types";
+import type { FC } from "react";
 
-const CustomButton: React.FC<IButtonProps> = ({
+const CustomButton: FC<IButtonProps> = ({
   type,
   variant,
   children,

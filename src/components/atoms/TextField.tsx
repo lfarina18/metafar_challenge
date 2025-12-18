@@ -1,16 +1,17 @@
-import * as React from "react";
 import { TextField } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
+import { memo } from "react";
+import type { FC, ChangeEvent } from "react";
 
 interface ISearchFieldProps {
   label: string;
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   fullWidth?: boolean;
   sx?: SxProps<Theme>;
 }
 
-const SearchField: React.FC<ISearchFieldProps> = ({
+const SearchField: FC<ISearchFieldProps> = ({
   label,
   value,
   onChange,
@@ -27,4 +28,4 @@ const SearchField: React.FC<ISearchFieldProps> = ({
   />
 );
 
-export default React.memo(SearchField);
+export default memo(SearchField);

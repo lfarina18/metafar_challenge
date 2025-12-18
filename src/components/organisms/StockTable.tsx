@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Autocomplete,
   TableContainer,
@@ -18,8 +17,10 @@ import { useStockTableData } from "../../hooks/table/useStockTableData";
 import { useVirtualizedRows } from "../../hooks/table/useVirtualizedRows";
 import { getPublicErrorMessage } from "../../utils/toast";
 import type { SymbolSearchResult } from "../../api/types";
+import { useMemo, useRef } from "react";
+import type { FC } from "react";
 
-const StockTable: React.FC = () => {
+const StockTable: FC = () => {
   const {
     exchange,
     autocompleteInput,
@@ -33,7 +34,7 @@ const StockTable: React.FC = () => {
     selectedSymbol,
   });
 
-  const parentRef = React.useRef<HTMLDivElement | null>(null);
+  const parentRef = useRef<HTMLDivElement | null>(null);
 
   const { data: symbolSearchData, isFetching: isSymbolSearchFetching } =
     useStockSearch(autocompleteInput, {
@@ -42,11 +43,11 @@ const StockTable: React.FC = () => {
       outputsize: 30,
     });
 
-  const symbolOptions = React.useMemo<SymbolSearchResult[]>(() => {
+  const symbolOptions = useMemo<SymbolSearchResult[]>(() => {
     return symbolSearchData?.data ?? [];
   }, [symbolSearchData]);
 
-  const virtualizationResetDeps = React.useMemo(
+  const virtualizationResetDeps = useMemo(
     () => [exchange, selectedSymbol?.symbol],
     [exchange, selectedSymbol?.symbol],
   );

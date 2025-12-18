@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Alert, Box, Skeleton } from "@mui/material";
 import { useParams } from "react-router-dom";
 import type { IStockData } from "../../types";
@@ -10,29 +9,36 @@ import { useHistoricalChartToast } from "../../hooks/detail/useHistoricalChartTo
 import StockPreferenceForm from "./StockPreferenceForm";
 import { RealTimeStatusBar } from "../molecules";
 import { getPublicErrorMessage, isNoDataError } from "../../utils/toast";
+import {
+  type FC,
+  lazy,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  Suspense,
+} from "react";
 
-const Chart = React.lazy(() => import("./StockChart"));
+const Chart = lazy(() => import("./StockChart"));
 
-const StockDetail: React.FC = () => {
+const StockDetail: FC = () => {
   const { symbol } = useParams<{ symbol?: string }>();
   const resolvedSymbol = symbol ?? "MELI";
 
-  const [realTimePaused, setRealTimePaused] = React.useState<boolean>(false);
+  const [realTimePaused, setRealTimePaused] = useState<boolean>(false);
 
-  const [preferences, setPreferences] = React.useState<StockQuotePreferences>(
-    () => {
-      const start = getTodayMarketStart();
-      const now = getNowClampedToMarketStart();
-      return {
-        interval: Interval.FIVE_MIN,
-        startDate: start,
-        endDate: now,
-        realTime: true,
-      };
-    },
-  );
+  const [preferences, setPreferences] = useState<StockQuotePreferences>(() => {
+    const start = getTodayMarketStart();
+    const now = getNowClampedToMarketStart();
+    return {
+      interval: Interval.FIVE_MIN,
+      startDate: start,
+      endDate: now,
+      realTime: true,
+    };
+  });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!preferences.realTime) {
       setRealTimePaused(false);
     }
@@ -54,7 +60,7 @@ const StockDetail: React.FC = () => {
     isSuccess: quoteQuery.isSuccess,
   });
 
-  const handlePreferencesSubmit = React.useCallback(
+  const handlePreferencesSubmit = useCallback(
     (next: StockQuotePreferences) => {
       setPreferences(next);
       if (!next.realTime) {
@@ -64,7 +70,7 @@ const StockDetail: React.FC = () => {
     [historicalToast],
   );
 
-  const chartData: IStockData | null = React.useMemo(() => {
+  const chartData: IStockData | null = useMemo(() => {
     const stockData = quoteQuery.data;
     if (!stockData) return null;
 
@@ -136,7 +142,7 @@ const StockDetail: React.FC = () => {
           <Skeleton variant="rectangular" height={320} />
         </Box>
       ) : chartData ? (
-        <React.Suspense
+        <Suspense
           fallback={
             <Box px={{ xs: 1.5, sm: 2 }} py={2}>
               <Skeleton variant="rectangular" height={320} />
@@ -144,7 +150,7 @@ const StockDetail: React.FC = () => {
           }
         >
           <Chart stockData={chartData} />
-        </React.Suspense>
+        </Suspense>
       ) : null}
     </>
   );

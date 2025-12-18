@@ -1,7 +1,7 @@
-import * as React from "react";
 import { IRadioButtonProps } from "../../types";
+import type { FC } from "react";
 
-const RadioButton: React.FC<IRadioButtonProps> = ({
+const RadioButton: FC<IRadioButtonProps> = ({
   name,
   value,
   checked,

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback, useState } from "react";
 import type { SymbolSearchResult } from "../../api/types";
 
 interface UseStockAutocompleteStateParams {
@@ -24,12 +24,12 @@ interface UseStockAutocompleteStateResult {
 export const useStockAutocompleteState = ({
   initialExchange = "NASDAQ",
 }: UseStockAutocompleteStateParams = {}): UseStockAutocompleteStateResult => {
-  const [exchange, setExchange] = React.useState<string>(initialExchange);
-  const [autocompleteInput, setAutocompleteInput] = React.useState<string>("");
+  const [exchange, setExchange] = useState<string>(initialExchange);
+  const [autocompleteInput, setAutocompleteInput] = useState<string>("");
   const [selectedSymbol, setSelectedSymbol] =
-    React.useState<SymbolSearchResult | null>(null);
+    useState<SymbolSearchResult | null>(null);
 
-  const handleAutocompleteInputChange = React.useCallback(
+  const handleAutocompleteInputChange = useCallback(
     (
       _: React.SyntheticEvent,
       value: string,
@@ -48,7 +48,7 @@ export const useStockAutocompleteState = ({
     [selectedSymbol],
   );
 
-  const handleAutocompleteChange = React.useCallback(
+  const handleAutocompleteChange = useCallback(
     (_: React.SyntheticEvent, value: SymbolSearchResult | null) => {
       setSelectedSymbol(value);
 

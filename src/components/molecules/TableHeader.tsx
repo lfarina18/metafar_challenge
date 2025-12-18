@@ -1,7 +1,7 @@
-import * as React from "react";
+import { memo, type FC } from "react";
 import { TableHead, TableRow, TableCell } from "@mui/material";
 
-const StockTableHeader: React.FC = () => (
+const StockTableHeader: FC = () => (
   <TableHead>
     <TableRow>
       <TableCell component="th" scope="col">
@@ -23,4 +23,4 @@ const StockTableHeader: React.FC = () => (
   </TableHead>
 );
 
-export default React.memo(StockTableHeader);
+export default memo(StockTableHeader);

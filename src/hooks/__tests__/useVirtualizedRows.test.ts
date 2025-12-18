@@ -1,5 +1,4 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import * as React from "react";
 import { renderHook, waitFor } from "../../test/utils";
 
 type MockVirtualItem = {

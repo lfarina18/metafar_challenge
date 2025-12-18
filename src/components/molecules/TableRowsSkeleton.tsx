@@ -1,11 +1,12 @@
-import * as React from "react";
+import { memo } from "react";
 import { TableRow, TableCell, Skeleton } from "@mui/material";
+import type { FC } from "react";
 
 interface TableRowsSkeletonProps {
   rows?: number;
 }
 
-const TableRowsSkeleton: React.FC<TableRowsSkeletonProps> = ({ rows = 10 }) => {
+const TableRowsSkeleton: FC<TableRowsSkeletonProps> = ({ rows = 10 }) => {
   return (
     <>
       {Array.from({ length: rows }).map((_, idx) => (
@@ -31,4 +32,4 @@ const TableRowsSkeleton: React.FC<TableRowsSkeletonProps> = ({ rows = 10 }) => {
   );
 };
 
-export default React.memo(TableRowsSkeleton);
+export default memo(TableRowsSkeleton);

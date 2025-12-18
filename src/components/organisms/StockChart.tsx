@@ -1,5 +1,4 @@
-import * as React from "react";
-import type { FC } from "react";
+import { memo, useMemo, type FC } from "react";
 import Highcharts from "highcharts/highstock";
 import Boost from "highcharts/modules/boost";
 import HighchartsReact from "highcharts-react-official";
@@ -15,7 +14,7 @@ interface IChartProps {
 const ChartScreen: FC<IChartProps> = ({ stockData }) => {
   const symbol = stockData.meta.symbol;
 
-  const chartOptions = React.useMemo(() => {
+  const chartOptions = useMemo(() => {
     const MAX_POINTS = 5000;
     const seriesData = buildSeriesData(stockData.values, MAX_POINTS);
 
@@ -72,4 +71,4 @@ const ChartScreen: FC<IChartProps> = ({ stockData }) => {
   );
 };
 
-export default React.memo(ChartScreen);
+export default memo(ChartScreen);

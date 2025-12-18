@@ -1,7 +1,7 @@
-import * as React from "react";
 import StockTable from "../components/organisms/StockTable";
+import type { FC } from "react";
 
-const HomePage: React.FC = () => {
+const HomePage: FC = () => {
   return <StockTable />;
 };
 

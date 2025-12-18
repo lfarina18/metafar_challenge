@@ -1,16 +1,16 @@
-import * as React from "react";
 import {
   type VirtualItem,
   type Virtualizer,
   useVirtualizer,
 } from "@tanstack/react-virtual";
+import { DependencyList, RefObject, useEffect } from "react";
 
 interface UseVirtualizedRowsParams {
   count: number;
-  parentRef: React.RefObject<HTMLDivElement>;
+  parentRef: RefObject<HTMLDivElement>;
   estimateSize: () => number;
   overscan?: number;
-  resetDeps: React.DependencyList;
+  resetDeps: DependencyList;
 }
 
 interface UseVirtualizedRowsResult {
@@ -43,7 +43,7 @@ export const useVirtualizedRows = ({
           (virtualRows[virtualRows.length - 1]?.size ?? 0))
       : 0;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!parentRef.current) return;
     if (count === 0) return;
 

@@ -1,8 +1,8 @@
-import * as React from "react";
 import SelectInput from "../atoms/SelectInput";
 import { IntervalSelectProps } from "../../types";
+import type { FC } from "react";
 
-const IntervalSelect: React.FC<IntervalSelectProps> = ({
+const IntervalSelect: FC<IntervalSelectProps> = ({
   value,
   onChange,
   style,

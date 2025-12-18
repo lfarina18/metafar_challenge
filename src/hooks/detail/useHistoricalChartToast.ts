@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   dismissToast,
   showLoadingToast,
@@ -16,14 +16,14 @@ export const useHistoricalChartToast = ({
   isError,
   isSuccess,
 }: UseHistoricalChartToastParams) => {
-  const [toastId, setToastId] = React.useState<string | null>(null);
+  const [toastId, setToastId] = useState<string | null>(null);
 
-  const show = React.useCallback(() => {
+  const show = useCallback(() => {
     const id = showLoadingToast("Cargando gráfico...");
     setToastId(id);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!enabled) return;
     if (!toastId) return;
 

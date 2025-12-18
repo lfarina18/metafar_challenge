@@ -1,7 +1,7 @@
-import * as React from "react";
 import StockDetail from "../components/organisms/StockDetail";
+import type { FC } from "react";
 
-const StockDetailPage: React.FC = () => {
+const StockDetailPage: FC = () => {
   return <StockDetail />;
 };
 

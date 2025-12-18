@@ -1,7 +1,7 @@
-import * as React from "react";
 import { ISelectInputProps } from "../../types";
+import type { FC } from "react";
 
-const SelectInput: React.FC<ISelectInputProps> = ({
+const SelectInput: FC<ISelectInputProps> = ({
   value,
   onChange,
   options,

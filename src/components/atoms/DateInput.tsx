@@ -1,7 +1,7 @@
-import * as React from "react";
 import { IDateInputProps } from "../../types";
+import type { FC } from "react";
 
-const DateInput: React.FC<IDateInputProps> = ({
+const DateInput: FC<IDateInputProps> = ({
   disabled,
   value,
   onChange,

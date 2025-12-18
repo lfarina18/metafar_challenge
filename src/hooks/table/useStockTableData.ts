@@ -1,8 +1,8 @@
-import * as React from "react";
 import type { IStock } from "../../types";
 import type { SymbolSearchResult, StockListResponse } from "../../api/types";
 import { useStockData } from "../queries/useStockData";
 import { useStockList } from "../queries/useStockList";
+import { useMemo } from "react";
 
 interface UseStockTableDataParams {
   exchange: string;
@@ -33,7 +33,7 @@ export const useStockTableData = ({
     : stockListQuery.isError;
   const error = selectedSymbol ? stockDataQuery.error : stockListQuery.error;
 
-  const stocks: IStock[] = React.useMemo(() => {
+  const stocks: IStock[] = useMemo(() => {
     const rows =
       selectedSymbol && data?.data
         ? data.data.filter(

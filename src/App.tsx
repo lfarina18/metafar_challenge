@@ -1,9 +1,10 @@
-import * as React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box, CircularProgress, CssBaseline } from "@mui/material";
+import { lazy, Suspense } from "react";
+import type { FC } from "react";
 
-const HomePage = React.lazy(() => import("./pages/HomePage"));
-const StockDetailPage = React.lazy(() => import("./pages/StockDetailPage"));
+const HomePage = lazy(() => import("./pages/HomePage"));
+const StockDetailPage = lazy(() => import("./pages/StockDetailPage"));
 
 const LoadingFallback = () => (
   <Box
@@ -16,7 +17,7 @@ const LoadingFallback = () => (
   </Box>
 );
 
-const App: React.FC = () => {
+const App: FC = () => {
   return (
     <BrowserRouter
       future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
@@ -35,12 +36,12 @@ const App: React.FC = () => {
         }}
       >
         <CssBaseline />
-        <React.Suspense fallback={<LoadingFallback />}>
+        <Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/stock/:symbol" element={<StockDetailPage />} />
           </Routes>
-        </React.Suspense>
+        </Suspense>
       </Box>
     </BrowserRouter>
   );
