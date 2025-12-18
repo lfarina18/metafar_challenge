@@ -17,10 +17,20 @@ const ChartScreen: FC<IChartProps> = ({ stockData }) => {
   const chartOptions = useMemo(() => {
     const MAX_POINTS = 5000;
     const seriesData = buildSeriesData(stockData.values, MAX_POINTS);
+    const enableDataGrouping = seriesData.length > 800;
 
     return {
+      chart: {
+        animation: false,
+      },
       title: {
         text: symbol,
+      },
+      credits: {
+        enabled: false,
+      },
+      accessibility: {
+        enabled: false,
       },
       rangeSelector: {
         enabled: false,
@@ -39,6 +49,19 @@ const ChartScreen: FC<IChartProps> = ({ stockData }) => {
           text: "Price",
         },
       },
+      plotOptions: {
+        series: {
+          animation: false,
+          marker: {
+            enabled: false,
+          },
+          states: {
+            hover: {
+              enabled: false,
+            },
+          },
+        },
+      },
       boost: {
         useGPUTranslations: true,
         usePreAllocated: true,
@@ -49,13 +72,13 @@ const ChartScreen: FC<IChartProps> = ({ stockData }) => {
       series: [
         {
           name: "Interval",
-          boostThreshold: 1,
+          boostThreshold: 1000,
           type: "line",
           data: seriesData,
           dataGrouping: {
-            enabled: true,
+            enabled: enableDataGrouping,
             approximation: "average",
-            groupPixelWidth: 10,
+            groupPixelWidth: 20,
           },
         },
       ],
