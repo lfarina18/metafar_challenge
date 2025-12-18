@@ -353,7 +353,7 @@ src/
 
 #### Developer Experience
 
-- [ ] **ESLint/Prettier**: Configurar con reglas estrictas
+- [x] **ESLint/Prettier**: Configurar con reglas estrictas
 - [ ] **Husky + pre-commit hooks**: Validar código antes de commit
 - [ ] **CI/CD básico**: GitHub Actions o similar para tests y linting
 - [ ] **Storybook**: Documentar componentes (opcional)

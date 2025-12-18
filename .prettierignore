@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+docs/metrics
+
+# Vite build artifacts
+*.log
+
+# Generated
+*.min.*
