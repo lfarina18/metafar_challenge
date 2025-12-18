@@ -13,6 +13,10 @@ type CapturedAutocompleteProps = {
   isOptionEqualToValue: (option: SymbolOption, value: SymbolOption) => boolean;
   getOptionLabel: (option: SymbolOption) => string;
   renderInput: (params: unknown) => ReactNode;
+  renderOption?: (
+    props: Record<string, unknown>,
+    option: SymbolOption,
+  ) => ReactNode;
 };
 
 type VirtualizedRowsArgs = {
@@ -51,10 +55,25 @@ vi.mock("@mui/material", async () => {
           InputProps: Record<string, unknown>;
           inputProps: Record<string, unknown>;
         }) => ReactNode;
+        renderOption?: (
+          props: Record<string, unknown>,
+          option: SymbolOption,
+        ) => ReactNode;
       };
 
       if (typedProps.options?.length && typedProps.getOptionLabel) {
         typedProps.getOptionLabel(typedProps.options[0]);
+      }
+
+      if (typedProps.options?.length && typedProps.renderOption) {
+        typedProps.renderOption(
+          {
+            id: "option",
+            role: "option",
+            tabIndex: -1,
+          },
+          typedProps.options[0],
+        );
       }
 
       const renderedInput = typedProps.renderInput
@@ -132,7 +151,6 @@ describe("StockTable", () => {
     useVirtualizedRowsMock.mockImplementation(
       (args: unknown): VirtualizedRowsResult => {
         const typedArgs = args as VirtualizedRowsArgs;
-        // Ensure estimateSize is exercised for coverage
         typedArgs.estimateSize();
         return {
           virtualRows: [],

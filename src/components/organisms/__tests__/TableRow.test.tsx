@@ -2,6 +2,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { MouseEventHandler, ReactNode } from "react";
 import { render, screen, userEvent } from "../../../test/utils";
 
+vi.mock("../../organisms/StockChart", () => ({
+  default: () => <div data-testid="stock-chart" />,
+}));
+
 const prefetchQueryMock = vi.fn().mockResolvedValue(undefined);
 const getStockDataMock = vi.fn().mockResolvedValue({ status: "ok", data: [] });
 
