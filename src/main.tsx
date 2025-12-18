@@ -8,6 +8,11 @@ import { queryClient } from "./lib/queryClient.ts";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 
+import "@fontsource/roboto/latin-300.css";
+import "@fontsource/roboto/latin-400.css";
+import "@fontsource/roboto/latin-500.css";
+import "@fontsource/roboto/latin-700.css";
+
 const ReactQueryDevtools = import.meta.env.DEV
   ? lazy(() =>
       import("@tanstack/react-query-devtools").then((m) => ({

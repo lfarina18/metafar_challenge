@@ -1,4 +1,5 @@
 import { memo, useMemo, type FC } from "react";
+import { useMediaQuery, useTheme } from "@mui/material";
 import Highcharts from "highcharts/highstock";
 import Boost from "highcharts/modules/boost";
 import HighchartsReact from "highcharts-react-official";
@@ -14,10 +15,17 @@ interface IChartProps {
 const ChartScreen: FC<IChartProps> = ({ stockData }) => {
   const symbol = stockData.meta.symbol;
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const chartOptions = useMemo(() => {
-    const MAX_POINTS = 5000;
+    const MAX_POINTS = isMobile ? 2000 : 5000;
     const seriesData = buildSeriesData(stockData.values, MAX_POINTS);
-    const enableDataGrouping = seriesData.length > 800;
+
+    const enableDataGrouping = isMobile
+      ? seriesData.length > 400
+      : seriesData.length > 800;
+    const groupPixelWidth = isMobile ? 35 : 20;
 
     return {
       chart: {
@@ -78,12 +86,12 @@ const ChartScreen: FC<IChartProps> = ({ stockData }) => {
           dataGrouping: {
             enabled: enableDataGrouping,
             approximation: "average",
-            groupPixelWidth: 20,
+            groupPixelWidth,
           },
         },
       ],
     };
-  }, [stockData.values, symbol]);
+  }, [isMobile, stockData.values, symbol]);
 
   return (
     <HighchartsReact
