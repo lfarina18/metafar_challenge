@@ -5,6 +5,37 @@
 - **Cantidad de corridas**: 3 corridas por escenario (registrar cada corrida por separado)
 - **Mismo flujo**: mismo texto de entrada, mismo timing, misma página
 
+## Comandos del proyecto
+
+Los siguientes comandos están disponibles vía `yarn <script>` (ver `package.json`).
+
+| Comando              | Descripción                                                    | Cuándo usar                                                       |
+| -------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `yarn dev`           | Levanta el servidor de desarrollo con HMR (Vite).              | Desarrollo local y capturas de React Profiler (DevTools).         |
+| `yarn build`         | Compila TypeScript y genera build de producción (`dist/`).     | Validar build final y medir bundle/Lighthouse en `preview`.       |
+| `yarn preview`       | Sirve el build de producción en local.                         | Medición de Lighthouse y verificación de comportamiento en build. |
+| `yarn typecheck`     | Typecheck sin emitir archivos.                                 | Validación rápida de tipos (también corre en `pre-push`).         |
+| `yarn lint`          | Ejecuta ESLint en todo el repo (falla con warnings).           | Antes de entregar o para CI.                                      |
+| `yarn lint:fix`      | ESLint con auto-fix.                                           | Correcciones rápidas locales.                                     |
+| `yarn format`        | Prettier sobre todo el repo.                                   | Mantener formato consistente (ideal antes de entregar).           |
+| `yarn format:check`  | Verifica formato sin escribir.                                 | CI / validación previa a PR.                                      |
+| `yarn test`          | Ejecuta Vitest en modo watch/interactivo.                      | Desarrollo de tests.                                              |
+| `yarn test:run`      | Ejecuta Vitest una sola vez (no interactivo).                  | Hooks/CI (corre en `pre-push`).                                   |
+| `yarn test:coverage` | Ejecuta tests con reporte de coverage.                         | Generar evidencia final de cobertura.                             |
+| `yarn analyze`       | Genera reporte de bundle visualizer en `docs/metrics/bundle/`. | Análisis de bundle y evidencia.                                   |
+| `yarn prepare`       | Inicializa Husky (hooks).                                      | Se ejecuta automáticamente tras `yarn install`.                   |
+
+### Husky / hooks
+
+- **pre-commit**: corre `yarn lint-staged`.
+- **pre-push**: corre `yarn typecheck` y `yarn test:run`.
+
+Si necesitás saltear hooks en un caso excepcional:
+
+```bash
+git commit --no-verify
+```
+
 ---
 
 # React Profiler (React DevTools)
@@ -542,25 +573,25 @@
 
 ### Implementado
 
-- **`React.memo` en `TableRow`** (`src/components/atomics/TableRow.tsx`):
+- **`React.memo` en `TableRow`** (`src/components/organisms/TableRow.tsx`):
   - Se memoizó la fila con un comparator por campos (`symbol/name/currency/type`).
   - **Objetivo**: evitar renders redundantes de filas visibles durante updates frecuentes del virtualizer/scroll cuando el `stock` no cambió.
 
 - **`React.memo` en componentes atómicos**:
-  - **`TextField`** (`src/components/atomics/TextField.tsx`)
-  - **`TableHeader`** (`src/components/atomics/TableHeader.tsx`)
+  - **`TextField`** (`src/components/atoms/TextField.tsx`)
+  - **`TableHeader`** (`src/components/molecules/TableHeader.tsx`)
   - **Objetivo**: que inputs y header no se re-rendericen por renders del padre (`StockTable`) que no cambian sus props.
 
-- **`useCallback` en handlers de búsqueda** (`src/components/StockTable.tsx`):
+- **`useCallback` en handlers de búsqueda** (`src/components/organisms/StockTable.tsx`):
   - `handleSearchNameChange` y `handleSearchSymbolChange` se estabilizaron con `useCallback`.
   - **Objetivo**: mantener estable la identidad de `onChange` y aprovechar la memoización del `TextField`.
 
-- **`useMemo` + `React.memo` en `StockChart`** (`src/components/StockChart.tsx`):
+- **`useMemo` + `React.memo` en `StockChart`** (`src/components/organisms/StockChart.tsx`):
   - `chartOptions` se memorizó con `useMemo` (evita recomputar mapeos sobre `values`).
   - El componente se exporta con `React.memo`.
   - **Objetivo**: reducir recomputación y re-renders en el gráfico cuando `stockData` no cambia.
 
-- **`useMemo` en filtrado** (`src/components/StockTable.tsx`):
+- **`useMemo` en filtrado** (`src/components/organisms/StockTable.tsx`):
   - `filteredStocks` se calcula con `useMemo` en base a `debouncedSearchName/debouncedSearchSymbol`.
   - **Objetivo**: evitar recalcar filtrado en renders no relacionados a la búsqueda.
 
@@ -850,6 +881,64 @@ Sí. Se implementó TanStack Query v5 a nivel de:
   - Optimización de render del chart para datasets grandes
   - Optimización de carga de fuentes (eliminación de Google Fonts render-blocking)
 
+## Estructura de directorios (final)
+
+```
+src/
+  api/
+    client.ts
+    endpoints.ts
+    schemas.ts
+    types.ts
+    __tests__/
+  components/
+    atoms/
+    molecules/
+    organisms/
+  hooks/
+    queries/
+    table/
+    detail/
+    __tests__/
+    useDebounce.ts
+  lib/
+    cacheConfig.ts
+    invalidation.ts
+    queryClient.ts
+    queryKeys.ts
+    stockChart.ts
+    __tests__/
+  pages/
+    HomePage.tsx
+    StockDetailPage.tsx
+  services/
+    stockService.ts
+    quoteService.ts
+    searchService.ts
+    shared/
+      requestOptions.ts
+      validateResponse.ts
+      __tests__/
+    __tests__/
+  test/
+    setup.ts
+    utils.tsx
+  utils/
+    toast.ts
+    __tests__/
+  App.tsx
+  main.tsx
+  types.ts
+
+docs/
+  metrics/
+    bundle/
+    coverage/
+    lighthouse/
+    profiler/
+  readme_anotation.md
+```
+
 ## React Query — decisiones y estrategia
 
 - **Diseño por capas**:
@@ -900,4 +989,57 @@ Sí. Se implementó TanStack Query v5 a nivel de:
 
 ## React Profiler
 
-- Repetir React Profiler específicamente para "después" de todas las optimizaciones finales (si se quiere un before/after más estricto por etapa).
+- **Entorno**:
+  - `yarn dev`.
+  - Nota: React DevTools Profiler no soporta `yarn preview` (build de producción estándar) sin un profiling build específico de React.
+
+- **Alcance**:
+  - Capturas realizadas sobre **Pantalla 1 (tabla)**.
+  - No se capturó Profiler sobre Pantalla 2 (gráfico).
+
+- **Qué se midió (final)**:
+  - **A (Reload / mount Home)**: carga inicial de la tabla.
+  - **B (Scroll tabla)**: scroll sostenido con virtualización.
+  - **C (Search / Autocomplete)**: búsqueda y selección de símbolo.
+
+### Resumen (antes vs después)
+
+- **Antes** (previo a optimizaciones de re-render / virtualización):
+  - Commits más pesados y con mayor “fan-out” de componentes actualizando durante scroll/interacciones.
+  - Más re-renders en cascada desde el contenedor hacia filas, con trabajo de reconciliación innecesario.
+  - Evidencia: ver capturas históricas en `docs/metrics/profiler/` con sufijos `*-before-*` y `RR_*` (sección de Profiler previa en este documento).
+
+- **Después (final)**:
+  - Commits más chicos y localizados.
+  - `TableRow` estable (memorización) y renders concentrados en el viewport visible (virtualización).
+  - Interacciones (scroll/búsqueda) no disparan re-render global de la tabla completa.
+
+### Evidencia (final)
+
+#### A — Reload / mount (Pantalla 1)
+
+- Observación:
+  - Mount acotado, sin costos “sorpresa” por componentes no requeridos en la vista inicial.
+
+![FINAL A - Reload - Flamegraph](./metrics/profiler/FINAL_A_reload_flamegraph.png)
+
+![FINAL A - Reload - Ranked](./metrics/profiler/FINAL_A_reload_ranked.png)
+
+#### B — Scroll tabla (Pantalla 1)
+
+- Observación:
+  - Commits chicos y repetibles durante scroll.
+  - Top components estables, sin rerenders globales.
+
+![FINAL B - Scroll - Flamegraph](./metrics/profiler/FINAL_B_scroll_flamegraph.png)
+
+![FINAL B - Scroll - Ranked](./metrics/profiler/FINAL_B_scroll_ranked.png)
+
+#### C — Search / Autocomplete (Pantalla 1)
+
+- Observación:
+  - Re-renders acotados al input/lista/estado de query, sin afectar filas no visibles.
+
+![FINAL C - Search - Flamegraph](./metrics/profiler/FINAL_C_search_flamegraph.png)
+
+![FINAL C - Search - Ranked](./metrics/profiler/FINAL_C_search_ranked.png)

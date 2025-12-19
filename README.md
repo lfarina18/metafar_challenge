@@ -1,5 +1,7 @@
 # Challenge: Mejora y Optimización de Aplicación de Mercado de Valores
 
+> Nota: el documento técnico principal y evidencia de métricas (Lighthouse, bundle, React Profiler, coverage) se encuentra en `docs/readme_anotation.md`.
+
 ## 📋 Contexto del Proyecto
 
 Este proyecto es una aplicación React + TypeScript que permite visualizar y analizar datos del mercado de valores utilizando la API de [Twelve Data](https://twelvedata.com/docs#overview). La aplicación actualmente incluye:
