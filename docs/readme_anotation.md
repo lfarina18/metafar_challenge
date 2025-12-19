@@ -1043,3 +1043,7 @@ docs/
 ![FINAL C - Search - Flamegraph](./metrics/profiler/FINAL_C_search_flamegraph.png)
 
 ![FINAL C - Search - Ranked](./metrics/profiler/FINAL_C_search_ranked.png)
+
+## Qué haría con más tiempo
+
+- Separar el CSS de los `sx` en archivos de styles separados para mejorar la legibilidad de los componentes.
