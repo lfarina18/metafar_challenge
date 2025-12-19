@@ -61,7 +61,16 @@ const StockTable: FC = () => {
   });
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box
+      sx={{
+        width: "100%",
+        height: "100%",
+        minHeight: 0,
+        display: "flex",
+        flexDirection: "column",
+        padding: "1rem 0",
+      }}
+    >
       <Box
         display="flex"
         flexDirection={{ xs: "column", sm: "row" }}
@@ -114,12 +123,50 @@ const StockTable: FC = () => {
         component={Paper}
         ref={parentRef}
         sx={{
-          maxHeight: { xs: 520, sm: 600 },
+          flex: 1,
+          minHeight: 0,
           overflow: "auto",
           width: "100%",
+          scrollbarWidth: "thin",
+          scrollbarColor: "rgba(0,0,0,0.35) transparent",
+          "&::-webkit-scrollbar": {
+            width: 10,
+            height: 10,
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "transparent",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "rgba(0,0,0,0.25)",
+            borderRadius: 999,
+            border: "2px solid transparent",
+            backgroundClip: "content-box",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            backgroundColor: "rgba(0,0,0,0.35)",
+          },
         }}
       >
-        <Table stickyHeader aria-label="Lista de acciones">
+        <Table
+          stickyHeader
+          aria-label="Lista de acciones"
+          sx={{
+            tableLayout: "fixed",
+            "& .MuiTableCell-root": {
+              borderBottomColor: "divider",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            },
+          }}
+        >
+          <colgroup>
+            <col style={{ width: 110 }} />
+            <col style={{ width: 120 }} />
+            <col style={{ width: "auto" }} />
+            <col style={{ width: 90 }} />
+            <col style={{ width: 220 }} />
+          </colgroup>
           <TableHeader />
           <TableBody>
             {isLoading && !data ? (
@@ -136,8 +183,9 @@ const StockTable: FC = () => {
               <MuiTableRow>
                 <TableCell colSpan={5} align="center">
                   <Box role="status" aria-live="polite">
-                    {selectedSymbol &&
-                      `No hay datos para "${selectedSymbol.symbol}".`}
+                    {selectedSymbol
+                      ? `No hay datos para "${selectedSymbol.symbol}".`
+                      : "Seleccione un símbolo para buscar datos."}
                   </Box>
                 </TableCell>
               </MuiTableRow>

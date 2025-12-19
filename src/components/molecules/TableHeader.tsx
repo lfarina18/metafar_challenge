@@ -3,7 +3,14 @@ import { TableHead, TableRow, TableCell } from "@mui/material";
 
 const StockTableHeader: FC = () => (
   <TableHead>
-    <TableRow>
+    <TableRow
+      sx={{
+        "& .MuiTableCell-root": {
+          bgcolor: "primary.main",
+          color: "primary.contrastText",
+        },
+      }}
+    >
       <TableCell component="th" scope="col">
         Símbolo
       </TableCell>
