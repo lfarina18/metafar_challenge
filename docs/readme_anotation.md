@@ -693,6 +693,27 @@ Registrar el output de `yarn build`:
 
   ![Build after code splitting/lazy loading](./metrics/bundle/build-after-code-splliting-and-lazy-loading.png)
 
+### Build final (estado actual)
+
+Registrar el output de `yarn build`:
+
+- **JS bundle (raw)**:
+  - `dist/assets/index-CddexZV8.js`: 303.58 kB
+  - `dist/assets/useStockData-B7W0p2v5.js`: 206.62 kB
+  - `dist/assets/StockChart-Dt3R_i1E.js`: 439.32 kB
+  - `dist/assets/HomePage-B1vZEa14.js`: 81.47 kB
+  - `dist/assets/StockDetail-BaPFV9QA.js`: 15.93 kB
+- **JS bundle (gzip)**:
+  - `dist/assets/index-CddexZV8.js`: 100.71 kB
+  - `dist/assets/useStockData-B7W0p2v5.js`: 64.15 kB
+  - `dist/assets/StockChart-Dt3R_i1E.js`: 157.85 kB
+  - `dist/assets/HomePage-B1vZEa14.js`: 27.09 kB
+  - `dist/assets/StockDetail-BaPFV9QA.js`: 5.96 kB
+- **Evidencia**:
+  - Ruta/nombre del screenshot: metrics/bundle/build-final.png
+
+  ![Build final](./metrics/bundle/build-final.png)
+
 ---
 
 # React Query: implementación, estrategia de caché y trade-offs
@@ -717,8 +738,11 @@ Sí. Se implementó TanStack Query v5 a nivel de:
 
 ### Nota sobre el uso actual en UI
 
-- Los hooks/servicios están listos y usados para **prefetch** (`TableRow` hover y `Detail` mount).
-- La **migración completa de componentes** a React Query (por ejemplo `StockTable` usando `useStockList` y búsqueda server-side con `useStockSearch`, y `StockPreferenceForm` usando `useStockData/useStockQuote`) todavía es un paso posterior.
+- Los hooks de React Query están integrados en la UI:
+  - `StockTable` consume `useStockTableData` (que compone `useStockList` + `useStockData`) y `useStockSearch`.
+  - `StockDetail` consume `useStockQuote` y lazy-load del `StockChart`.
+  - `StockPreferenceForm` consume `useStockData`.
+- También se utiliza **prefetch** para mejorar navegación (hover en filas / carga de detalle) cuando aplica.
 
 ## Estrategia de caché por tipo de dato
 
@@ -760,3 +784,120 @@ Sí. Se implementó TanStack Query v5 a nivel de:
 - **Cancelación de requests (AbortSignal)**:
   - Los `queryFn` usan `({ signal })` y los services propagan `signal` a Axios.
   - Beneficio: evitar race conditions y requests innecesarias cuando cambia el input/params o se desmonta el componente.
+
+---
+
+# Lighthouse (FINAL) — Evidencia entregable
+
+## Página 1 — Home (tabla)
+
+### Desktop (final)
+
+- **Screenshot**: `docs/metrics/lighthouse/page-1-desktop-lighthouse-final.png`
+- **Scores**: Performance 100 / Accessibility 100 / Best Practices 100 / SEO 100
+
+![Page 1 Desktop - Lighthouse Final](./metrics/lighthouse/page-1-desktop-lighthouse-final.png)
+
+### Mobile (final)
+
+- **Screenshot**: `docs/metrics/lighthouse/page-1-mobile-lighthouse-final.png`
+- **Scores**: Performance 86 / Accessibility 100 / Best Practices 100 / SEO 100
+- **Métricas**:
+  - **FCP**: 1.7s
+  - **LCP**: 2.7s
+  - **TBT**: 380ms
+  - **CLS**: 0
+
+![Page 1 Mobile - Lighthouse Final](./metrics/lighthouse/page-1-mobile-lighthouse-final.png)
+
+## Página 2 — Detail (gráfico)
+
+### Desktop (final)
+
+- **Screenshot**: `docs/metrics/lighthouse/page-2-desktop-lighthouse-final.png`
+- **Scores**: Performance 100 / Accessibility 100 / Best Practices 100 / SEO 100
+- **Métricas**:
+  - **FCP**: 0.5s
+  - **LCP**: 0.6s
+  - **TBT**: 0ms
+  - **CLS**: 0.004
+
+![Page 2 Desktop - Lighthouse Final](./metrics/lighthouse/page-2-desktop-lighthouse-final.png)
+
+### Mobile (final)
+
+- **Screenshot**: `docs/metrics/lighthouse/page-2-mobile-lighthouse-final.png`
+- **Scores**: Performance 86 / Accessibility 100 / Best Practices 100 / SEO 100
+- **Métricas**:
+  - **FCP**: 1.8s
+  - **LCP**: 2.8s
+  - **TBT**: 380ms
+  - **CLS**: 0.005
+
+![Page 2 Mobile - Lighthouse Final](./metrics/lighthouse/page-2-mobile-lighthouse-final.png)
+
+---
+
+# Informe final (resumen ejecutivo)
+
+## Alcance
+
+- La aplicación fue refactorizada para usar **TanStack Query (React Query v5)** como capa de estado de servidor.
+- Se aplicaron optimizaciones de performance enfocadas en:
+  - Virtualización de tabla
+  - Code splitting / lazy loading (especialmente Highcharts)
+  - Optimización de re-renders
+  - Optimización de render del chart para datasets grandes
+  - Optimización de carga de fuentes (eliminación de Google Fonts render-blocking)
+
+## React Query — decisiones y estrategia
+
+- **Diseño por capas**:
+  - `src/services/*` encapsula acceso a API + validación runtime (Zod).
+  - `src/hooks/queries/*` define queries, keys y políticas de cache.
+  - UI consume hooks y se mantiene declarativa (`isLoading/isError/isFetching`).
+- **Caché por tipo de dato**:
+  - Lista de stocks: cache de largo plazo + persistencia selectiva.
+  - Search: cache corto + debounce.
+  - Quote realtime: `staleTime: 0` + `refetchInterval` configurable.
+- **Trade-offs**:
+  - Persistencia selectiva (solo lista) para evitar cachear time-series pesado.
+  - Cancelación con `AbortSignal` para evitar race conditions.
+
+## Performance — optimizaciones aplicadas (justificación)
+
+- **Virtualización (`@tanstack/react-virtual`)**:
+  - Reduce trabajo de render cuando el listado es grande.
+- **Code splitting (rutas + chart)**:
+  - Se implementó lazy loading de `StockChart` para no penalizar el bundle inicial.
+- **Highcharts/Highstock**:
+  - Se deshabilitan animaciones/markers/hover y se aplica `boost`.
+  - En mobile se reduce cantidad de puntos y se agrupa la data más agresivamente.
+- **Fonts**:
+  - Se eliminó Google Fonts (render-blocking) y se pasó a `@fontsource/roboto`.
+  - Se ajustó a subset `latin-*` para evitar empaquetar múltiples subsets innecesarios.
+
+## Evidencia de métricas
+
+- Lighthouse FINAL:
+  - Ver sección **"Lighthouse (FINAL) — Evidencia entregable"** y capturas bajo `docs/metrics/lighthouse/`.
+- Bundle:
+  - Ver `docs/metrics/bundle/*`.
+- React Profiler:
+  - Ver `docs/metrics/profiler/*`.
+
+## Testing & Coverage
+
+- Command:
+  - `yarn test:coverage`
+- Resultados finales:
+  - Statements: 99.5%
+  - Branches: 93.17%
+  - Functions: 100%
+  - Lines: 100%
+- Evidencia:
+  ![Coverage](./metrics/coverage/coverage.png)
+
+## React Profiler
+
+- Repetir React Profiler específicamente para "después" de todas las optimizaciones finales (si se quiere un before/after más estricto por etapa).

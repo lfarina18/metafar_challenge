@@ -309,17 +309,17 @@ src/
   - Configurar React Testing Library
   - Configurar `@tanstack/react-query` para testing
 
-- [ ] **Tests de hooks de React Query**
+- [x] **Tests de hooks de React Query**
   - Tests para custom hooks de queries
   - Mocking de servicios
   - Tests de estados de loading, error, success
 
-- [ ] **Tests de componentes**
+- [x] **Tests de componentes**
   - Tests para componentes críticos usando React Query
   - Tests de integración para flujos completos
   - Mocking apropiado de React Query
 
-- [ ] **Cobertura**
+- [x] **Cobertura**
   - Alcanzar al menos 60% de cobertura en código crítico
   - Documentar qué se testea y qué no (y por qué)
 
