@@ -335,7 +335,7 @@ src/
 #### Developer Experience
 
 - [x] **ESLint/Prettier**: Configurar con reglas estrictas
-- [ ] **Husky + pre-commit hooks**: Validar código antes de commit
+- [x] **Husky + pre-commit hooks**: Validar código antes de commit
 - [ ] **CI/CD básico**: GitHub Actions o similar para tests y linting
 - [ ] **Storybook**: Documentar componentes (opcional)
 
@@ -431,7 +431,7 @@ src/
 
    ```bash
    git clone [repo-url]
-   cd metafar-challenge
+   cd metafar_challenge
    ```
 
 2. **Instalar dependencias actuales**

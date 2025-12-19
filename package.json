@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prepare": "husky",
     "build": "tsc && vite build",
     "typecheck": "tsc --noEmit",
     "analyze": "mkdir -p docs/metrics/bundle && vite-bundle-visualizer --output docs/metrics/bundle/stats.html --open true",
@@ -14,7 +15,16 @@
     "format:check": "prettier --check .",
     "preview": "vite preview",
     "test": "vitest",
+    "test:run": "vitest run",
     "test:coverage": "vitest --coverage"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix"
+    ],
+    "*.{json,md,css,scss,html}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -57,7 +67,9 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "eslint-plugin-unused-imports": "^4.3.0",
+    "husky": "^9.1.7",
     "jsdom": "^26.1.0",
+    "lint-staged": "^15.5.2",
     "prettier": "^3.7.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
